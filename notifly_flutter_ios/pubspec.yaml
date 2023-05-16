@@ -1,0 +1,27 @@
+name: notifly_flutter_ios
+description: iOS implementation of the notifly_flutter plugin
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.19.0 <3.0.0"
+
+flutter:
+  plugin:
+    implements: notifly_flutter
+    platforms:
+      ios:
+        pluginClass: NotiflyFlutterPlugin
+        dartPluginClass: NotiflyFlutterIOS
+
+dependencies:
+  flutter:
+    sdk: flutter
+  notifly_flutter_platform_interface:
+    path: ../notifly_flutter_platform_interface
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.0
+  very_good_analysis: ^4.0.0

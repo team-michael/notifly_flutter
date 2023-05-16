@@ -1,0 +1,32 @@
+name: notifly_flutter
+description: Notifly Flutter plugin
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.19.0 <3.0.0"
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        default_package: notifly_flutter_android
+      ios:
+        default_package: notifly_flutter_ios
+
+dependencies:
+  flutter:
+    sdk: flutter
+  notifly_flutter_android:
+    path: ../notifly_flutter_android
+  notifly_flutter_ios:
+    path: ../notifly_flutter_ios
+  notifly_flutter_platform_interface:
+    path: ../notifly_flutter_platform_interface
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.3.0
+  plugin_platform_interface: ^2.0.0
+  very_good_analysis: ^4.0.0
