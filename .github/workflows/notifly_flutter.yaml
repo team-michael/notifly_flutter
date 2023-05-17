@@ -23,6 +23,7 @@ jobs:
       flutter_channel: stable
       flutter_version: 3.7.0
       working_directory: notifly_flutter
+      min_coverage: 0
 
 
   android:

@@ -8,3 +8,19 @@ Future<String> getPlatformName() async {
   if (platformName == null) throw Exception('Unable to get platform name.');
   return platformName;
 }
+
+/// Notifly Flutter plugin.
+class NotiflyPlugin {
+  /// Initialize Notifly Flutter.
+  Future<bool> initialize(
+    String projectId,
+    String username,
+    String password,
+  ) async {
+    // Invoke the platform-specific method.
+    final success = await _platform.initialize(projectId, username, password);
+
+    if (!success) throw Exception('Unable to initialize Notifly Flutter.');
+    return success;
+  }
+}
