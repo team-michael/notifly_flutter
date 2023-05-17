@@ -7,7 +7,8 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 /// rather than implement it as `NotiflyFlutter`.
 /// Extending this class (using `extends`) ensures that the subclass will get
 /// the default implementation, while platform implementations that `implements`
-///  this interface will be broken by newly added [NotiflyFlutterPlatform] methods.
+///  this interface will be broken
+///  by newly added [NotiflyFlutterPlatform] methods.
 abstract class NotiflyFlutterPlatform extends PlatformInterface {
   /// Constructs a NotiflyFlutterPlatform.
   NotiflyFlutterPlatform() : super(token: _token);

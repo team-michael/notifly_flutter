@@ -13,7 +13,10 @@ Future<String> getPlatformName() async {
 class NotiflyPlugin {
   /// Initialize Notifly Flutter.
   Future<bool> initialize(
-      String projectId, String username, String password,) async {
+    String projectId,
+    String username,
+    String password,
+  ) async {
     // Invoke the platform-specific method.
     final success = await _platform.initialize(projectId, username, password);
 
