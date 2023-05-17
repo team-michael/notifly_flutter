@@ -30,4 +30,9 @@ abstract class NotiflyFlutterPlatform extends PlatformInterface {
 
   /// Return the current platform name.
   Future<String?> getPlatformName();
+
+  /// Initialize Notifly Flutter.
+  Future<bool> initialize(String projectId, String username, String password) {
+    throw UnimplementedError('initialize() has not been implemented.');
+  }
 }

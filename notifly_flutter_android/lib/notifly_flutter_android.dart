@@ -17,4 +17,16 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
   Future<String?> getPlatformName() {
     return methodChannel.invokeMethod<String>('getPlatformName');
   }
+
+  @override
+  Future<bool> initialize(String projectId, String username, String password) {
+    final args = <String, dynamic>{
+      'projectId': projectId,
+      'username': username,
+      'password': password,
+    };
+    return methodChannel
+        .invokeMethod('initialize', args)
+        .then((value) => value as bool);
+  }
 }
