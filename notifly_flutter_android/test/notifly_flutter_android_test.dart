@@ -15,7 +15,7 @@ void main() {
       notiflyFlutter = NotiflyFlutterAndroid();
 
       log = <MethodCall>[];
-      TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(notiflyFlutter.methodChannel,
               (methodCall) async {
         log.add(methodCall);

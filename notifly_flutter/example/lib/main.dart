@@ -2,22 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:notifly_flutter/notifly_flutter.dart';
 
-NotiflyPlugin notifly = NotiflyPlugin();
-
 void main() async {
   await dotenv.load();
   WidgetsFlutterBinding.ensureInitialized();
 
-  try {
-    final success = await notifly.initialize(
-      dotenv.env['NOTIFLY_PROJECT_ID']!,
-      dotenv.env['NOTIFLY_USERNAME']!,
-      dotenv.env['NOTIFLY_PASSWORD']!,
-    );
-    print('Notifly initialized: $success');
-  } catch (error) {
-    print('Failed to initialize Notifly: $error');
-  }
+  await NotiflyPlugin.initialize(
+    dotenv.env['NOTIFLY_PROJECT_ID']!,
+    dotenv.env['NOTIFLY_USERNAME']!,
+    dotenv.env['NOTIFLY_PASSWORD']!,
+  );
 
   runApp(const MyApp());
 }

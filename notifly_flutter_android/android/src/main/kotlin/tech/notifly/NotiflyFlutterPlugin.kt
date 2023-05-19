@@ -1,6 +1,7 @@
 package tech.notifly
 
 import android.content.Context
+import android.util.Log
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -21,34 +22,69 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        if (call.method == "getPlatformName") {
+        val methodName = call.method
+        if (methodName == "getPlatformName") {
             result.success("Android")
-        } else if (call.method == "initialize") {
-            try {
-                val success = initialize(context, call)
-                result.success(success)
-            } catch (e: Exception) {
-                when (e) {
-                    is IllegalArgumentException -> {
-                        result.error("INVALID_ARGUMENT", e.message, null)
-                    }
+        }
 
-                    else -> {
-                        result.error(
-                            "INITIALIZATION_FAILED",
-                            "Failed to initialize Notifly",
-                            e.toString()
-                        )
-                    }
+        var errorCodeOnError = ""
+        var errorMessageOnError = ""
+
+        try {
+            when (methodName) {
+                "initialize" -> {
+                    errorCodeOnError = "INITIALIZATION_FAILED"
+                    errorMessageOnError = "Failed to initialize Notifly"
+
+                    initialize(call)
+                    result.success(true)
+                }
+
+                "setUserId" -> {
+                    errorCodeOnError = "SET_USER_ID_FAILED"
+                    errorMessageOnError = "Failed to set user id"
+
+                    setUserId(call)
+                    result.success(true)
+                }
+
+                "setUserProperties" -> {
+                    errorCodeOnError = "SET_USER_PROPERTIES_FAILED"
+                    errorMessageOnError = "Failed to set user properties"
+
+                    setUserProperties(call)
+                    result.success(true)
+                }
+
+                "trackEvent" -> {
+                    errorCodeOnError = "TRACK_EVENT_FAILED"
+                    errorMessageOnError = "Failed to track event"
+
+                    trackEvent(call)
+                    result.success(true)
+                }
+
+                else -> {
+                    result.notImplemented()
                 }
             }
-        } else {
-            result.notImplemented()
+        } catch (e: Exception) {
+            when (e) {
+                is IllegalArgumentException -> {
+                    result.error("INVALID_ARGUMENT", e.message, null)
+                }
+
+                else -> {
+                    result.error(
+                        errorCodeOnError, errorMessageOnError, e.toString()
+                    )
+                }
+            }
         }
     }
 
     @Throws(IllegalArgumentException::class, Exception::class)
-    private fun initialize(context: Context?, call: MethodCall): Boolean {
+    private fun initialize(call: MethodCall) {
         if (context == null) {
             throw Exception("Context is null")
         }
@@ -59,8 +95,45 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
         val password = call.argument<String>("password")
             ?: throw IllegalArgumentException("Password was not provided")
 
-        Notifly.initialize(context, projectId, username, password)
-        return true
+        Notifly.initialize(context!!, projectId, username, password)
+    }
+
+    @Throws(IllegalArgumentException::class, Exception::class)
+    private fun setUserId(call: MethodCall) {
+        if (context == null) {
+            throw Exception("Context is null")
+        }
+        val userId = call.argument<String>("userId")
+            ?: throw IllegalArgumentException("UserId was not provided")
+
+        Notifly.setUserId(context!!, userId)
+    }
+
+    @Throws(IllegalArgumentException::class, Exception::class)
+    private fun setUserProperties(call: MethodCall) {
+        if (context == null) {
+            throw Exception("Context is null")
+        }
+        val params = call.argument<Map<String, Any>>("params")
+            ?: throw IllegalArgumentException("Params was not provided")
+
+        Notifly.setUserProperties(context!!, params)
+    }
+
+    @Throws(IllegalArgumentException::class, Exception::class)
+    private fun trackEvent(call: MethodCall) {
+        if (context == null) {
+            throw Exception("Context is null")
+        }
+
+        val eventName = call.argument<String>("eventName")
+            ?: throw IllegalArgumentException("EventName was not provided")
+        val eventParams =
+            call.argument<Map<String, Any?>>("eventParams") ?: emptyMap<String, Any?>()
+        val segmentationEventParamKeys =
+            call.argument<List<String>>("segmentationEventParamKeys") ?: null
+
+        Notifly.trackEvent(context!!, eventName, eventParams, segmentationEventParamKeys)
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {

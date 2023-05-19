@@ -1,3 +1,4 @@
+import 'package:logger/logger.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 
 NotiflyFlutterPlatform get _platform => NotiflyFlutterPlatform.instance;
@@ -11,16 +12,57 @@ Future<String> getPlatformName() async {
 
 /// Notifly Flutter plugin.
 class NotiflyPlugin {
+  static final _logger = Logger();
+
   /// Initialize Notifly Flutter.
-  Future<bool> initialize(
+  static Future<void> initialize(
     String projectId,
     String username,
     String password,
   ) async {
-    // Invoke the platform-specific method.
-    final success = await _platform.initialize(projectId, username, password);
+    try {
+      await _platform.initialize(projectId, username, password);
+      _logger.i('Notifly has been successfully initialized for $projectId.');
+    } catch (e) {
+      _logger.e('Failed to', e);
+    }
+  }
 
-    if (!success) throw Exception('Unable to initialize Notifly Flutter.');
-    return success;
+  /// Sets the user ID.
+  static Future<void> setUserId(String userId) async {
+    try {
+      await _platform.setUserId(userId);
+      _logger.i('User ID set to $userId');
+    } catch (e) {
+      _logger.e('Failed to', e);
+    }
+  }
+
+  /// Sets the user properties.
+  static Future<void> setUserProperties(Map<String, Object> params) async {
+    try {
+      await _platform.setUserProperties(params);
+      _logger.i('User properties set to $params');
+    } catch (e) {
+      _logger.e('Failed to', e);
+    }
+  }
+
+  /// Track an event.
+  static Future<void> trackEvent(
+    String eventName,
+    Map<String, Object>? eventParams,
+    List<String>? segmentationEventParamKeys,
+  ) async {
+    try {
+      await _platform.trackEvent(
+        eventName,
+        eventParams,
+        segmentationEventParamKeys,
+      );
+      _logger.i('Event $eventName tracked with params $eventParams');
+    } catch (e) {
+      _logger.e('Failed to', e);
+    }
   }
 }

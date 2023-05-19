@@ -17,6 +17,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
+  logger: ^1.1.0
   notifly_flutter_android:
     path: ../notifly_flutter_android
   notifly_flutter_ios:
