@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:notifly_flutter/notifly_flutter.dart';
+import 'package:notifly_flutter_example/firebase_options.dart';
 
 final router = GoRouter(
   routes: [
@@ -22,6 +24,9 @@ final router = GoRouter(
 void main() async {
   await dotenv.load();
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   await NotiflyPlugin.initialize(
     projectId: dotenv.env['NOTIFLY_PROJECT_ID']!,
