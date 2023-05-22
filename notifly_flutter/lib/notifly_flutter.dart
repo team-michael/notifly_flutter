@@ -15,11 +15,11 @@ class NotiflyPlugin {
   static final _logger = Logger();
 
   /// Initialize Notifly Flutter.
-  static Future<void> initialize(
-    String projectId,
-    String username,
-    String password,
-  ) async {
+  static Future<void> initialize({
+    required String projectId,
+    required String username,
+    required String password,
+  }) async {
     try {
       await _platform.initialize(projectId, username, password);
       _logger.i('Notifly has been successfully initialized for $projectId.');
@@ -29,6 +29,7 @@ class NotiflyPlugin {
   }
 
   /// Sets the user ID.
+  /// TODO: User Id can be null, so we should handle that.
   static Future<void> setUserId(String userId) async {
     try {
       await _platform.setUserId(userId);
@@ -49,11 +50,11 @@ class NotiflyPlugin {
   }
 
   /// Track an event.
-  static Future<void> trackEvent(
-    String eventName,
+  static Future<void> trackEvent({
+    required String eventName,
     Map<String, Object>? eventParams,
     List<String>? segmentationEventParamKeys,
-  ) async {
+  }) async {
     try {
       await _platform.trackEvent(
         eventName,

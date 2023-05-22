@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.0.0
+  go_router: ^7.0.2
   notifly_flutter:
     # When depending on this package from a real application you should use:
     #   notifly_flutter: ^x.y.z
