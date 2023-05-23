@@ -1,10 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:notifly_flutter/notifly_flutter.dart';
 import 'package:notifly_flutter_example/firebase_options.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print('Handling a background message: ${message.data.toString()}');
+}
 
 final router = GoRouter(
   routes: [
@@ -29,6 +39,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   final status = await Permission.notification.status;
   if (status.isDenied) {
     await Permission.notification.request();
@@ -51,9 +63,37 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Future<void> setupInteractedMessage() async {
+    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+
+    print('setupInteractedMessage: $initialMessage');
+
+    if (initialMessage != null) {
+      _handleMessage(initialMessage);
+    }
+
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    print('handleMessage: $message');
+    _showMessage(message.data.toString());
+  }
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        content: Text(message),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
+
+    setupInteractedMessage();
   }
 
   @override
