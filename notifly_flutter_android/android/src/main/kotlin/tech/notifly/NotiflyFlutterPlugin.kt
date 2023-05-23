@@ -1,7 +1,9 @@
 package tech.notifly
 
 import android.content.Context
+import android.webkit.WebView
 import android.util.Log
+import android.webkit.WebSettings
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -19,6 +21,12 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "notifly_flutter_android")
         channel.setMethodCallHandler(this)
         context = flutterPluginBinding.applicationContext
+
+        // Initialize Webview
+        val webView = WebView(context!!)
+        webView.settings.javaScriptEnabled = true
+        webView.settings.useWideViewPort = true
+        webView.settings.loadWithOverviewMode = true
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {

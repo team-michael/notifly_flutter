@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:notifly_flutter/notifly_flutter.dart';
 import 'package:notifly_flutter_example/firebase_options.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 final router = GoRouter(
   routes: [
@@ -27,6 +28,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  final status = await Permission.notification.status;
+  if (status.isDenied) {
+    await Permission.notification.request();
+  }
 
   await NotiflyPlugin.initialize(
     projectId: dotenv.env['NOTIFLY_PROJECT_ID']!,
