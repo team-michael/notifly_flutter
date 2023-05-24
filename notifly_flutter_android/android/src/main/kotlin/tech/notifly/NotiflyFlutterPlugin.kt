@@ -12,6 +12,10 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import tech.notifly.Notifly
+import tech.notifly.utils.NotiflySdkType
+import tech.notifly.utils.NotiflyControlToken
+
+class NotiflyControlTokenImpl : NotiflyControlToken
 
 class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var channel: MethodChannel
@@ -102,6 +106,9 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
             ?: throw IllegalArgumentException("Username was not provided")
         val password = call.argument<String>("password")
             ?: throw IllegalArgumentException("Password was not provided")
+
+        Notifly.setSdkType(NotiflyControlTokenImpl(), NotiflySdkType.FLUTTER)
+        Notifly.setSdkVersion(NotiflyControlTokenImpl(), "0.0.1") // TODO: Get version from pubspec.yaml
 
         Notifly.initialize(context!!, projectId, username, password)
     }
