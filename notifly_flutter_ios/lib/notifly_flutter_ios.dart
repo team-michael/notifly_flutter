@@ -17,4 +17,48 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
   Future<String?> getPlatformName() {
     return methodChannel.invokeMethod<String>('getPlatformName');
   }
+
+  @override
+  Future<void> initialize(
+    String projectId,
+    String username,
+    String password,
+  ) async {
+    await methodChannel.invokeMethod('initialize', {
+      'projectID': projectId,
+      'username': username,
+      'password': password,
+    });
+  }
+
+  @override
+  Future<void> setUserId(
+    String? userId,
+  ) async {
+    await methodChannel.invokeMethod('setUserId', {
+      'userId': userId,
+    });
+  }
+
+  @override
+  Future<void> setUserProperties(Map<String, Object> params) async {
+    await methodChannel.invokeMethod('setUserProperties', {
+      'userProperties': params,
+    });
+  }
+
+  @override
+  Future<void> trackEvent(
+    String eventName, 
+    Map<String, Object>? eventParams,
+    List<String>? segmentationEventParamKeys,
+  ) async {
+    await methodChannel.invokeMethod('trackEvent', {
+      'eventName': eventName,
+      'eventParams': eventParams,
+      'segmentationEventParamKeys': segmentationEventParamKeys,
+    });
+  }
+
+
 }
