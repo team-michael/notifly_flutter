@@ -22,7 +22,6 @@ class NotiflyPlugin {
   }) async {
     try {
       await _platform.initialize(projectId, username, password);
-      _logger.i('Notifly has been successfully initialized for $projectId.');
     } catch (e) {
       _logger.e('Failed to', e);
     }
@@ -33,7 +32,6 @@ class NotiflyPlugin {
   static Future<void> setUserId(String userId) async {
     try {
       await _platform.setUserId(userId);
-      _logger.i('User ID set to $userId');
     } catch (e) {
       _logger.e('Failed to', e);
     }
@@ -43,7 +41,6 @@ class NotiflyPlugin {
   static Future<void> setUserProperties(Map<String, Object> params) async {
     try {
       await _platform.setUserProperties(params);
-      _logger.i('User properties set to $params');
     } catch (e) {
       _logger.e('Failed to', e);
     }
@@ -61,7 +58,6 @@ class NotiflyPlugin {
         eventParams,
         segmentationEventParamKeys,
       );
-      _logger.i('Event $eventName tracked with params $eventParams');
     } catch (e) {
       _logger.e('Failed to', e);
     }

@@ -40,7 +40,7 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
   }
 
   @override
-  Future<void> setUserId(String userId) async {
+  Future<void> setUserId(String? userId) async {
     final args = <String, dynamic>{
       'userId': userId,
     };
