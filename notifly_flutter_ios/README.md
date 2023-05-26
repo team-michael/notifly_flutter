@@ -1,5 +1,7 @@
 # notifly_flutter_ios
 
+[![Pub](https://img.shields.io/pub/v/notifly_flutter_ios.svg)](https://pub.dev/packages/notifly_flutter_ios)
+
 The iOS implementation of `notifly_flutter`.
 
 ## Usage

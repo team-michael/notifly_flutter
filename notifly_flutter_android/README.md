@@ -1,5 +1,7 @@
 # notifly_flutter_android
 
+[![Pub](https://img.shields.io/pub/v/notifly_flutter_android.svg)](https://pub.dev/packages/notifly_flutter_android)
+
 The Android implementation of `notifly_flutter`.
 
 ## Usage
