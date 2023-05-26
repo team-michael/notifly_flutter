@@ -1,5 +1,6 @@
 # notifly_flutter
 
+[![Pub](https://img.shields.io/pub/v/notifly_flutter.svg)](https://pub.dev/packages/notifly_flutter)
 ![coverage][coverage_badge]
 
 [coverage_badge]: notifly_flutter/coverage_badge.svg
