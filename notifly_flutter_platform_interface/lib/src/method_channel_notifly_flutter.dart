@@ -25,7 +25,7 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
   }
 
   @override
-  Future<void> setUserId(String userId) {
+  Future<void> setUserId(String? userId) {
     final args = <String, dynamic>{
       'userId': userId,
     };

@@ -38,7 +38,7 @@ abstract class NotiflyFlutterPlatform extends PlatformInterface {
   }
 
   /// Sets the user ID.
-  Future<void> setUserId(String userId) {
+  Future<void> setUserId(String? userId) {
     throw UnimplementedError();
   }
 
