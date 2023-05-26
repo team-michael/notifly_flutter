@@ -21,6 +21,7 @@ dependencies:
     # the parent directory to use the current plugin's version.
     path: ../
   permission_handler: ^10.2.0
+  uni_links: ^0.5.1
 
 dev_dependencies:
   flutter_driver:

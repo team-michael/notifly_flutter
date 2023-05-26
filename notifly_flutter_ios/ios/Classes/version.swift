@@ -1,1 +1,4 @@
-let NOTIFLY_FLUTTER_PLUGIN_VERSION = "0.1.1"
+import Foundation
+struct Constants {
+    static let SDK_VERSION: String = "0.1.1"
+}
