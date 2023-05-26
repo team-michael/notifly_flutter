@@ -21,7 +21,7 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
          let username = arguments["username"] as? String,
          let password = arguments["password"] as? String
       {
-        Notifly.setSdkType(type: SdkType.flutter.rawValue) // TODO: REMOVE RAWVALUE
+        Notifly.setSdkType(type: SdkType.flutter.rawValue)
           Notifly.setSdkVersion(version: Constants.SDK_VERSION)
         Notifly.initialize(projectID: projectID, username: username, password: password)
       } else {

@@ -117,8 +117,7 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
         if (context == null) {
             throw Exception("Context is null")
         }
-        val userId = call.argument<String>("userId")
-            ?: throw IllegalArgumentException("UserId was not provided")
+        val userId = call.argument<String?>("userId")
 
         Notifly.setUserId(context!!, userId)
     }
