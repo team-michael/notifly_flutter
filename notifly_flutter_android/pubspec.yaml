@@ -1,5 +1,5 @@
 name: notifly_flutter_android
-description: Android implementation of the notifly_flutter plugin
+description: Android implementation of the notifly_flutter plugin, based on Notifly Android SDK.
 version: 0.1.4
 homepage: https://notifly.tech/
 
