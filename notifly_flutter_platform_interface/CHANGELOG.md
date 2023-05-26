@@ -6,3 +6,6 @@
 
 - Add compatibility with AGP <4.2
  
+# 0.1.4
+
+- Nullable userId in setUserId.

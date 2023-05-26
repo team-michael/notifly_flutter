@@ -29,7 +29,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    namespace 'tech.notifly.flutter_android_example'
+    // namespace 'tech.notifly.flutter_android_example'
     compileSdkVersion 33
 
     compileOptions {
