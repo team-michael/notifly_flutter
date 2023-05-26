@@ -1,5 +1,5 @@
 name: notifly_flutter_platform_interface
-description: A common platform interface for the notifly_flutter plugin.
+description: A common platform interface for the notifly_flutter plugin, the app-facing package.
 version: 0.1.4
 homepage: https://notifly.tech/
 
