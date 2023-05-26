@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:notifly_flutter/notifly_flutter.dart';
 import 'package:notifly_flutter_example/firebase_options.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:uni_links/uni_links.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -53,6 +54,7 @@ void main() async {
   );
 
   runApp(const MyApp());
+  initUniLinks();
 }
 
 class MyApp extends StatefulWidget {
@@ -352,4 +354,34 @@ class _HomePageState extends State<HomePage> {
 
     super.dispose();
   }
+}
+
+void initUniLinks() async {
+  // try {
+    String? initialLink = await getInitialLink();
+    handleLink(initialLink); // 앱이 이미 실행 중일 때 딥링크 처리
+  // } on PlatformException {
+    // 예외 처리
+    // print("🔥 DSDSDSERR, " + PlatformException.toString())
+  // }
+
+  // 딥링크 이벤트 리스너 등록
+  linkStream.listen((String? link) {
+    handleLink(link);
+  }, onError: (err) {
+    // 에러 처리
+  });
+}
+
+void handleLink(String? link) {
+  print("🔥 DSDSDS, ");
+  print(link ?? 'null');
+  // if (link != null) {
+    // // 딥링크 처리 로직
+    // if (link.startsWith('myapp://example.com/deeplink')) {
+    //   // 딥링크가 'myapp://example.com/deeplink'와 일치하는 경우
+    //   final data = link.substring(link.indexOf('=') + 1);
+    //   // navigateToDeepLinkScreen(data);
+    // }
+  // }
 }
