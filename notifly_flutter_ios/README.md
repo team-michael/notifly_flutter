@@ -1,6 +1,6 @@
 # notifly_flutter_ios
 
-The ios implementation of `notifly_flutter`.
+The iOS implementation of `notifly_flutter`.
 
 ## Usage
 
