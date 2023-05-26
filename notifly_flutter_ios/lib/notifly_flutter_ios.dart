@@ -49,7 +49,7 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
 
   @override
   Future<void> trackEvent(
-    String eventName, 
+    String eventName,
     Map<String, Object>? eventParams,
     List<String>? segmentationEventParamKeys,
   ) async {
@@ -59,6 +59,4 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
       'segmentationEventParamKeys': segmentationEventParamKeys,
     });
   }
-
-
 }
