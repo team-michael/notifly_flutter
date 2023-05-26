@@ -7,6 +7,8 @@ import 'package:notifly_flutter/notifly_flutter.dart';
 import 'package:notifly_flutter_example/firebase_options.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uni_links/uni_links.dart';
+import 'package:notifly_flutter_example/src/HomePage.dart';
+import 'package:notifly_flutter_example/src/DetailPage.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -14,7 +16,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
 
-  print('Handling a background message: ${message.data.toString()}');
+  print(
+      '🔥 [Flutter]: Received a background message: ${message.data.toString()}');
 }
 
 final router = GoRouter(
@@ -54,7 +57,7 @@ void main() async {
   );
 
   runApp(const MyApp());
-  initUniLinks();
+  final deeplinkHandler = DeeplinkHandler();
 }
 
 class MyApp extends StatefulWidget {
@@ -78,7 +81,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _handleMessage(RemoteMessage message) {
-    print('handleMessage: $message');
+    print('🔥 [Flutter] Push Message Clicked: $message');
     _showMessage(message.data.toString());
   }
 
@@ -109,279 +112,27 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class DetailPage extends StatelessWidget {
-  const DetailPage({
-    required this.id,
-    super.key,
-  });
-
-  final String id;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Route id: $id')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Route id: $id'),
-            ElevatedButton(
-              onPressed: () {
-                router.go('/');
-              },
-              child: const Text('Go to home'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _HomePageState extends State<HomePage> {
-  final TextEditingController _userIdTextInputController =
-      TextEditingController();
-  final TextEditingController _userPropertiesKeyInputController =
-      TextEditingController();
-  final TextEditingController _userPropertiesValueInputController =
-      TextEditingController();
-  final TextEditingController _eventNameInputController =
-      TextEditingController();
-  final TextEditingController _eventParamsKeyInputController =
-      TextEditingController();
-  final TextEditingController _eventParamsValueInputController =
-      TextEditingController();
-  final TextEditingController _routeIdInputController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        // Unfocus the text fields when tapped outside
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        appBar: AppBar(title: const Text('NotiflyFlutter Example')),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: TextField(
-                    controller: _userIdTextInputController,
-                    decoration: const InputDecoration(
-                      labelText: 'User Id',
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      final userIdInput = _userIdTextInputController.text;
-                      await NotiflyPlugin.setUserId(userIdInput);
-                      _showMessage('User Id successfully set to $userIdInput');
-                    } catch (error) {
-                      _showError(error);
-                    }
-                  },
-                  child: const Text('Set User Id'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Flexible(
-                        child: TextField(
-                          controller: _userPropertiesKeyInputController,
-                          decoration: const InputDecoration(
-                            labelText: 'Key',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Flexible(
-                        child: TextField(
-                          controller: _userPropertiesValueInputController,
-                          decoration: const InputDecoration(
-                            labelText: 'Value',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      final key = _userPropertiesKeyInputController.text;
-                      final value = _userPropertiesValueInputController.text;
-                      await NotiflyPlugin.setUserProperties({key: value});
-                      _showMessage(
-                        "User properties successfully set to {'$key': '$value'}",
-                      );
-                    } catch (error) {
-                      _showError(error);
-                    }
-                  },
-                  child: const Text('Set User Properties'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: TextField(
-                    controller: _eventNameInputController,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Name',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Flexible(
-                        child: TextField(
-                          controller: _eventParamsKeyInputController,
-                          decoration: const InputDecoration(
-                            labelText: 'Key',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Flexible(
-                        child: TextField(
-                          controller: _eventParamsValueInputController,
-                          decoration: const InputDecoration(
-                            labelText: 'Value',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      final eventName = _eventNameInputController.text;
-                      final key = _eventParamsKeyInputController.text;
-                      final value = _eventParamsValueInputController.text;
-
-                      if (key.isEmpty || value.isEmpty) {
-                        await NotiflyPlugin.trackEvent(eventName: eventName);
-                      } else {
-                        await NotiflyPlugin.trackEvent(
-                          eventName: eventName,
-                          eventParams: {key: value},
-                          segmentationEventParamKeys: <String>[key],
-                        );
-                      }
-
-                      _showMessage('Event $eventName successfully tracked with '
-                          'params {$key: $value}');
-                    } catch (error) {
-                      _showError(error);
-                    }
-                  },
-                  child: const Text('Track Event'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: TextField(
-                    controller: _routeIdInputController,
-                    decoration: const InputDecoration(
-                      labelText: 'Route Id',
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    final routePathId = _routeIdInputController.text;
-                    if (routePathId.contains('/')) {
-                      _showError('Route Id cannot contain "/"');
-                      return;
-                    }
-                    await GoRouter.of(context).push('/$routePathId');
-                  },
-                  child: const Text('Go!'),
-                ),
-                const SizedBox(height: 16),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+class DeeplinkHandler {
+  DeeplinkHandler() {
+    final initialLink = getInitialLink()
+        .then((link) => handleLink(link != null ? Uri.parse(link) : Uri()));
+    linkStream.listen((link) {
+      handleLink(link != null ? Uri.parse(link) : Uri());
+    }, onError: (err) {
+      print("🔥 ERROR " + err.toString());
+    });
   }
 
-  void _showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        content: Text(message),
-      ),
-    );
+  void handleLink(Uri link) {
+    print("🔥 opened with URL ${link.toString()}");
+    final scheme = link.scheme;
+    final host = link.host;
+    final queryParameters = link.queryParameters;
+    if (scheme == "pushnotiflyflutter" && host == "navigation") {
+      final routeId = queryParameters["routeId"];
+      if (routeId != null) {
+        router.go("/$routeId");
+      }
+    }
   }
-
-  void _showError(Object error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Theme.of(context).colorScheme.error,
-        content: Text('$error'),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _userIdTextInputController.dispose();
-    _userPropertiesKeyInputController.dispose();
-    _userPropertiesValueInputController.dispose();
-    _eventNameInputController.dispose();
-    _eventParamsKeyInputController.dispose();
-    _eventParamsValueInputController.dispose();
-
-    super.dispose();
-  }
-}
-
-void initUniLinks() async {
-  // try {
-    String? initialLink = await getInitialLink();
-    handleLink(initialLink); // 앱이 이미 실행 중일 때 딥링크 처리
-  // } on PlatformException {
-    // 예외 처리
-    // print("🔥 DSDSDSERR, " + PlatformException.toString())
-  // }
-
-  // 딥링크 이벤트 리스너 등록
-  linkStream.listen((String? link) {
-    handleLink(link);
-  }, onError: (err) {
-    // 에러 처리
-  });
-}
-
-void handleLink(String? link) {
-  print("🔥 DSDSDS, ");
-  print(link ?? 'null');
-  // if (link != null) {
-    // // 딥링크 처리 로직
-    // if (link.startsWith('myapp://example.com/deeplink')) {
-    //   // 딥링크가 'myapp://example.com/deeplink'와 일치하는 경우
-    //   final data = link.substring(link.indexOf('=') + 1);
-    //   // navigateToDeepLinkScreen(data);
-    // }
-  // }
 }
