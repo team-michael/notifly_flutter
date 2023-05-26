@@ -28,7 +28,7 @@ class NotiflyPlugin {
   }
 
   /// Sets the user ID.
-  /// TODO: User Id can be null, so we should handle that.
+  // TODO(csjunha): User Id can be null, so we should handle that.
   static Future<void> setUserId(String userId) async {
     try {
       await _platform.setUserId(userId);

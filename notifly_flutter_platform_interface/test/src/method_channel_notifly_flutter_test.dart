@@ -11,16 +11,18 @@ void main() {
     final log = <MethodCall>[];
 
     setUp(() async {
-      methodChannelNotiflyFlutter = MethodChannelNotiflyFlutter()
-        ..methodChannel.setMockMethodCallHandler((MethodCall methodCall) async {
-          log.add(methodCall);
-          switch (methodCall.method) {
-            case 'getPlatformName':
-              return kPlatformName;
-            default:
-              return null;
-          }
-        });
+      methodChannelNotiflyFlutter = MethodChannelNotiflyFlutter();
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(methodChannelNotiflyFlutter.methodChannel,
+              (MethodCall methodCall) async {
+        log.add(methodCall);
+        switch (methodCall.method) {
+          case 'getPlatformName':
+            return kPlatformName;
+          default:
+            return null;
+        }
+      });
     });
 
     tearDown(log.clear);
