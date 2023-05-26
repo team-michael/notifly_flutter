@@ -16,7 +16,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
 
-  print('🔥 Handling a background message: ${message.data.toString()}');
+  print(
+      '🔥 [Flutter]: Received a background message: ${message.data.toString()}');
 }
 
 final router = GoRouter(
@@ -80,7 +81,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _handleMessage(RemoteMessage message) {
-    print('🔥 (Push Message Clicked: $message');
+    print('🔥 [Flutter] Push Message Clicked: $message');
     _showMessage(message.data.toString());
   }
 
@@ -118,12 +119,12 @@ class DeeplinkHandler {
     linkStream.listen((link) {
       handleLink(link != null ? Uri.parse(link) : Uri());
     }, onError: (err) {
-      print("🔥 DSDSDS, ERROR " + err.toString());
+      print("🔥 ERROR " + err.toString());
     });
   }
 
   void handleLink(Uri link) {
-    print("🔥 handleLink ${link.toString()}");
+    print("🔥 opened with URL ${link.toString()}");
     final scheme = link.scheme;
     final host = link.host;
     final queryParameters = link.queryParameters;
