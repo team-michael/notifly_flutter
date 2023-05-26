@@ -1,10 +1,11 @@
 name: notifly_flutter
 description: Notifly Flutter plugin
 version: 0.1.1
-publish_to: none
+homepage: https://notifly.tech/
 
 environment:
-  sdk: ">=2.19.0 <3.0.0"
+  sdk: ">=2.19.0 <4.0.0"
+  flutter: ">=1.20.0"
 
 flutter:
   plugin:
@@ -18,12 +19,9 @@ dependencies:
   flutter:
     sdk: flutter
   logger: ^1.1.0
-  notifly_flutter_android:
-    path: ../notifly_flutter_android
-  notifly_flutter_ios:
-    path: ../notifly_flutter_ios
-  notifly_flutter_platform_interface:
-    path: ../notifly_flutter_platform_interface
+  notifly_flutter_android: ^0.1.1
+  notifly_flutter_ios: ^0.1.1
+  notifly_flutter_platform_interface: ^0.1.1
 
 dev_dependencies:
   flutter_test:

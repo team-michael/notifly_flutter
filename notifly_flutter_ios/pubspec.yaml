@@ -1,10 +1,11 @@
 name: notifly_flutter_ios
 description: iOS implementation of the notifly_flutter plugin
-version: 0.1.0+1
-publish_to: none
+version: 0.1.1
+homepage: https://notifly.tech/
 
 environment:
-  sdk: ">=2.19.0 <3.0.0"
+  sdk: ">=2.19.0 <4.0.0"
+  flutter: ">=1.20.0"
 
 flutter:
   plugin:
@@ -17,12 +18,11 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  notifly_flutter_platform_interface:
-    path: ../notifly_flutter_platform_interface
+  notifly_flutter_platform_interface: ^0.1.1
 
 dev_dependencies:
+  dart_style: ^2.2.1
   flutter_test:
     sdk: flutter
   plugin_platform_interface: ^2.0.0
   very_good_analysis: ^4.0.0
-  dart_style: ^2.2.1
