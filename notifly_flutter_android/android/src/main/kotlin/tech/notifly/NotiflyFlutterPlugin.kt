@@ -14,7 +14,6 @@ import io.flutter.plugin.common.MethodChannel.Result
 import tech.notifly.Notifly
 import tech.notifly.utils.NotiflySdkType
 import tech.notifly.utils.NotiflyControlToken
-
 class NotiflyControlTokenImpl : NotiflyControlToken
 
 class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
@@ -108,7 +107,7 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
             ?: throw IllegalArgumentException("Password was not provided")
 
         Notifly.setSdkType(NotiflyControlTokenImpl(), NotiflySdkType.FLUTTER)
-        Notifly.setSdkVersion(NotiflyControlTokenImpl(), "0.0.1") // TODO: Get version from pubspec.yaml
+        Notifly.setSdkVersion(NotiflyControlTokenImpl(), NOTIFLY_FLUTTER_PLUGIN_VERSION)
 
         Notifly.initialize(context!!, projectId, username, password)
     }

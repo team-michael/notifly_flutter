@@ -21,7 +21,7 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
          let password = arguments["password"] as? String
       {
         Notifly.setSdkType(type: SdkType.flutter.rawValue) // TODO: REMOVE RAWVALUE
-        Notifly.setSdkVersion(version: "0.0.1") // TODO: Get version from pubspec.yaml
+        Notifly.setSdkVersion(version: NOTIFLY_FLUTTER_PLUGIN_VERSION)
         Notifly.initialize(projectID: projectID, username: username, password: password)
       } else {
         log(funcName: "initialize", message: "Invalid arguments")
