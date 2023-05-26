@@ -30,6 +30,7 @@ class AppDelegate: FlutterAppDelegate {
         /* Required */
         Notifly.application(application,
                             didFailToRegisterForRemoteNotificationsWithError: error)
+        super.application(application, didFailToRegisterForRemoteNotificationsWithError: error)
         /* Required */
     }
 
@@ -40,6 +41,7 @@ class AppDelegate: FlutterAppDelegate {
         /* Required */
         Notifly.application(application,
                             didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
+        super.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
         /* Required */
     }
 
@@ -51,9 +53,10 @@ class AppDelegate: FlutterAppDelegate {
         Notifly.application(application,
                             didReceiveRemoteNotification: userInfo,
                             fetchCompletionHandler: completionHandler)
+        super.application(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
         /* Required */
     }
-
+//
     override func userNotificationCenter(_ notificationCenter: UNUserNotificationCenter,
                                          didReceive response: UNNotificationResponse,
                                          withCompletionHandler completion: @escaping () -> Void)
@@ -62,6 +65,7 @@ class AppDelegate: FlutterAppDelegate {
         Notifly.userNotificationCenter(notificationCenter,
                                        didReceive: response,
                                        withCompletionHandler: completion)
+        super.userNotificationCenter(notificationCenter, didReceive: response, withCompletionHandler: completion)
         /* Required */
     }
 
@@ -74,5 +78,6 @@ class AppDelegate: FlutterAppDelegate {
                                        willPresent: notification,
                                        withCompletionHandler: completion)
         /* Required */
+        super.userNotificationCenter(notificationCenter, willPresent: notification, withCompletionHandler: completion)
     }
 }
