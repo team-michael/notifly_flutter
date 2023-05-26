@@ -26,7 +26,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    namespace 'tech.notifly.notifly_flutter_android'
+    if (project.android.hasProperty('namespace')) {
+        namespace 'tech.notifly.notifly_flutter_android'
+    }
     compileSdkVersion 30
 
     compileOptions {
