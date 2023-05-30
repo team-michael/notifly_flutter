@@ -9,3 +9,7 @@
 # 0.1.4
 
 - Nullable userId in setUserId.
+
+# 1.0.0
+
+- Official release: Transitioned from beta to stable version.
