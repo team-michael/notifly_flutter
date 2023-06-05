@@ -25,7 +25,7 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
     String password,
   ) async {
     await methodChannel.invokeMethod('initialize', {
-      'projectID': projectId,
+      'projectId': projectId,
       'username': username,
       'password': password,
     });
