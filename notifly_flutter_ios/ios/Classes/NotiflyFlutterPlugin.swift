@@ -17,13 +17,13 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
 
     case "initialize":
       if let arguments = call.arguments as? [String: Any],
-         let projectID = arguments["projectID"] as? String,
+         let projectId = arguments["projectId"] as? String,
          let username = arguments["username"] as? String,
          let password = arguments["password"] as? String
       {
         Notifly.setSdkType(type: SdkType.flutter.rawValue)
           Notifly.setSdkVersion(version: Constants.SDK_VERSION)
-        Notifly.initialize(projectID: projectID, username: username, password: password)
+        Notifly.initialize(projectId: projectId, username: username, password: password)
       } else {
         log(funcName: "initialize", message: "Invalid arguments")
       }
