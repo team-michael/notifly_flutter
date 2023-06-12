@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,10 @@ void main() async {
     await Permission.notification.request();
   }
 
+  // Android only
+  if (Platform.isAndroid) {
+    await NotiflyPlugin.setLogLevel(2);
+  }
   await NotiflyPlugin.initialize(
     projectId: dotenv.env['NOTIFLY_PROJECT_ID']!,
     username: dotenv.env['NOTIFLY_USERNAME']!,
@@ -123,6 +128,7 @@ class DeeplinkHandler {
     });
   }
 
+  // Example: pushnotiflyflutter://navigation?routeId=123
   void handleLink(Uri link) {
     print("🔥 opened with URL ${link.toString()}");
     final scheme = link.scheme;

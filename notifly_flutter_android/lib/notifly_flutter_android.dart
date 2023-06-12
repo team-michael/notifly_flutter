@@ -90,4 +90,19 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
       );
     }
   }
+
+  @override
+  Future<void> setLogLevel(int logLevel) async {
+    final args = <String, dynamic>{
+      'logLevel': logLevel,
+    };
+
+    final success = await methodChannel.invokeMethod<bool>('setLogLevel', args);
+    if (success == null || !success) {
+      throw PlatformException(
+        code: 'SET_LOG_LEVEL_FAILED',
+        message: 'Setting log level failed',
+      );
+    }
+  }
 }
