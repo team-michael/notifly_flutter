@@ -28,7 +28,6 @@ class NotiflyPlugin {
   }
 
   /// Sets the user ID.
-  // TODO(csjunha): User Id can be null, so we should handle that.
   static Future<void> setUserId(String? userId) async {
     try {
       await _platform.setUserId(userId);
@@ -58,6 +57,15 @@ class NotiflyPlugin {
         eventParams,
         segmentationEventParamKeys,
       );
+    } catch (e) {
+      _logger.e('Failed to', e);
+    }
+  }
+
+  /// Sets the log level.
+  static Future<void> setLogLevel(int logLevel) async {
+    try {
+      await _platform.setLogLevel(logLevel);
     } catch (e) {
       _logger.e('Failed to', e);
     }

@@ -53,4 +53,12 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
     };
     return methodChannel.invokeMethod<void>('trackEvent', args);
   }
+
+  @override
+  Future<void> setLogLevel(int logLevel) {
+    final args = <String, dynamic>{
+      'logLevel': logLevel,
+    };
+    return methodChannel.invokeMethod<void>('setLogLevel', args);
+  }
 }

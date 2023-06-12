@@ -75,6 +75,14 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(true)
                 }
 
+                "setLogLevel" -> {
+                    errorCodeOnError = "SET_LOG_LEVEL_FAILED"
+                    errorMessageOnError = "Failed to set log level"
+
+                    setLogLevel(call)
+                    result.success(true)
+                }
+
                 else -> {
                     result.notImplemented()
                 }
@@ -147,6 +155,14 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
             call.argument<List<String>>("segmentationEventParamKeys") ?: null
 
         Notifly.trackEvent(context!!, eventName, eventParams, segmentationEventParamKeys)
+    }
+
+    @Throws(IllegalArgumentException::class, Exception::class)
+    private fun setLogLevel(call: MethodCall) {
+        val logLevel = call.argument<Int>("logLevel")
+            ?: throw IllegalArgumentException("logLevel was not provided")
+
+        Notifly.setLogLevel(logLevel)
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
