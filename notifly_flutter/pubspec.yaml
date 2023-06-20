@@ -19,9 +19,12 @@ dependencies:
   flutter:
     sdk: flutter
   logger: ^1.1.0
-  notifly_flutter_android: ^1.0.3
-  notifly_flutter_ios: ^1.0.3
-  notifly_flutter_platform_interface: ^1.0.3
+  notifly_flutter_android: 
+    path: ../notifly_flutter_android
+  notifly_flutter_ios: 
+    path: ../notifly_flutter_ios
+  notifly_flutter_platform_interface: 
+    path: ../notifly_flutter_platform_interface
 
 dev_dependencies:
   flutter_test:

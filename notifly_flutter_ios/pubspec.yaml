@@ -18,7 +18,8 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  notifly_flutter_platform_interface: ^1.0.3
+  notifly_flutter_platform_interface: 
+    path: ../notifly_flutter_platform_interface
 
 dev_dependencies:
   dart_style: ^2.2.1
