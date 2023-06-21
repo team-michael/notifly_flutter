@@ -11,6 +11,27 @@ import 'package:uni_links/uni_links.dart';
 import 'package:notifly_flutter_example/src/HomePage.dart';
 import 'package:notifly_flutter_example/src/DetailPage.dart';
 
+void requestFCMPermission() async {
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    // Permission granted, you can now use FCM.
+    print('FCM permission granted.');
+  } else {
+    // Permission denied.
+    print('FCM permission denied.');
+  }
+}
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -39,6 +60,7 @@ final router = GoRouter(
 
 void main() async {
   await dotenv.load();
+  await requestFCMPermission();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
