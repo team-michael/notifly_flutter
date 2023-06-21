@@ -6,31 +6,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:notifly_flutter/notifly_flutter.dart';
 import 'package:notifly_flutter_example/firebase_options.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:notifly_flutter_example/src/HomePage.dart';
 import 'package:notifly_flutter_example/src/DetailPage.dart';
-
-void requestFCMPermission() async {
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-
-  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    // Permission granted, you can now use FCM.
-    print('FCM permission granted.');
-  } else {
-    // Permission denied.
-    print('FCM permission denied.');
-  }
-}
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -60,7 +38,7 @@ final router = GoRouter(
 
 void main() async {
   await dotenv.load();
-  await requestFCMPermission();
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -68,15 +46,24 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  final status = await Permission.notification.status;
-  if (status.isDenied) {
-    await Permission.notification.request();
-  }
+  /* Firebase messaging request permission */
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  /* Firebase messaging request permission */
 
   // Android only
   if (Platform.isAndroid) {
     await NotiflyPlugin.setLogLevel(2);
   }
+
   await NotiflyPlugin.initialize(
     projectId: dotenv.env['NOTIFLY_PROJECT_ID']!,
     username: dotenv.env['NOTIFLY_USERNAME']!,
