@@ -1,6 +1,6 @@
 name: notifly_flutter_ios
 description: iOS implementation of the notifly_flutter plugin, based on Notifly iOS SDK.
-version: 1.1.0
+version: 1.1.1
 homepage: https://notifly.tech/
 
 environment:
@@ -18,7 +18,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  notifly_flutter_platform_interface: 1.1.0
+  notifly_flutter_platform_interface: 1.1.1
 
 dev_dependencies:
   dart_style: ^2.2.1

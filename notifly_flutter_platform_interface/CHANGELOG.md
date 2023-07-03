@@ -29,3 +29,7 @@
 # 1.1.0
 
 - Remove dependency on FCM for notifly in app messaging.
+
+# 1.1.1
+
+- Fix issue with notifly in app messaging.
