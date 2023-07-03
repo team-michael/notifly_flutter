@@ -33,3 +33,7 @@
 # 1.1.1
 
 - Fix issue with notifly in app messaging.
+
+# 1.1.2
+
+- Android In-App Message: Fix background transparency issue.
