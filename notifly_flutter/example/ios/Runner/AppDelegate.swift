@@ -12,13 +12,6 @@ class AppDelegate: FlutterAppDelegate {
         GeneratedPluginRegistrant.register(with: self)
         /* Required */
         UNUserNotificationCenter.current().delegate = self
-        // UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in
-        //     DispatchQueue.main.async {
-        //         UIApplication.shared.registerForRemoteNotifications()
-        //     }
-        // }
-        /* Required */
-
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
@@ -44,17 +37,6 @@ class AppDelegate: FlutterAppDelegate {
         /* Required */
     }
 
-    override func application(_ application: UIApplication,
-                              didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-                              fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
-    {
-        /* Required */
-        Notifly.application(application,
-                            didReceiveRemoteNotification: userInfo)
-        super.application(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
-        /* Required */
-    }
-//
     override func userNotificationCenter(_ notificationCenter: UNUserNotificationCenter,
                                          didReceive response: UNNotificationResponse,
                                          withCompletionHandler completion: @escaping () -> Void)

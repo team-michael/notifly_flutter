@@ -25,3 +25,7 @@
 # 1.0.3
 
 - Android: Implement setLogLevel function for testing in development.
+
+# 1.1.0
+
+- Remove dependency on FCM for notifly in app messaging.
