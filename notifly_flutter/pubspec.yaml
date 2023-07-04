@@ -3,6 +3,8 @@ description: Notifly Flutter Plugin is a cross-platform SDK for integrating Noti
 version: 1.1.5
 homepage: https://notifly.tech/
 
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
 environment:
   sdk: ">=2.19.0 <4.0.0"
   flutter: ">=1.20.0"
@@ -19,9 +21,12 @@ dependencies:
   flutter:
     sdk: flutter
   logger: ^1.1.0
-  notifly_flutter_android: 1.1.5
-  notifly_flutter_ios: 1.1.5
-  notifly_flutter_platform_interface: 1.1.5
+  notifly_flutter_android:
+    path: ../notifly_flutter_android
+  notifly_flutter_ios:
+    path: ../notifly_flutter_ios
+  notifly_flutter_platform_interface:
+    path: ../notifly_flutter_platform_interface
 
 dev_dependencies:
   flutter_test:

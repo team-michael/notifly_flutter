@@ -29,7 +29,7 @@ android {
     if (project.android.hasProperty('namespace')) {
         namespace 'tech.notifly.notifly_flutter_android'
     }
-    compileSdkVersion 30
+    compileSdkVersion 33
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
