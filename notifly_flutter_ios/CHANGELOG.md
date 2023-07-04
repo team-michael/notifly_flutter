@@ -38,6 +38,6 @@
 
 - Android In-App Message: Fix background transparency issue.
 
-# 1.1.3
+# 1.1.4
 
 - Android In-App Message: Improve stability, fix rounded corners issue. As of 1.1.3, the in-app message will be displayed only for devices of API level 30 (Red Velvet Cake) and above.
