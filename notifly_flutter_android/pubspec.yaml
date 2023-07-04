@@ -1,6 +1,6 @@
 name: notifly_flutter_android
 description: Android implementation of the notifly_flutter plugin, based on Notifly Android SDK.
-version: 1.1.2
+version: 1.1.3
 homepage: https://notifly.tech/
 
 environment:
@@ -19,7 +19,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  notifly_flutter_platform_interface: 1.1.2
+  notifly_flutter_platform_interface: 1.1.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
