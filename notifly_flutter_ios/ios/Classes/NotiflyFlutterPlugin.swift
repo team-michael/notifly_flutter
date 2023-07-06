@@ -1,5 +1,5 @@
-import Foundation
 import Flutter
+import Foundation
 import notifly_sdk
 import UIKit
 
@@ -22,7 +22,7 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
          let password = arguments["password"] as? String
       {
         Notifly.setSdkType(type: SdkType.flutter.rawValue)
-          Notifly.setSdkVersion(version: Constants.SDK_VERSION)
+        Notifly.setSdkVersion(version: Constants.SDK_VERSION)
         Notifly.initialize(projectId: projectId, username: username, password: password)
       } else {
         log(funcName: "initialize", message: "Invalid arguments")
@@ -40,8 +40,23 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
 
     case "setUserProperties":
       if let arguments = call.arguments as? [String: Any],
-         let userProperties = arguments["userProperties"] as? [String: Any]
+         var userProperties = arguments["userProperties"] as? [String: Any],
+         let typeMap = arguments["typeMap"] as? [String: String]
       {
+        for (key, value) in typeMap {
+          switch value {
+          case "int":
+            if let intValue = userProperties[key] as? Int {
+              userProperties[key] = intValue
+            }
+          case "bool":
+            if let boolValue = userProperties[key] as? Bool {
+              userProperties[key] = boolValue
+            }
+          default:
+            continue
+          }
+        }
         Notifly.setUserProperties(userProperties: userProperties)
       } else {
         log(funcName: "setUserProperties", message: "Invalid arguments")
