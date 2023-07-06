@@ -44,4 +44,12 @@
 
 # 1.1.5
 
-- Android: removed material dependency.
+- Android: Removed material dependency.
+
+# 1.1.6
+
+- Android: Bumped compileSdkVersion to 33.
+
+# 1.1.7
+
+- iOS: Fix issue with type casting of user properties.

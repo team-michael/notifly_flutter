@@ -42,7 +42,7 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
 
   @override
   Future<void> setUserProperties(Map<String, Object> params) async {
-    Map<String, String> typeMap = {};
+    final typeMap = <String, String>{};
     params.forEach((key, value) {
       if (value is int || value is bool) {
         typeMap[key] = value.runtimeType.toString();
