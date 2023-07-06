@@ -1,9 +1,10 @@
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:notifly_flutter/notifly_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -23,6 +24,27 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _eventParamsValueInputController =
       TextEditingController();
   final TextEditingController _routeIdInputController = TextEditingController();
+
+  final List<String> _valueTypes = ['TEXT', 'INT', 'BOOL', 'ARRAY'];
+  String? _selectedValueType;
+  bool _useSegmentationKey = false;
+
+  Object _castValue(String value, String? type) {
+    switch (type) {
+      case null:
+        return value; // Default to TEXT
+      case 'TEXT':
+        return value;
+      case 'INT':
+        return int.parse(value);
+      case 'BOOL':
+        return value.toLowerCase() == 'true';
+      case 'ARRAY':
+        return value.split(',');
+      default:
+        throw ArgumentError('Invalid type: $type');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +74,11 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () async {
                     try {
                       final userIdInput = _userIdTextInputController.text;
+                      if (userIdInput.isEmpty) {
+                        await NotiflyPlugin.setUserId(null);
+                        _showMessage('User Id successfully unset');
+                        return;
+                      }
                       await NotiflyPlugin.setUserId(userIdInput);
                       _showMessage('User Id successfully set to $userIdInput');
                     } catch (error) {
@@ -82,6 +109,21 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
+                      const SizedBox(width: 16),
+                      DropdownButton<String>(
+                        value: _selectedValueType ?? _valueTypes[0],
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedValueType = newValue;
+                          });
+                        },
+                        items: _valueTypes.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                     ],
                   ),
                 ),
@@ -90,7 +132,8 @@ class _HomePageState extends State<HomePage> {
                     try {
                       final key = _userPropertiesKeyInputController.text;
                       final value = _userPropertiesValueInputController.text;
-                      await NotiflyPlugin.setUserProperties({key: value});
+                      final castedValue = _castValue(value, _selectedValueType);
+                      await NotiflyPlugin.setUserProperties({key: castedValue});
                       _showMessage(
                         "User properties successfully set to {'$key': '$value'}",
                       );
@@ -107,6 +150,21 @@ class _HomePageState extends State<HomePage> {
                     decoration: const InputDecoration(
                       labelText: 'Event Name',
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: CheckboxListTile(
+                    title: const Text(
+                      'Use Key Segmentation',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    value: _useSegmentationKey,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        _useSegmentationKey = newValue ?? false;
+                      });
+                    },
                   ),
                 ),
                 Padding(
@@ -131,6 +189,21 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
+                      const SizedBox(width: 16),
+                      DropdownButton<String>(
+                        value: _selectedValueType ?? _valueTypes[0],
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedValueType = newValue;
+                          });
+                        },
+                        items: _valueTypes.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                     ],
                   ),
                 ),
@@ -144,10 +217,13 @@ class _HomePageState extends State<HomePage> {
                       if (key.isEmpty || value.isEmpty) {
                         await NotiflyPlugin.trackEvent(eventName: eventName);
                       } else {
+                        final castedValue =
+                            _castValue(value, _selectedValueType);
                         await NotiflyPlugin.trackEvent(
                           eventName: eventName,
-                          eventParams: {key: value},
-                          segmentationEventParamKeys: <String>[key],
+                          eventParams: {key: castedValue},
+                          segmentationEventParamKeys:
+                              _useSegmentationKey ? [key] : null,
                         );
                       }
 
@@ -214,6 +290,7 @@ class _HomePageState extends State<HomePage> {
     _eventNameInputController.dispose();
     _eventParamsKeyInputController.dispose();
     _eventParamsValueInputController.dispose();
+    _routeIdInputController.dispose();
 
     super.dispose();
   }

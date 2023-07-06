@@ -6,9 +6,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:notifly_flutter/notifly_flutter.dart';
 import 'package:notifly_flutter_example/firebase_options.dart';
-import 'package:uni_links/uni_links.dart';
-import 'package:notifly_flutter_example/src/HomePage.dart';
 import 'package:notifly_flutter_example/src/DetailPage.dart';
+import 'package:notifly_flutter_example/src/HomePage.dart';
+import 'package:uni_links/uni_links.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -139,7 +139,7 @@ class DeeplinkHandler {
 
   // Example: pushnotiflyflutter://navigation?routeId=123
   void handleLink(Uri link) {
-    print("🔥 opened with URL ${link.toString()}");
+    print('🔥 opened with URL ${link.toString()}');
     final scheme = link.scheme;
     final host = link.host;
     final queryParameters = link.queryParameters;
