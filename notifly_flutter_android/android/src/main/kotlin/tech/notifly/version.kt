@@ -1,3 +1,3 @@
 package tech.notifly
 
-const val NOTIFLY_FLUTTER_PLUGIN_VERSION = "1.1.7"
+const val NOTIFLY_FLUTTER_PLUGIN_VERSION = "1.1.8"
