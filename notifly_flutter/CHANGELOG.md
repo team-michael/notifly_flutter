@@ -58,3 +58,8 @@
 
 - In-App Message: Now in-app modals won't be dismissed when the user taps on the background by default. It is configurable via the notifly console when creating the in-app message from the template.
 - In-App Message: In-app messages are now displayed after the content is available. Previously, the in-app messages were displayed even if the content was not yet available, causing the temporal white-screen issue especially when the size of the content is large.
+
+# 1.2.0
+
+- In-App-Messsage: Improved stability and performance.
+- In-App-Messsage: Fix problems which occur when the url of main button is invalid.
