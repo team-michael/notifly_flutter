@@ -63,3 +63,7 @@
 
 - In-App-Messsage: Improved stability and performance.
 - In-App-Messsage: Fix problems which occur when the url of main button is invalid.
+
+# 1.2.1
+- Support Web Platofrm 
+- ios: push-extension for rich push notification
