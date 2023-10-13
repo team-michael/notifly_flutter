@@ -1,6 +1,6 @@
 name: notifly_flutter
 description: Notifly Flutter Plugin is a cross-platform SDK for integrating Notifly services into your Flutter apps.
-version: 2
+version: 1.2.2
 homepage: https://notifly.tech/
 
 # publish_to: "none" # Remove this line if you wish to publish to pub.dev
