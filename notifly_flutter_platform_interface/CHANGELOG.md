@@ -67,3 +67,6 @@
 # 1.2.1
 - Support Web Platofrm 
 - ios: push-extension for rich push notification
+
+# 1.2.2
+- android: directory structure change
