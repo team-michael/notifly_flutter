@@ -1,5 +1,6 @@
-name: notifly_flutter_android
-description: Android implementation of the notifly_flutter plugin, based on Notifly Android SDK.
+name: notifly_flutter_web
+description: web implementation of the notifly_flutter plugin, based on Notifly iOS SDK.
+
 version: 1.2.2
 homepage: https://notifly.tech/
 
@@ -13,18 +14,19 @@ flutter:
   plugin:
     implements: notifly_flutter
     platforms:
-      android:
-        package: tech.notifly
-        pluginClass: NotiflyFlutterPlugin
-        dartPluginClass: NotiflyFlutterAndroid
+      web:
+        pluginClass: NotiflyFlutterWeb
+        fileName: notifly_flutter_web.dart
 
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  js: ^0.6.3
   notifly_flutter_platform_interface: 1.2.2
 
 dev_dependencies:
+  dart_style: ^2.2.1
   plugin_platform_interface: ^2.0.0
   very_good_analysis: ^4.0.0
-  flutter_test:
-    sdk: flutter

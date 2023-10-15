@@ -12,8 +12,8 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import tech.notifly.Notifly
-import tech.notifly.utils.NotiflySdkType
-import tech.notifly.utils.NotiflyControlToken
+import tech.notifly.NotiflySdkType
+import tech.notifly.NotiflyControlToken
 class NotiflyControlTokenImpl : NotiflyControlToken
 
 class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -9,16 +10,6 @@ import 'package:notifly_flutter_example/firebase_options.dart';
 import 'package:notifly_flutter_example/src/DetailPage.dart';
 import 'package:notifly_flutter_example/src/HomePage.dart';
 import 'package:uni_links/uni_links.dart';
-
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
-
-  print(
-      '🔥 [Flutter]: Received a background message: ${message.data.toString()}');
-}
 
 final router = GoRouter(
   routes: [
@@ -40,30 +31,12 @@ void main() async {
   await dotenv.load();
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  /* Firebase messaging request permission */
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-  /* Firebase messaging request permission */
-
-  // Android only
-  if (Platform.isAndroid) {
-    await NotiflyPlugin.setLogLevel(2);
+  if (!kIsWeb) {
+    await initializeApp();
+    DeeplinkHandler();
   }
 
+  print('🔥 [Flutter] Initializing NotiflyPlugin');
   await NotiflyPlugin.initialize(
     projectId: dotenv.env['NOTIFLY_PROJECT_ID']!,
     username: dotenv.env['NOTIFLY_USERNAME']!,
@@ -71,7 +44,6 @@ void main() async {
   );
 
   runApp(const MyApp());
-  final deeplinkHandler = DeeplinkHandler();
 }
 
 class MyApp extends StatefulWidget {
@@ -82,37 +54,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Future<void> setupInteractedMessage() async {
-    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-
-    print('setupInteractedMessage: $initialMessage');
-
-    if (initialMessage != null) {
-      _handleMessage(initialMessage);
-    }
-
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
-  }
-
-  void _handleMessage(RemoteMessage message) {
-    print('🔥 [Flutter] Push Message Clicked: $message');
-    _showMessage(message.data.toString());
-  }
-
-  void _showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        content: Text(message),
-      ),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
-
-    setupInteractedMessage();
   }
 
   @override
@@ -150,4 +94,38 @@ class DeeplinkHandler {
       }
     }
   }
+}
+
+Future<void> initializeApp() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  // Android only
+  if (Platform.isAndroid) {
+    await NotiflyPlugin.setLogLevel(2);
+  }
+
+  /* Firebase messaging request permission */
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print(
+      '🔥 [Flutter]: Received a background message: ${message.data.toString()}');
 }
