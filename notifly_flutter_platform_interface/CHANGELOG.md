@@ -65,8 +65,14 @@
 - In-App-Messsage: Fix problems which occur when the url of main button is invalid.
 
 # 1.2.1
-- Support Web Platofrm 
+
+- Support Web Platofrm
 - ios: push-extension for rich push notification
 
 # 1.2.2
+
 - android: directory structure change
+
+# 1.2.3
+
+- ios: fix issue with push-extension
