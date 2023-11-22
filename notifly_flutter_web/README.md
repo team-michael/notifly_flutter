@@ -1,8 +1,8 @@
-# notifly_flutter_ios
+# notifly_flutter_web
 
-[![Pub](https://img.shields.io/pub/v/notifly_flutter_ios.svg)](https://pub.dev/packages/notifly_flutter_ios)
+[![Pub](https://img.shields.io/pub/v/notifly_flutter_web.svg)](https://pub.dev/packages/notifly_flutter_web)
 
-The iOS implementation of `notifly_flutter`.
+Notifly Website SDK plugged into Flutter Web.
 
 ## Usage
 

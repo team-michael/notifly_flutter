@@ -29,29 +29,29 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
     String username,
     String password,
   ) async {
-    final lodashScript = ScriptElement()
-      ..async = true
-      ..type = 'text/javascript'
-      ..src = 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js';
-
-    document.head!.append(lodashScript);
-
     final script = ScriptElement()
       ..async = true
       ..type = 'text/javascript'
       ..text = '''
-      
-      async function initializeNotifly() {
-          const {default: notifly} = await import("https://cdn.notifly.tech/notifly-js-sdk/dist/index.js");
-          await notifly.initialize({
-              projectId: '$projectId', 
-              username: '$username', 
-              password: '$password', 
-          });
-          window.notifly = notifly;
-      }
-      
-      initializeNotifly();
+      (function (w, d, p, u, a, o) {
+        var s = d.createElement('script');
+        s.async = !0;
+        s.src = 'https://cdn.jsdelivr.net/npm/notifly-js-sdk@2/dist/index.min.js';
+        s.onload = function () {
+            w.notifly.initialize({ projectId: p, username: u, password: a, pushSubscriptionOptions: o });
+        };
+        s.onerror = function () {
+            console.error('Failed to load Notifly Browser SDK.');
+        };
+        d.getElementsByTagName('head')[0].appendChild(s);
+      })(
+        window,
+        document,
+        '$projectId',
+        '$username',
+        '$password',
+        // Currently no one uses web push notifications with flutter web
+      );
       async function callNotiflyMethod(command, params, callback) {
           if (!window.notifly?.[command]) {
               console.error("Notifly is not initialized yet");
@@ -69,7 +69,6 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
           callback(true);
       }
     ''';
-
     document.head!.append(script);
   }
 
