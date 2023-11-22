@@ -76,3 +76,7 @@
 # 1.2.3
 
 - ios: fix issue with push-extension
+
+# 1.2.4
+
+- android: fix issue with invocation misordering between `setUserId` and `setUserProperties`
