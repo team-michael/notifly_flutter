@@ -63,3 +63,9 @@
 
 - In-App-Messsage: Improved stability and performance.
 - In-App-Messsage: Fix problems which occur when the url of main button is invalid.
+
+# 1.3.0
+
+- web: support method for requesting permission
+- android: bump Android SDK version from 1.3.2 to 1.4.0
+- ios: bump iOS SDK version from 1.3.0 to 1.4.0

@@ -14,3 +14,9 @@ Initial release
 
 - web: change method for importing javascript file from CDN
 - android: fix issue with invocation misordering between `setUserId` and `setUserProperties`
+
+# 1.3.0
+
+- web: support method for requesting permission
+- android: bump Android SDK version from 1.3.2 to 1.4.0
+- ios: bump iOS SDK version from 1.3.0 to 1.4.0
