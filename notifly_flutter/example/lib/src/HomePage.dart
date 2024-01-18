@@ -78,6 +78,7 @@ class _HomePageState extends State<HomePage> {
                         _showMessage('User Id successfully unset');
                         return;
                       }
+                      await NotiflyPlugin.requestPermission();
                       await NotiflyPlugin.setUserId(userIdInput);
                       _showMessage('User Id successfully set to $userIdInput');
                     } catch (error) {
