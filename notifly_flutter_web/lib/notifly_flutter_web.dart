@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 import 'dart:js' as js;
+import 'dart:js_interop';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -33,12 +34,20 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
       ..async = true
       ..type = 'text/javascript'
       ..text = '''
-      (function (w, d, p, u, a, o) {
+      (function (w, d, p, u, a) {
         var s = d.createElement('script');
         s.async = !0;
-        s.src = 'https://cdn.jsdelivr.net/npm/notifly-js-sdk@2/dist/index.min.js';
+        s.src = 'https://cdn.jsdelivr.net/npm/notifly-js-sdk@2.7.4/dist/index.global.min.js';
         s.onload = function () {
-            w.notifly.initialize({ projectId: p, username: u, password: a, pushSubscriptionOptions: o });
+          console.log(typeof window.define)
+            if (typeof window.define == 'function') {
+       delete window.define.amd;
+       delete window.exports;
+       delete window.module;
+       
+    }
+            w.notifly.setSdkType('js-flutter');
+            w.notifly.initialize({ projectId: p, username: u, password: a });
         };
         s.onerror = function () {
             console.error('Failed to load Notifly Browser SDK.');
@@ -50,9 +59,9 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
         '$projectId',
         '$username',
         '$password',
-        // Currently no one uses web push notifications with flutter web
       );
-      async function callNotiflyMethod(command, params, callback) {
+
+      async function callNotiflyMethod(command, params = [], callback) {
           if (!window.notifly?.[command]) {
               console.error("Notifly is not initialized yet");
               callback(false);
@@ -125,6 +134,24 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
           completer.complete();
         } else {
           completer.completeError('Failed to track event');
+        }
+      }),
+    ]);
+    return completer.future;
+  }
+
+  @override
+  Future<void> requestPermission() async {
+    final completer = Completer<void>();
+    js.context.callMethod('callNotiflyMethod', [
+      'requestPermission',
+      null,
+      js.allowInterop((bool suc) {
+        if (suc == true) {
+          completer.completeError('Failed to request permission!!!!');
+          completer.complete();
+        } else {
+          completer.completeError('Failed to request permission');
         }
       }),
     ]);

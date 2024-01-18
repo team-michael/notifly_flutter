@@ -15,7 +15,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F23C11852AD91BFF00B9872D"
+               BlueprintIdentifier = "2B14F2512B58EEE6003F25BF"
                BuildableName = "NotiflyNotificationExtension.appex"
                BlueprintName = "NotiflyNotificationExtension"
                ReferencedContainer = "container:Runner.xcodeproj">

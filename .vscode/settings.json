@@ -1,5 +1,6 @@
 {
   "editor.formatOnSave": true,
   "editor.renderWhitespace": "all",
-  "files.autoSave": "afterDelay"
+  "files.autoSave": "afterDelay",
+  "editor.quickSuggestions": false
 }

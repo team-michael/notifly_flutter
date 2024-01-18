@@ -70,4 +70,12 @@ class NotiflyPlugin {
       _logger.e('Failed to', e);
     }
   }
+
+  static Future<void> requestPermission() async {
+    try {
+      await _platform.requestPermission();
+    } catch (e) {
+      _logger.e('Failed to', e);
+    }
+  }
 }

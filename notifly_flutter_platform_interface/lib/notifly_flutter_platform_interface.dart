@@ -60,4 +60,8 @@ abstract class NotiflyFlutterPlatform extends PlatformInterface {
   Future<void> setLogLevel(int logLevel) {
     throw UnimplementedError();
   }
+
+  Future<void> requestPermission() {
+    throw UnimplementedError();
+  }
 }
