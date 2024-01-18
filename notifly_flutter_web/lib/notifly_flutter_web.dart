@@ -30,20 +30,6 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
     String username,
     String password,
   ) async {
-    // document.head!.append(ScriptElement()
-    //   ..src =
-    //       'assets/packages/plgn/assets/script/utils.js' // ignore: unsafe_html
-    //   ..type = 'application/javascript'
-    //   ..addEventListener('load', (event) {
-    //     // Fix Require.js issues with Flutter overrides
-    //     js.context.callMethod('fixRequireJs', []);
-
-    //     for (final String source in otherScripts) {
-    //       html.document.body!.append(html.ScriptElement()
-    //         ..src = source // ignore: unsafe_html
-    //         ..type = 'application/javascript');
-    //     }
-    //   }));
     final script = ScriptElement()
       ..async = true
       ..type = 'text/javascript'
@@ -51,7 +37,7 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
       (function (w, d, p, u, a) {
         var s = d.createElement('script');
         s.async = !0;
-        s.src = 'https://cdn.jsdelivr.net/npm/notifly-js-sdk@2.7.3/dist/index.js';
+        s.src = 'https://cdn.jsdelivr.net/npm/notifly-js-sdk@2.7.4/dist/index.global.min.js';
         s.onload = function () {
           console.log(typeof window.define)
             if (typeof window.define == 'function') {
