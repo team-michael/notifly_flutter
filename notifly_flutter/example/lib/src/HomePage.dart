@@ -9,6 +9,90 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+class KeyValueInput extends StatefulWidget {
+  final TextEditingController keyController;
+  final TextEditingController valueController;
+  final List<String> valueTypes;
+  String? selectedValueType;
+
+  KeyValueInput({
+    required this.keyController,
+    required this.valueController,
+    required this.valueTypes,
+    this.selectedValueType,
+  });
+
+  @override
+  _KeyValueInputState createState() => _KeyValueInputState();
+
+  Map<String, Object> getKeyValue() {
+    return {
+      keyController.text: _castValue(valueController.text, selectedValueType),
+    };
+  }
+}
+
+class _KeyValueInputState extends State<KeyValueInput> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Flexible(
+          child: TextField(
+            controller: widget.keyController,
+            decoration: const InputDecoration(
+              labelText: 'Key',
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Flexible(
+          child: TextField(
+            controller: widget.valueController,
+            decoration: const InputDecoration(
+              labelText: 'Value',
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        DropdownButton<String>(
+          value: widget.selectedValueType ?? widget.valueTypes[0],
+          onChanged: (String? newValue) {
+            setState(() {
+              widget.selectedValueType = newValue;
+            });
+          },
+          items: widget.valueTypes.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+}
+
+Object _castValue(String value, String? type) {
+  switch (type) {
+    case null:
+      return value; // Default to TEXT
+    case 'TEXT':
+      return value;
+    case 'INT':
+      return int.parse(value);
+    case 'BOOL':
+      return value.toLowerCase() == 'true';
+    case 'ARRAY':
+      print(value.split(','));
+      return value.split(',');
+    default:
+      throw ArgumentError('Invalid type: $type');
+  }
+}
+
 class _HomePageState extends State<HomePage> {
   final TextEditingController _userIdTextInputController =
       TextEditingController();
@@ -18,32 +102,24 @@ class _HomePageState extends State<HomePage> {
       TextEditingController();
   final TextEditingController _eventNameInputController =
       TextEditingController();
-  final TextEditingController _eventParamsKeyInputController =
-      TextEditingController();
-  final TextEditingController _eventParamsValueInputController =
-      TextEditingController();
+  final valueTypes = ['TEXT', 'INT', 'BOOL', 'ARRAY'];
+  final List<KeyValueInput> _eventParamsInputs = [
+    KeyValueInput(
+      keyController: TextEditingController(),
+      valueController: TextEditingController(),
+      valueTypes: [
+        'TEXT',
+        'INT',
+        'BOOL',
+        'ARRAY',
+      ],
+    )
+  ];
+
   final TextEditingController _routeIdInputController = TextEditingController();
 
-  final List<String> _valueTypes = ['TEXT', 'INT', 'BOOL', 'ARRAY'];
   String? _selectedValueType;
   bool _useSegmentationKey = false;
-
-  Object _castValue(String value, String? type) {
-    switch (type) {
-      case null:
-        return value; // Default to TEXT
-      case 'TEXT':
-        return value;
-      case 'INT':
-        return int.parse(value);
-      case 'BOOL':
-        return value.toLowerCase() == 'true';
-      case 'ARRAY':
-        return value.split(',');
-      default:
-        throw ArgumentError('Invalid type: $type');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +149,13 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () async {
                     try {
                       final userIdInput = _userIdTextInputController.text;
+
                       if (userIdInput.isEmpty) {
                         await NotiflyPlugin.setUserId(null);
                         _showMessage('User Id successfully unset');
                         return;
                       }
+
                       await NotiflyPlugin.requestPermission();
                       await NotiflyPlugin.setUserId(userIdInput);
                       _showMessage('User Id successfully set to $userIdInput');
@@ -111,13 +189,13 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(width: 16),
                       DropdownButton<String>(
-                        value: _selectedValueType ?? _valueTypes[0],
+                        value: _selectedValueType ?? valueTypes[0],
                         onChanged: (String? newValue) {
                           setState(() {
                             _selectedValueType = newValue;
                           });
                         },
-                        items: _valueTypes.map((String value) {
+                        items: valueTypes.map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -168,67 +246,60 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Flexible(
-                        child: TextField(
-                          controller: _eventParamsKeyInputController,
-                          decoration: const InputDecoration(
-                            labelText: 'Key',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Flexible(
-                        child: TextField(
-                          controller: _eventParamsValueInputController,
-                          decoration: const InputDecoration(
-                            labelText: 'Value',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      DropdownButton<String>(
-                        value: _selectedValueType ?? _valueTypes[0],
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedValueType = newValue;
-                          });
-                        },
-                        items: _valueTypes.map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ],
+                  padding: const EdgeInsets.all(10), // 패딩 추가
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 10), // 마진 추가
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _eventParamsInputs.add(KeyValueInput(
+                            keyController: TextEditingController(),
+                            valueController: TextEditingController(),
+                            valueTypes: valueTypes,
+                          ));
+                        });
+                      },
+                      child: Text('Add Event Param',
+                          style: const TextStyle(fontSize: 16)),
+                    ),
                   ),
                 ),
+
+                //  params input
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _eventParamsInputs.removeLast();
+                    });
+                  },
+                  child: Text('Remove Event Param'),
+                ), // add event params input
+                ..._eventParamsInputs.map((input) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: input,
+                  );
+                }),
                 ElevatedButton(
                   onPressed: () async {
                     try {
                       final eventName = _eventNameInputController.text;
-                      final key = _eventParamsKeyInputController.text;
-                      final value = _eventParamsValueInputController.text;
+                      final segmentationKey = _useSegmentationKey
+                          ? _eventParamsInputs[0].keyController.text
+                          : null;
 
-                      if (key.isEmpty || value.isEmpty) {
-                        await NotiflyPlugin.trackEvent(eventName: eventName);
-                      } else {
-                        final castedValue =
-                            _castValue(value, _selectedValueType);
-                        await NotiflyPlugin.trackEvent(
-                          eventName: eventName,
-                          eventParams: {key: castedValue},
-                          segmentationEventParamKeys:
-                              _useSegmentationKey ? [key] : null,
-                        );
-                      }
+                      final eventParams = _eventParamsInputs
+                          .map((input) => input.getKeyValue())
+                          .reduce((value, element) => value..addAll(element));
+                      await NotiflyPlugin.trackEvent(
+                        eventName: eventName,
+                        eventParams: eventParams,
+                        segmentationEventParamKeys: _useSegmentationKey
+                            ? eventParams.keys.toList()
+                            : null,
+                      );
 
-                      _showMessage('Event $eventName successfully tracked with '
-                          'params {$key: $value}');
+                      _showMessage('Event $eventName successfully tracked');
                     } catch (error) {
                       _showError(error);
                     }
@@ -288,8 +359,10 @@ class _HomePageState extends State<HomePage> {
     _userPropertiesKeyInputController.dispose();
     _userPropertiesValueInputController.dispose();
     _eventNameInputController.dispose();
-    _eventParamsKeyInputController.dispose();
-    _eventParamsValueInputController.dispose();
+    _eventParamsInputs.forEach((input) {
+      input.keyController.dispose();
+      input.valueController.dispose();
+    });
     _routeIdInputController.dispose();
 
     super.dispose();
