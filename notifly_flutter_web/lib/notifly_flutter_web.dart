@@ -47,6 +47,7 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
        
     }
             w.notifly.setSdkType('js-flutter');
+            console.log('🔥 [Flutter] Initializing Notifly Browser SDK, p, u, a');
             w.notifly.initialize({ projectId: p, username: u, password: a });
         };
         s.onerror = function () {
@@ -62,6 +63,7 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
       );
 
       async function callNotiflyMethod(command, params = [], callback) {
+        console.log(window.notifly);
           if (!window.notifly?.[command]) {
               console.error("Notifly is not initialized yet");
               callback(false);
@@ -148,7 +150,6 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
       null,
       js.allowInterop((bool suc) {
         if (suc == true) {
-          completer.completeError('Failed to request permission!!!!');
           completer.complete();
         } else {
           completer.completeError('Failed to request permission');
