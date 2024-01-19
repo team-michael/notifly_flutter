@@ -103,3 +103,7 @@
 # 1.3.4
 
 - web: bump Web SDK version from 2.7.4 to 2.7.5
+
+# 1.3.5
+
+- web: make `initialize` method asynchronous
