@@ -95,3 +95,7 @@
 # 1.3.2
 
 - web: remove unnecessary log
+
+# 1.3.3
+
+- web: remove unnecessary log

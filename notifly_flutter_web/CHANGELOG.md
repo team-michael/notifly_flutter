@@ -24,3 +24,11 @@ Initial release
 # 1.3.1
 
 - ios: bump iOS SDK version from 1.3.2 to 1.4.0
+
+# 1.3.2
+
+- web: remove unnecessary log
+
+# 1.3.3
+
+- web: remove unnecessary log

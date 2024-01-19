@@ -39,15 +39,13 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
         s.async = !0;
         s.src = 'https://cdn.jsdelivr.net/npm/notifly-js-sdk@2.7.4/dist/index.global.min.js';
         s.onload = function () {
-          console.log(typeof window.define)
+          
             if (typeof window.define == 'function') {
-       delete window.define.amd;
-       delete window.exports;
-       delete window.module;
-       
-    }
+                delete window.define.amd;
+                delete window.exports;
+                delete window.module;
+              }
             w.notifly.setSdkType('js-flutter');
-            console.log('🔥 [Flutter] Initializing Notifly Browser SDK, p, u, a');
             w.notifly.initialize({ projectId: p, username: u, password: a });
         };
         s.onerror = function () {
@@ -63,7 +61,6 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
       );
 
       async function callNotiflyMethod(command, params = [], callback) {
-        console.log(window.notifly);
           if (!window.notifly?.[command]) {
               console.error("Notifly is not initialized yet");
               callback(false);

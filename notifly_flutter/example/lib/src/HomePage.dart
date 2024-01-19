@@ -156,7 +156,6 @@ class _HomePageState extends State<HomePage> {
                         return;
                       }
 
-                      await NotiflyPlugin.requestPermission();
                       await NotiflyPlugin.setUserId(userIdInput);
                       _showMessage('User Id successfully set to $userIdInput');
                     } catch (error) {
