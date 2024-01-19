@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
+import 'constants.dart' as NOTIFLY_CONSTANTS;
 
 /// The implementation of [NotiflyFlutterPlatform].
 class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
@@ -37,15 +38,15 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
       (function (w, d, p, u, a) {
         var s = d.createElement('script');
         s.async = !0;
-        s.src = 'https://cdn.jsdelivr.net/npm/notifly-js-sdk@2.7.4/dist/index.global.min.js';
+        s.src = 'https://cdn.jsdelivr.net/npm/${NOTIFLY_CONSTANTS.Config.JS_SDK_DEPENDENCY}/dist/index.global.min.js';
         s.onload = function () {
-          
             if (typeof window.define == 'function') {
                 delete window.define.amd;
                 delete window.exports;
                 delete window.module;
               }
-            w.notifly.setSdkType('js-flutter');
+            w.notifly.setSdkType('${NOTIFLY_CONSTANTS.Config.SDK_TYPE}');
+            w.notifly.setSdkVersion('${NOTIFLY_CONSTANTS.Config.SDK_VERSION}');
             w.notifly.initialize({ projectId: p, username: u, password: a });
         };
         s.onerror = function () {
@@ -66,7 +67,7 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
               callback(false);
               return;
           }
-          const parsedParams = params.map(param => JSON.parse(param));
+          const parsedParams = params ? params.map(param => JSON.parse(param)) : [];
           try {
             const result = await window.notifly[command](...parsedParams);
           } catch(err) {

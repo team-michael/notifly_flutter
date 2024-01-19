@@ -99,3 +99,7 @@
 # 1.3.3
 
 - web: remove unnecessary log
+
+# 1.3.4
+
+- web: bump Web SDK version from 2.7.4 to 2.7.5
