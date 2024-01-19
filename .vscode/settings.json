@@ -2,5 +2,9 @@
   "editor.formatOnSave": true,
   "editor.renderWhitespace": "all",
   "files.autoSave": "afterDelay",
-  "editor.quickSuggestions": false
+  "editor.quickSuggestions": {
+    "comments": "off",
+    "strings": "off",
+    "other": "off"
+  }
 }

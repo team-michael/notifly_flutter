@@ -85,4 +85,24 @@
 
 - web: support method for requesting permission
 - android: bump Android SDK version from 1.3.2 to 1.4.0
-- ios: bump iOS SDK version from 1.3.0 to 1.4.0
+- ios: bump iOS SDK version from 1.3.0 to 1.3.2
+
+# 1.3.1
+
+- ios: bump iOS SDK version from 1.3.2 to 1.4.0
+
+# 1.3.2
+
+- web: remove unnecessary log
+
+# 1.3.3
+
+- web: remove unnecessary log
+
+# 1.3.4
+
+- web: bump Web SDK version from 2.7.4 to 2.7.5
+
+# 1.3.5
+
+- web: make `initialize` method asynchronous

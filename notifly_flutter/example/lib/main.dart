@@ -36,12 +36,13 @@ void main() async {
     DeeplinkHandler();
   }
 
-  print('🔥 [Flutter] Initializing NotiflyPlugin');
   await NotiflyPlugin.initialize(
     projectId: dotenv.env['NOTIFLY_PROJECT_ID']!,
     username: dotenv.env['NOTIFLY_USERNAME']!,
     password: dotenv.env['NOTIFLY_PASSWORD']!,
   );
+  print('🔥 [Flutter] NotiflyPlugin initialized');
+  await NotiflyPlugin.requestPermission();
 
   runApp(const MyApp());
 }
