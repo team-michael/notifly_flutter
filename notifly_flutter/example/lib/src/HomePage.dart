@@ -149,6 +149,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () async {
                     try {
                       final userIdInput = _userIdTextInputController.text;
+                      await NotiflyPlugin.requestPermission();
 
                       if (userIdInput.isEmpty) {
                         await NotiflyPlugin.setUserId(null);
