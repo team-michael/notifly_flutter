@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 import 'dart:js' as js;
-import 'dart:js_interop';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
