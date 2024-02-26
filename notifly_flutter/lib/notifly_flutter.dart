@@ -1,7 +1,4 @@
-// Flutter imports:
 import 'package:flutter/foundation.dart' show kIsWeb;
-
-// Package imports:
 import 'package:logger/logger.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 
@@ -26,6 +23,28 @@ class NotiflyPlugin {
   }) async {
     try {
       await _platform.initialize(projectId, username, password);
+    } catch (e) {
+      _logger.e('Failed to', e);
+    }
+  }
+
+  /// Requests web push permission. Only works on web.
+  static Future<void> requestPermission() async {
+    if (kIsWeb) {
+      try {
+        await _platform.requestPermission();
+      } catch (e) {
+        _logger.e('Failed to', e);
+      }
+    } else {
+      _logger.e('This method is only available on web.');
+    }
+  }
+
+  /// Sets the log level.
+  static Future<void> setLogLevel(int logLevel) async {
+    try {
+      await _platform.setLogLevel(logLevel);
     } catch (e) {
       _logger.e('Failed to', e);
     }
@@ -63,28 +82,6 @@ class NotiflyPlugin {
       );
     } catch (e) {
       _logger.e('Failed to', e);
-    }
-  }
-
-  /// Sets the log level.
-  static Future<void> setLogLevel(int logLevel) async {
-    try {
-      await _platform.setLogLevel(logLevel);
-    } catch (e) {
-      _logger.e('Failed to', e);
-    }
-  }
-
-  /// Requests web push permission. Only works on web.
-  static Future<void> requestPermission() async {
-    if (kIsWeb) {
-      try {
-        await _platform.requestPermission();
-      } catch (e) {
-        _logger.e('Failed to', e);
-      }
-    } else {
-      _logger.e('This method is only available on web.');
     }
   }
 }

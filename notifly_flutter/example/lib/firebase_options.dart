@@ -2,7 +2,7 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_classes_with_only_static_members
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+    show TargetPlatform, defaultTargetPlatform, kIsWeb;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -15,6 +15,25 @@ import 'package:flutter/foundation.dart'
 /// );
 /// ```
 class DefaultFirebaseOptions {
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyA6_vg1NujnUg6W6My1B-WlTpod_Wzx6BY',
+    appId: '1:909415986026:android:d29f6f987579bb4d066b13',
+    messagingSenderId: '909415986026',
+    projectId: 'ios-test-app-f6e0e',
+    storageBucket: 'ios-test-app-f6e0e.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBfdiwzsyoBe0WATS-OMNvQYN2_hR5JB1U',
+    appId: '1:909415986026:ios:d5f63531619bbb75066b13',
+    messagingSenderId: '909415986026',
+    projectId: 'ios-test-app-f6e0e',
+    storageBucket: 'ios-test-app-f6e0e.appspot.com',
+    iosClientId:
+        '909415986026-hkka76o3qkbhnjmfk61nk070rv4ti8m2.apps.googleusercontent.com',
+    iosBundleId: 'tech.notifly',
+  );
+
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       throw UnsupportedError(
@@ -42,28 +61,11 @@ class DefaultFirebaseOptions {
           'DefaultFirebaseOptions have not been configured for linux - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
+      // ignore: no_default_cases
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
         );
     }
   }
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA6_vg1NujnUg6W6My1B-WlTpod_Wzx6BY',
-    appId: '1:909415986026:android:d29f6f987579bb4d066b13',
-    messagingSenderId: '909415986026',
-    projectId: 'ios-test-app-f6e0e',
-    storageBucket: 'ios-test-app-f6e0e.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBfdiwzsyoBe0WATS-OMNvQYN2_hR5JB1U',
-    appId: '1:909415986026:ios:d5f63531619bbb75066b13',
-    messagingSenderId: '909415986026',
-    projectId: 'ios-test-app-f6e0e',
-    storageBucket: 'ios-test-app-f6e0e.appspot.com',
-    iosClientId: '909415986026-hkka76o3qkbhnjmfk61nk070rv4ti8m2.apps.googleusercontent.com',
-    iosBundleId: 'tech.notifly',
-  );
 }
