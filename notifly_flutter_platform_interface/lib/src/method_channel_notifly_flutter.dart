@@ -1,5 +1,8 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter/services.dart';
+
+// Project imports:
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 
 /// An implementation of [NotiflyFlutterPlatform] that uses method channels.

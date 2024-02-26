@@ -1,11 +1,18 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 import 'dart:js' as js;
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
+
+// Project imports:
 import 'constants.dart' as NOTIFLY_CONSTANTS;
 
 /// The implementation of [NotiflyFlutterPlatform].

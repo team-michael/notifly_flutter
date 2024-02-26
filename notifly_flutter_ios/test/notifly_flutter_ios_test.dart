@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
-import 'package:notifly_flutter_ios/notifly_flutter_ios.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
+
+// Project imports:
+import 'package:notifly_flutter_ios/notifly_flutter_ios.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

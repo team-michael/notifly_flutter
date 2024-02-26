@@ -1,5 +1,8 @@
-import 'package:notifly_flutter_platform_interface/src/method_channel_notifly_flutter.dart';
+// Package imports:
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+
+// Project imports:
+import 'package:notifly_flutter_platform_interface/src/method_channel_notifly_flutter.dart';
 
 /// The interface that implementations of notifly_flutter must implement.
 ///

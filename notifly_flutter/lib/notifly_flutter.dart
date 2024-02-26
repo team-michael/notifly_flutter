@@ -1,5 +1,8 @@
-import 'package:logger/logger.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart' show kIsWeb;
+
+// Package imports:
+import 'package:logger/logger.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 
 NotiflyFlutterPlatform get _platform => NotiflyFlutterPlatform.instance;

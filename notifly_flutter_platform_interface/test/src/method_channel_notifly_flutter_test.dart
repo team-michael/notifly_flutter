@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
 import 'package:notifly_flutter_platform_interface/src/method_channel_notifly_flutter.dart';
 
 void main() {

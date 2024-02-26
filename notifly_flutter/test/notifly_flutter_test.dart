@@ -1,8 +1,11 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:notifly_flutter/notifly_flutter.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+
+// Project imports:
+import 'package:notifly_flutter/notifly_flutter.dart';
 
 class MockNotiflyFlutterPlatform extends Mock
     with MockPlatformInterfaceMixin
