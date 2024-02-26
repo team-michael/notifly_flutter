@@ -1,8 +1,5 @@
-// Package imports:
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-
-// Project imports:
 import 'package:notifly_flutter_platform_interface/src/method_channel_notifly_flutter.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 /// The interface that implementations of notifly_flutter must implement.
 ///
@@ -13,9 +10,6 @@ import 'package:notifly_flutter_platform_interface/src/method_channel_notifly_fl
 ///  this interface will be broken
 ///  by newly added [NotiflyFlutterPlatform] methods.
 abstract class NotiflyFlutterPlatform extends PlatformInterface {
-  /// Constructs a NotiflyFlutterPlatform.
-  NotiflyFlutterPlatform() : super(token: _token);
-
   static final Object _token = Object();
 
   static NotiflyFlutterPlatform _instance = MethodChannelNotiflyFlutter();
@@ -32,11 +26,23 @@ abstract class NotiflyFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  /// Constructs a NotiflyFlutterPlatform.
+  NotiflyFlutterPlatform() : super(token: _token);
+
   /// Return the current platform name.
   Future<String?> getPlatformName();
 
   /// Initialize Notifly Flutter.
   Future<void> initialize(String projectId, String username, String password) {
+    throw UnimplementedError();
+  }
+
+  Future<void> requestPermission() {
+    throw UnimplementedError();
+  }
+
+  /// Set log level for development.
+  Future<void> setLogLevel(int logLevel) {
     throw UnimplementedError();
   }
 
@@ -56,15 +62,6 @@ abstract class NotiflyFlutterPlatform extends PlatformInterface {
     Map<String, Object>? eventParams,
     List<String>? segmentationEventParamKeys,
   ) {
-    throw UnimplementedError();
-  }
-
-  /// Set log level for development.
-  Future<void> setLogLevel(int logLevel) {
-    throw UnimplementedError();
-  }
-
-  Future<void> requestPermission() {
     throw UnimplementedError();
   }
 }

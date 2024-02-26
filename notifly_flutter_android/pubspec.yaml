@@ -26,8 +26,7 @@ dependencies:
   #   path: ../notifly_flutter_platform_interface # Remove this line if you wish to publish to pub.dev
 
 dev_dependencies:
-  plugin_platform_interface: ^2.0.0
-  very_good_analysis: ^4.0.0
   flutter_test:
     sdk: flutter
-  import_sorter: ^4.6.0
+  plugin_platform_interface: ^2.0.0
+  very_good_analysis: ^4.0.0

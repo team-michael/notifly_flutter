@@ -1,8 +1,5 @@
-// Flutter imports:
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter/services.dart';
-
-// Project imports:
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 
 /// An implementation of [NotiflyFlutterPlatform] that uses method channels.
@@ -25,6 +22,14 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
     };
 
     return methodChannel.invokeMethod<void>('initialize', args);
+  }
+
+  @override
+  Future<void> setLogLevel(int logLevel) {
+    final args = <String, dynamic>{
+      'logLevel': logLevel,
+    };
+    return methodChannel.invokeMethod<void>('setLogLevel', args);
   }
 
   @override
@@ -55,13 +60,5 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
       'segmentationEventParamKeys': segmentationEventParamKeys,
     };
     return methodChannel.invokeMethod<void>('trackEvent', args);
-  }
-
-  @override
-  Future<void> setLogLevel(int logLevel) {
-    final args = <String, dynamic>{
-      'logLevel': logLevel,
-    };
-    return methodChannel.invokeMethod<void>('setLogLevel', args);
   }
 }
