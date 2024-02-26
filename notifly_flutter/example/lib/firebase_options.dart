@@ -63,8 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '909415986026',
     projectId: 'ios-test-app-f6e0e',
     storageBucket: 'ios-test-app-f6e0e.appspot.com',
-    iosClientId:
-        '909415986026-hkka76o3qkbhnjmfk61nk070rv4ti8m2.apps.googleusercontent.com',
+    iosClientId: '909415986026-hkka76o3qkbhnjmfk61nk070rv4ti8m2.apps.googleusercontent.com',
     iosBundleId: 'tech.notifly',
   );
 }

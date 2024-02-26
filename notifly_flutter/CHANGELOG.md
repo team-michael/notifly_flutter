@@ -93,3 +93,9 @@
 # 1.3.5
 
 - web: make `initialize` method asynchronous
+
+# 1.3.6
+
+- android: Separate notification channels based on the importance of the notification
+- android: Importance of the notification is now determined by the imp field in the push notification data payload
+- web: bump Web SDK version from 2.7.5 to 2.7.8

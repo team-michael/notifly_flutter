@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 
 NotiflyFlutterPlatform get _platform => NotiflyFlutterPlatform.instance;
@@ -71,11 +72,16 @@ class NotiflyPlugin {
     }
   }
 
+  /// Requests web push permission. Only works on web.
   static Future<void> requestPermission() async {
-    try {
-      await _platform.requestPermission();
-    } catch (e) {
-      _logger.e('Failed to', e);
+    if (kIsWeb) {
+      try {
+        await _platform.requestPermission();
+      } catch (e) {
+        _logger.e('Failed to', e);
+      }
+    } else {
+      _logger.e('This method is only available on web.');
     }
   }
 }
