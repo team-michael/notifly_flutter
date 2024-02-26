@@ -25,6 +25,14 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
   }
 
   @override
+  Future<void> setLogLevel(int logLevel) {
+    final args = <String, dynamic>{
+      'logLevel': logLevel,
+    };
+    return methodChannel.invokeMethod<void>('setLogLevel', args);
+  }
+
+  @override
   Future<void> setUserId(String? userId) {
     final args = <String, dynamic>{
       'userId': userId,
@@ -52,13 +60,5 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
       'segmentationEventParamKeys': segmentationEventParamKeys,
     };
     return methodChannel.invokeMethod<void>('trackEvent', args);
-  }
-
-  @override
-  Future<void> setLogLevel(int logLevel) {
-    final args = <String, dynamic>{
-      'logLevel': logLevel,
-    };
-    return methodChannel.invokeMethod<void>('setLogLevel', args);
   }
 }

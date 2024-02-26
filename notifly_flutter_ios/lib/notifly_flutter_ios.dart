@@ -8,11 +8,6 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('notifly_flutter_ios');
 
-  /// Registers this class as the default instance of [NotiflyFlutterPlatform]
-  static void registerWith() {
-    NotiflyFlutterPlatform.instance = NotiflyFlutterIOS();
-  }
-
   @override
   Future<String?> getPlatformName() {
     return methodChannel.invokeMethod<String>('getPlatformName');
@@ -66,5 +61,10 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
       'eventParams': eventParams,
       'segmentationEventParamKeys': segmentationEventParamKeys,
     });
+  }
+
+  /// Registers this class as the default instance of [NotiflyFlutterPlatform]
+  static void registerWith() {
+    NotiflyFlutterPlatform.instance = NotiflyFlutterIOS();
   }
 }

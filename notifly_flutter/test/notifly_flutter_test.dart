@@ -4,10 +4,6 @@ import 'package:notifly_flutter/notifly_flutter.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockNotiflyFlutterPlatform extends Mock
-    with MockPlatformInterfaceMixin
-    implements NotiflyFlutterPlatform {}
-
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -42,3 +38,7 @@ void main() {
     });
   });
 }
+
+class MockNotiflyFlutterPlatform extends Mock
+    with MockPlatformInterfaceMixin
+    implements NotiflyFlutterPlatform {}

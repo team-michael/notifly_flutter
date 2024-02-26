@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:notifly_flutter/notifly_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:notifly_flutter/notifly_flutter.dart';
+
+Object _castValue(String value, String? type) {
+  switch (type) {
+    case null:
+      return value; // Default to TEXT
+    case 'TEXT':
+      return value;
+    case 'INT':
+      return int.parse(value);
+    case 'BOOL':
+      return value.toLowerCase() == 'true';
+    case 'ARRAY':
+      print(value.split(','));
+      return value.split(',');
+    default:
+      throw ArgumentError('Invalid type: $type');
+  }
+}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,67 +47,6 @@ class KeyValueInput extends StatefulWidget {
     return {
       keyController.text: _castValue(valueController.text, selectedValueType),
     };
-  }
-}
-
-class _KeyValueInputState extends State<KeyValueInput> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Flexible(
-          child: TextField(
-            controller: widget.keyController,
-            decoration: const InputDecoration(
-              labelText: 'Key',
-            ),
-          ),
-        ),
-        const SizedBox(width: 16),
-        Flexible(
-          child: TextField(
-            controller: widget.valueController,
-            decoration: const InputDecoration(
-              labelText: 'Value',
-            ),
-          ),
-        ),
-        const SizedBox(width: 16),
-        DropdownButton<String>(
-          value: widget.selectedValueType ?? widget.valueTypes[0],
-          onChanged: (String? newValue) {
-            setState(() {
-              widget.selectedValueType = newValue;
-            });
-          },
-          items: widget.valueTypes.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-}
-
-Object _castValue(String value, String? type) {
-  switch (type) {
-    case null:
-      return value; // Default to TEXT
-    case 'TEXT':
-      return value;
-    case 'INT':
-      return int.parse(value);
-    case 'BOOL':
-      return value.toLowerCase() == 'true';
-    case 'ARRAY':
-      print(value.split(','));
-      return value.split(',');
-    default:
-      throw ArgumentError('Invalid type: $type');
   }
 }
 
@@ -335,24 +292,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        content: Text(message),
-      ),
-    );
-  }
-
-  void _showError(Object error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Theme.of(context).colorScheme.error,
-        content: Text('$error'),
-      ),
-    );
-  }
-
   @override
   void dispose() {
     _userIdTextInputController.dispose();
@@ -366,5 +305,66 @@ class _HomePageState extends State<HomePage> {
     _routeIdInputController.dispose();
 
     super.dispose();
+  }
+
+  void _showError(Object error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.error,
+        content: Text('$error'),
+      ),
+    );
+  }
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        content: Text(message),
+      ),
+    );
+  }
+}
+
+class _KeyValueInputState extends State<KeyValueInput> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Flexible(
+          child: TextField(
+            controller: widget.keyController,
+            decoration: const InputDecoration(
+              labelText: 'Key',
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Flexible(
+          child: TextField(
+            controller: widget.valueController,
+            decoration: const InputDecoration(
+              labelText: 'Value',
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        DropdownButton<String>(
+          value: widget.selectedValueType ?? widget.valueTypes[0],
+          onChanged: (String? newValue) {
+            setState(() {
+              widget.selectedValueType = newValue;
+            });
+          },
+          items: widget.valueTypes.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ],
+    );
   }
 }

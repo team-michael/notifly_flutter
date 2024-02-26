@@ -8,11 +8,6 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('notifly_flutter_android');
 
-  /// Registers this class as the default instance of [NotiflyFlutterPlatform]
-  static void registerWith() {
-    NotiflyFlutterPlatform.instance = NotiflyFlutterAndroid();
-  }
-
   @override
   Future<String?> getPlatformName() {
     return methodChannel.invokeMethod<String>('getPlatformName');
@@ -35,6 +30,21 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
       throw PlatformException(
         code: 'INITIALIZATION_FAILED',
         message: 'Initialization failed',
+      );
+    }
+  }
+
+  @override
+  Future<void> setLogLevel(int logLevel) async {
+    final args = <String, dynamic>{
+      'logLevel': logLevel,
+    };
+
+    final success = await methodChannel.invokeMethod<bool>('setLogLevel', args);
+    if (success == null || !success) {
+      throw PlatformException(
+        code: 'SET_LOG_LEVEL_FAILED',
+        message: 'Setting log level failed',
       );
     }
   }
@@ -91,18 +101,8 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
     }
   }
 
-  @override
-  Future<void> setLogLevel(int logLevel) async {
-    final args = <String, dynamic>{
-      'logLevel': logLevel,
-    };
-
-    final success = await methodChannel.invokeMethod<bool>('setLogLevel', args);
-    if (success == null || !success) {
-      throw PlatformException(
-        code: 'SET_LOG_LEVEL_FAILED',
-        message: 'Setting log level failed',
-      );
-    }
+  /// Registers this class as the default instance of [NotiflyFlutterPlatform]
+  static void registerWith() {
+    NotiflyFlutterPlatform.instance = NotiflyFlutterAndroid();
   }
 }

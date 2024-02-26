@@ -1,7 +1,8 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
@@ -10,22 +11,6 @@ import 'package:notifly_flutter_example/firebase_options.dart';
 import 'package:notifly_flutter_example/src/DetailPage.dart';
 import 'package:notifly_flutter_example/src/HomePage.dart';
 import 'package:uni_links/uni_links.dart';
-
-final router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const HomePage(),
-    ),
-    GoRoute(
-      path: '/:id',
-      builder: (context, state) {
-        final pathId = state.pathParameters['id']!;
-        return DetailPage(id: pathId);
-      },
-    )
-  ],
-);
 
 void main() async {
   await dotenv.load();
@@ -47,55 +32,21 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(routerConfig: router);
-  }
-}
-
-class DeeplinkHandler {
-  DeeplinkHandler() {
-    final initialLink = getInitialLink()
-        .then((link) => handleLink(link != null ? Uri.parse(link) : Uri()));
-    linkStream.listen((link) {
-      handleLink(link != null ? Uri.parse(link) : Uri());
-    }, onError: (err) {
-      print("🔥 ERROR " + err.toString());
-    });
-  }
-
-  // Example: pushnotiflyflutter://navigation?routeId=123
-  void handleLink(Uri link) {
-    print('🔥 opened with URL ${link.toString()}');
-    final scheme = link.scheme;
-    final host = link.host;
-    final queryParameters = link.queryParameters;
-    if (scheme == "pushnotiflyflutter" && host == "navigation") {
-      final routeId = queryParameters["routeId"];
-      if (routeId != null) {
-        router.go("/$routeId");
-      }
-    }
-  }
-}
+final router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: '/:id',
+      builder: (context, state) {
+        final pathId = state.pathParameters['id']!;
+        return DetailPage(id: pathId);
+      },
+    )
+  ],
+);
 
 Future<void> initializeApp() async {
   await Firebase.initializeApp(
@@ -129,4 +80,54 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   print(
       '🔥 [Flutter]: Received a background message: ${message.data.toString()}');
+}
+
+class DeeplinkHandler {
+  DeeplinkHandler() {
+    final initialLink = getInitialLink()
+        .then((link) => handleLink(link != null ? Uri.parse(link) : Uri()));
+    linkStream.listen((link) {
+      handleLink(link != null ? Uri.parse(link) : Uri());
+    }, onError: (err) {
+      print("🔥 ERROR " + err.toString());
+    });
+  }
+
+  // Example: pushnotiflyflutter://navigation?routeId=123
+  void handleLink(Uri link) {
+    print('🔥 opened with URL ${link.toString()}');
+    final scheme = link.scheme;
+    final host = link.host;
+    final queryParameters = link.queryParameters;
+    if (scheme == "pushnotiflyflutter" && host == "navigation") {
+      final routeId = queryParameters["routeId"];
+      if (routeId != null) {
+        router.go("/$routeId");
+      }
+    }
+  }
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(routerConfig: router);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 }

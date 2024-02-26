@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 import 'dart:js' as js;
-import 'dart:js_interop';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
+
 import 'constants.dart' as NOTIFLY_CONSTANTS;
 
 /// The implementation of [NotiflyFlutterPlatform].
@@ -14,11 +15,6 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
   final methodChannel = const MethodChannel('notifly_flutter_web');
-
-  /// Registers this class as the default instance of [NotiflyFlutterPlatform]
-  static void registerWith(Registrar registrar) {
-    NotiflyFlutterPlatform.instance = NotiflyFlutterWeb();
-  }
 
   @override
   Future<String?> getPlatformName() {
@@ -81,6 +77,23 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
   }
 
   @override
+  Future<void> requestPermission() async {
+    final completer = Completer<void>();
+    js.context.callMethod('callNotiflyMethod', [
+      'requestPermission',
+      null,
+      js.allowInterop((bool suc) {
+        if (suc == true) {
+          completer.complete();
+        } else {
+          completer.completeError('Failed to request permission');
+        }
+      }),
+    ]);
+    return completer.future;
+  }
+
+  @override
   Future<void> setUserId(String? userId) async {
     final completer = Completer<void>();
     js.context.callMethod('callNotiflyMethod', [
@@ -139,20 +152,8 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
     return completer.future;
   }
 
-  @override
-  Future<void> requestPermission() async {
-    final completer = Completer<void>();
-    js.context.callMethod('callNotiflyMethod', [
-      'requestPermission',
-      null,
-      js.allowInterop((bool suc) {
-        if (suc == true) {
-          completer.complete();
-        } else {
-          completer.completeError('Failed to request permission');
-        }
-      }),
-    ]);
-    return completer.future;
+  /// Registers this class as the default instance of [NotiflyFlutterPlatform]
+  static void registerWith(Registrar registrar) {
+    NotiflyFlutterPlatform.instance = NotiflyFlutterWeb();
   }
 }
