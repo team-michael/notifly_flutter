@@ -112,3 +112,7 @@
 - android: Separate notification channels based on the importance of the notification
 - android: Importance of the notification is now determined by the imp field in the push notification data payload
 - web: bump Web SDK version from 2.7.5 to 2.7.8
+
+# 1.3.7
+
+- android: fix issue with app restart when the push notification is clicked on foreground state.

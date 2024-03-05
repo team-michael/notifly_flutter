@@ -48,11 +48,36 @@ final router = GoRouter(
   ],
 );
 
+Future<void> setupInteractedMessage() async {
+  // Get any messages which caused the application to open from
+  // a terminated state.
+  RemoteMessage? initialMessage =
+      await FirebaseMessaging.instance.getInitialMessage();
+
+  // If the message also contains a data property with a x"type" of "chat",
+  // navigate to a chat screen
+  if (initialMessage != null) {
+    print(
+        '🔥 [NotiflyFlutterPackage]: Received a message on app startup: ${initialMessage.data.toString()}');
+  }
+
+  // Also handle any interaction when the app is in the background via a
+  // Stream listener
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    print(
+        '🔥 [NotiflyFlutterPackage]: Message opened app: ${message.data.toString()}');
+  });
+}
+
 Future<void> initializeApp() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print(
+        '🔥 [NotiflyFlutterPackage]: Received a foreground message: ${message.data.toString()}');
+  });
 
   // Android only
   if (Platform.isAndroid) {
@@ -79,7 +104,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 
   print(
-      '🔥 [Flutter]: Received a background message: ${message.data.toString()}');
+      '🔥 [NotiflyFlutterPackage]: Received a background message: ${message.data.toString()}');
 }
 
 class DeeplinkHandler {
@@ -129,5 +154,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    setupInteractedMessage();
   }
 }
