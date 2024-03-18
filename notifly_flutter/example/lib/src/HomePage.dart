@@ -245,15 +245,21 @@ class _HomePageState extends State<HomePage> {
                           ? _eventParamsInputs[0].keyController.text
                           : null;
 
-                      final eventParams = _eventParamsInputs
-                          .map((input) => input.getKeyValue())
-                          .reduce((value, element) => value..addAll(element));
+                      final eventParams = _eventParamsInputs.isNotEmpty
+                          ? _eventParamsInputs
+                              .map((input) => input.getKeyValue())
+                              .reduce(
+                                (value, element) => value..addAll(element),
+                              )
+                          : null;
+
                       await NotiflyPlugin.trackEvent(
                         eventName: eventName,
                         eventParams: eventParams,
-                        segmentationEventParamKeys: _useSegmentationKey
-                            ? eventParams.keys.toList()
-                            : null,
+                        segmentationEventParamKeys:
+                            (_useSegmentationKey && eventParams != null)
+                                ? eventParams.keys.toList()
+                                : null,
                       );
 
                       _showMessage('Event $eventName successfully tracked');

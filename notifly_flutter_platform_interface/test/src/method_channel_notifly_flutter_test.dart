@@ -18,7 +18,7 @@ void main() {
     setUp(() async {
       methodChannelNotiflyFlutter = MethodChannelNotiflyFlutter();
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-          .setMockMethodCallHandler(methodChannelNotiflyFlutter.methodChannel,
+          .setMockMethodCallHandler(methodChannelNotiflyFlutter.channel,
               (MethodCall methodCall) async {
         log.add(methodCall);
         switch (methodCall.method) {

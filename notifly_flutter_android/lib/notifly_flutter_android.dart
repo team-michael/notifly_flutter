@@ -1,16 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 
 /// The Android implementation of [NotiflyFlutterPlatform].
 class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
-  /// The method channel used to interact with the native platform.
-  @visibleForTesting
-  final methodChannel = const MethodChannel('notifly_flutter_android');
+  /// Creates a new instance of [NotiflyFlutterAndroid].
+  NotiflyFlutterAndroid() {
+    channel = const MethodChannel('notifly_flutter_android');
+  }
 
   @override
   Future<String?> getPlatformName() {
-    return methodChannel.invokeMethod<String>('getPlatformName');
+    return channel.invokeMethod<String>('getPlatformName');
   }
 
   @override
@@ -25,7 +25,7 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
       'password': password,
     };
 
-    final success = await methodChannel.invokeMethod<bool>('initialize', args);
+    final success = await channel.invokeMethod<bool>('initialize', args);
     if (success == null || !success) {
       throw PlatformException(
         code: 'INITIALIZATION_FAILED',
@@ -40,7 +40,7 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
       'logLevel': logLevel,
     };
 
-    final success = await methodChannel.invokeMethod<bool>('setLogLevel', args);
+    final success = await channel.invokeMethod<bool>('setLogLevel', args);
     if (success == null || !success) {
       throw PlatformException(
         code: 'SET_LOG_LEVEL_FAILED',
@@ -55,7 +55,7 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
       'userId': userId,
     };
 
-    final success = await methodChannel.invokeMethod<bool>('setUserId', args);
+    final success = await channel.invokeMethod<bool>('setUserId', args);
     if (success == null || !success) {
       throw PlatformException(
         code: 'SET_USER_ID_FAILED',
@@ -70,8 +70,7 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
       'params': params,
     };
 
-    final success =
-        await methodChannel.invokeMethod<bool>('setUserProperties', args);
+    final success = await channel.invokeMethod<bool>('setUserProperties', args);
     if (success == null || !success) {
       throw PlatformException(
         code: 'SET_USER_PROPERTIES_FAILED',
@@ -92,7 +91,7 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
       'segmentationEventParamKeys': segmentationEventParamKeys,
     };
 
-    final success = await methodChannel.invokeMethod<bool>('trackEvent', args);
+    final success = await channel.invokeMethod<bool>('trackEvent', args);
     if (success == null || !success) {
       throw PlatformException(
         code: 'TRACK_EVENT_FAILED',

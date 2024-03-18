@@ -21,14 +21,6 @@ void main() async {
     DeeplinkHandler();
   }
 
-  await NotiflyPlugin.initialize(
-    projectId: dotenv.env['NOTIFLY_PROJECT_ID']!,
-    username: dotenv.env['NOTIFLY_USERNAME']!,
-    password: dotenv.env['NOTIFLY_PASSWORD']!,
-  );
-  print('🔥 [Flutter] NotiflyPlugin initialized');
-  await NotiflyPlugin.requestPermission();
-
   runApp(const MyApp());
 }
 
@@ -141,6 +133,28 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Future<void> initNotifly() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    await NotiflyPlugin.initialize(
+      projectId: dotenv.env['NOTIFLY_PROJECT_ID']!,
+      username: dotenv.env['NOTIFLY_USERNAME']!,
+      password: dotenv.env['NOTIFLY_PASSWORD']!,
+    );
+
+    print('🔥 [Flutter] NotiflyPlugin initialized');
+    if (kIsWeb) {
+      await NotiflyPlugin.requestPermission();
+    }
+
+    if (Platform.isAndroid) {
+      await NotiflyPlugin.addNotificationClickListener((notification) {
+        print(
+            '🔥 [NotiflyFlutterPackage]: Notification clicked: ${notification.notification.title}');
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(routerConfig: router);
@@ -154,6 +168,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    initNotifly();
     setupInteractedMessage();
   }
 }

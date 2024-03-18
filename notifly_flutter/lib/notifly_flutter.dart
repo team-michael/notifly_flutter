@@ -1,6 +1,11 @@
+import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+import 'package:notifly_flutter/src/notification.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
+
+export 'package:notifly_flutter/src/notification.dart';
 
 NotiflyFlutterPlatform get _platform => NotiflyFlutterPlatform.instance;
 
@@ -15,6 +20,10 @@ Future<String> getPlatformName() async {
 class NotiflyPlugin {
   static final _logger = Logger();
 
+  static bool _isInitialized = false;
+  static final _notificationClickListeners = <NotificationClickListener>{};
+  static bool _isClickListenerRegistered = false;
+
   /// Initialize Notifly Flutter.
   static Future<void> initialize({
     required String projectId,
@@ -22,7 +31,16 @@ class NotiflyPlugin {
     required String password,
   }) async {
     try {
-      await _platform.initialize(projectId, username, password);
+      if (!_isInitialized) {
+        if (Platform.isAndroid) {
+          // Currently only Android platform requires method call handler.
+          _platform.channel.setMethodCallHandler(_handleMethodCall);
+        }
+        await _platform.initialize(projectId, username, password);
+        _isInitialized = true;
+      } else {
+        _logger.w('Notifly Flutter is already initialized.');
+      }
     } catch (e) {
       _logger.e('Failed to', e);
     }
@@ -37,7 +55,7 @@ class NotiflyPlugin {
         _logger.e('Failed to', e);
       }
     } else {
-      _logger.e('This method is only available on web.');
+      _logger.w('This method is only available on web.');
     }
   }
 
@@ -82,6 +100,39 @@ class NotiflyPlugin {
       );
     } catch (e) {
       _logger.e('Failed to', e);
+    }
+  }
+
+  /// Add notification click listener (Supported for Android platform only).
+  static Future<void> addNotificationClickListener(
+    NotificationClickListener listener,
+  ) async {
+    if (Platform.isAndroid) {
+      try {
+        if (!_isClickListenerRegistered) {
+          final success = await _platform.channel
+              .invokeMethod<bool>('addNotificationClickListener');
+          if (success == null || !success) {
+            _logger.e('Failed to add notification click listener');
+          }
+          _isClickListenerRegistered = true;
+        }
+        _notificationClickListeners.add(listener);
+      } catch (e) {
+        _logger.e('Failed to', e);
+      }
+    } else {
+      _logger.w('This method is only available on Android. '
+          'For iOS, use FCM message handler instead.');
+    }
+  }
+
+  static Future<void> _handleMethodCall(MethodCall call) async {
+    if (call.method == 'onNotificationClick') {
+      final notification = Map<String, dynamic>.from(call.arguments as Map);
+      for (final listener in _notificationClickListeners) {
+        listener(OSNotificationClickEvent(notification));
+      }
     }
   }
 }

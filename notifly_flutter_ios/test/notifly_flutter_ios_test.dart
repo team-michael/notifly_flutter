@@ -16,8 +16,7 @@ void main() {
 
       log = <MethodCall>[];
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-          .setMockMethodCallHandler(notiflyFlutter.methodChannel,
-              (methodCall) async {
+          .setMockMethodCallHandler(notiflyFlutter.channel, (methodCall) async {
         log.add(methodCall);
         switch (methodCall.method) {
           case 'getPlatformName':

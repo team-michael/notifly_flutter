@@ -1,16 +1,16 @@
-import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter/services.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 
 /// An implementation of [NotiflyFlutterPlatform] that uses method channels.
 class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
   /// The method channel used to interact with the native platform.
-  @visibleForTesting
-  final methodChannel = const MethodChannel('notifly_flutter');
+  MethodChannelNotiflyFlutter() {
+    channel = const MethodChannel('notifly_flutter');
+  }
 
   @override
   Future<String?> getPlatformName() {
-    return methodChannel.invokeMethod<String>('getPlatformName');
+    return channel.invokeMethod<String>('getPlatformName');
   }
 
   @override
@@ -21,7 +21,7 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
       'password': password,
     };
 
-    return methodChannel.invokeMethod<void>('initialize', args);
+    return channel.invokeMethod<void>('initialize', args);
   }
 
   @override
@@ -29,7 +29,7 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
     final args = <String, dynamic>{
       'logLevel': logLevel,
     };
-    return methodChannel.invokeMethod<void>('setLogLevel', args);
+    return channel.invokeMethod<void>('setLogLevel', args);
   }
 
   @override
@@ -37,7 +37,7 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
     final args = <String, dynamic>{
       'userId': userId,
     };
-    return methodChannel.invokeMethod<void>('setUserId', args);
+    return channel.invokeMethod<void>('setUserId', args);
   }
 
   @override
@@ -45,7 +45,7 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
     final args = <String, dynamic>{
       'params': params,
     };
-    return methodChannel.invokeMethod<void>('setUserProperties', args);
+    return channel.invokeMethod<void>('setUserProperties', args);
   }
 
   @override
@@ -59,6 +59,11 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
       'eventParams': eventParams,
       'segmentationEventParamKeys': segmentationEventParamKeys,
     };
-    return methodChannel.invokeMethod<void>('trackEvent', args);
+    return channel.invokeMethod<void>('trackEvent', args);
+  }
+
+  @override
+  Future<void> requestPermission() {
+    return channel.invokeMethod<void>('requestPermission');
   }
 }
