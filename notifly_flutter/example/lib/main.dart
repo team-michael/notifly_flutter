@@ -72,7 +72,7 @@ Future<void> initializeApp() async {
   });
 
   // Android only
-  if (Platform.isAndroid) {
+  if (!kIsWeb && Platform.isAndroid) {
     await NotiflyPlugin.setLogLevel(2);
   }
 
@@ -147,10 +147,14 @@ class _MyAppState extends State<MyApp> {
       await NotiflyPlugin.requestPermission();
     }
 
-    if (Platform.isAndroid) {
+    if (!kIsWeb && Platform.isAndroid) {
       await NotiflyPlugin.addNotificationClickListener((notification) {
         print(
             '🔥 [NotiflyFlutterPackage]: Notification clicked: ${notification.notification.title}');
+        print(
+            '🔥 [NotiflyFlutterPackage]: Notification clicked: ${notification.notification.body}');
+        print(
+            '🔥 [NotiflyFlutterPackage]: Notification clicked: ${notification.notification.customData}');
       });
     }
   }
@@ -169,6 +173,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initNotifly();
-    setupInteractedMessage();
+    if (!kIsWeb) {
+      setupInteractedMessage();
+    }
   }
 }

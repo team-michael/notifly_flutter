@@ -32,7 +32,7 @@ class NotiflyPlugin {
   }) async {
     try {
       if (!_isInitialized) {
-        if (Platform.isAndroid) {
+        if (!kIsWeb && Platform.isAndroid) {
           // Currently only Android platform requires method call handler.
           _platform.channel.setMethodCallHandler(_handleMethodCall);
         }
@@ -107,7 +107,7 @@ class NotiflyPlugin {
   static Future<void> addNotificationClickListener(
     NotificationClickListener listener,
   ) async {
-    if (Platform.isAndroid) {
+    if (!kIsWeb && Platform.isAndroid) {
       try {
         if (!_isClickListenerRegistered) {
           final success = await _platform.channel
