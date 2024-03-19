@@ -1,8 +1,9 @@
-package tech.notifly
+package tech.notifly.flutter
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.webkit.WebView
-import android.util.Log
 import android.webkit.WebSettings
 import androidx.annotation.NonNull
 
@@ -11,25 +12,50 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+
 import tech.notifly.Notifly
 import tech.notifly.NotiflySdkType
 import tech.notifly.NotiflyControlToken
+import tech.notifly.push.interfaces.INotificationClickEvent
+import tech.notifly.push.interfaces.INotificationClickListener
+
 class NotiflyControlTokenImpl : NotiflyControlToken
 
-class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
+class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
     private var context: Context? = null
+    private var isNativeNotificationClickListenersAdded = false
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "notifly_flutter_android")
+    override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+        channel = MethodChannel(binding.binaryMessenger, "notifly_flutter_android")
         channel.setMethodCallHandler(this)
-        context = flutterPluginBinding.applicationContext
+        context = binding.applicationContext
 
         // Initialize Webview
         val webView = WebView(context!!)
         webView.settings.javaScriptEnabled = true
         webView.settings.useWideViewPort = true
         webView.settings.loadWithOverviewMode = true
+    }
+
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+        channel.setMethodCallHandler(null)
+        context = null
+    }
+
+    override fun onAttachedToActivity(@NonNull binding: ActivityPluginBinding) {
+        context = binding.activity;
+    }
+
+    override fun onDetachedFromActivity() {
+    }
+
+    override fun onReattachedToActivityForConfigChanges(@NonNull binding: ActivityPluginBinding) {
+    }
+
+    override fun onDetachedFromActivityForConfigChanges() {
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -48,7 +74,9 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
                     errorMessageOnError = "Failed to initialize Notifly"
 
                     initialize(call)
-                    result.success(true)
+                    runOnMainThread {
+                        result.success(true)
+                    }
                 }
 
                 "setUserId" -> {
@@ -56,7 +84,9 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
                     errorMessageOnError = "Failed to set user id"
 
                     setUserId(call)
-                    result.success(true)
+                    runOnMainThread {
+                        result.success(true)
+                    }
                 }
 
                 "setUserProperties" -> {
@@ -64,7 +94,9 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
                     errorMessageOnError = "Failed to set user properties"
 
                     setUserProperties(call)
-                    result.success(true)
+                    runOnMainThread {
+                        result.success(true)
+                    }
                 }
 
                 "trackEvent" -> {
@@ -72,7 +104,9 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
                     errorMessageOnError = "Failed to track event"
 
                     trackEvent(call)
-                    result.success(true)
+                    runOnMainThread {
+                        result.success(true)
+                    }
                 }
 
                 "setLogLevel" -> {
@@ -80,23 +114,39 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
                     errorMessageOnError = "Failed to set log level"
 
                     setLogLevel(call)
-                    result.success(true)
+                    runOnMainThread {
+                        result.success(true)
+                    }
+                }
+
+                "addNotificationClickListener" -> {
+                    errorCodeOnError = "ADD_NOTIFICATION_CLICK_LISTENER_FAILED"
+                    errorMessageOnError = "Failed to add notification click listener"
+
+                    addNotificationClickListener()
+                    runOnMainThread {
+                        result.success(true)
+                    }
                 }
 
                 else -> {
-                    result.notImplemented()
+                    runOnMainThread {
+                        result.notImplemented()
+                    }
                 }
             }
         } catch (e: Exception) {
             when (e) {
                 is IllegalArgumentException -> {
-                    result.error("INVALID_ARGUMENT", e.message, null)
+                    runOnMainThread {
+                        result.error("INVALID_ARGUMENT", e.message, null)
+                    }
                 }
 
                 else -> {
-                    result.error(
-                        errorCodeOnError, errorMessageOnError, e.toString()
-                    )
+                    runOnMainThread {
+                        result.error(errorCodeOnError, errorMessageOnError, e.toString())
+                    }
                 }
             }
         }
@@ -165,8 +215,28 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler {
         Notifly.setLogLevel(logLevel)
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        channel.setMethodCallHandler(null)
-        context = null
+    private fun addNotificationClickListener() {
+        if (isNativeNotificationClickListenersAdded) {
+            return
+        }
+
+        isNativeNotificationClickListenersAdded = true
+
+        Notifly.addNotificationClickListener(object : INotificationClickListener {
+            override fun onClick(event: INotificationClickEvent) {
+                runOnMainThread {
+                    channel.invokeMethod("onNotificationClick", NotiflySerializer.serializeNotificationClickEvent(event))
+                }
+            }
+        })
+    }
+
+    private fun runOnMainThread(runnable: Runnable) {
+        if (Looper.getMainLooper().thread == Thread.currentThread()) {
+            runnable.run()
+        } else {
+            val handler = Handler(Looper.getMainLooper())
+            handler.post(runnable)
+        }
     }
 }

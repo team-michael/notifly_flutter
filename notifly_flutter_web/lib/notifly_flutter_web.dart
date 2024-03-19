@@ -13,8 +13,9 @@ import 'constants.dart' as NOTIFLY_CONSTANTS;
 /// The implementation of [NotiflyFlutterPlatform].
 class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
   /// The method channel used to interact with the native platform.
-  @visibleForTesting
-  final methodChannel = const MethodChannel('notifly_flutter_web');
+  NotiflyFlutterWeb() {
+    channel = const MethodChannel('notifly_flutter_web');
+  }
 
   @override
   Future<String?> getPlatformName() {

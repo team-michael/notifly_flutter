@@ -1,16 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 
 /// The iOS implementation of [NotiflyFlutterPlatform].
 class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
   /// The method channel used to interact with the native platform.
-  @visibleForTesting
-  final methodChannel = const MethodChannel('notifly_flutter_ios');
+  NotiflyFlutterIOS() {
+    channel = const MethodChannel('notifly_flutter_ios');
+  }
 
   @override
   Future<String?> getPlatformName() {
-    return methodChannel.invokeMethod<String>('getPlatformName');
+    return channel.invokeMethod<String>('getPlatformName');
   }
 
   @override
@@ -19,7 +19,7 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
     String username,
     String password,
   ) async {
-    await methodChannel.invokeMethod('initialize', {
+    await channel.invokeMethod('initialize', {
       'projectId': projectId,
       'username': username,
       'password': password,
@@ -30,7 +30,7 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
   Future<void> setUserId(
     String? userId,
   ) async {
-    await methodChannel.invokeMethod('setUserId', {
+    await channel.invokeMethod('setUserId', {
       'userId': userId,
     });
   }
@@ -44,7 +44,7 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
       }
     });
 
-    await methodChannel.invokeMethod('setUserProperties', {
+    await channel.invokeMethod('setUserProperties', {
       'userProperties': params,
       'typeMap': typeMap,
     });
@@ -56,7 +56,7 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
     Map<String, Object>? eventParams,
     List<String>? segmentationEventParamKeys,
   ) async {
-    await methodChannel.invokeMethod('trackEvent', {
+    await channel.invokeMethod('trackEvent', {
       'eventName': eventName,
       'eventParams': eventParams,
       'segmentationEventParamKeys': segmentationEventParamKeys,

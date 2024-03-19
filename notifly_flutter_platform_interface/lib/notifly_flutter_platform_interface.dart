@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:notifly_flutter_platform_interface/src/method_channel_notifly_flutter.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -10,9 +11,15 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 ///  this interface will be broken
 ///  by newly added [NotiflyFlutterPlatform] methods.
 abstract class NotiflyFlutterPlatform extends PlatformInterface {
+  /// Constructs a NotiflyFlutterPlatform.
+  NotiflyFlutterPlatform() : super(token: _token);
+
   static final Object _token = Object();
 
   static NotiflyFlutterPlatform _instance = MethodChannelNotiflyFlutter();
+
+  /// The method channel used to interact with the native platform.
+  late MethodChannel channel;
 
   /// The default instance of [NotiflyFlutterPlatform] to use.
   ///
@@ -26,18 +33,11 @@ abstract class NotiflyFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  /// Constructs a NotiflyFlutterPlatform.
-  NotiflyFlutterPlatform() : super(token: _token);
-
   /// Return the current platform name.
   Future<String?> getPlatformName();
 
   /// Initialize Notifly Flutter.
   Future<void> initialize(String projectId, String username, String password) {
-    throw UnimplementedError();
-  }
-
-  Future<void> requestPermission() {
     throw UnimplementedError();
   }
 
@@ -62,6 +62,11 @@ abstract class NotiflyFlutterPlatform extends PlatformInterface {
     Map<String, Object>? eventParams,
     List<String>? segmentationEventParamKeys,
   ) {
+    throw UnimplementedError();
+  }
+
+  /// Requests web push permission. Only works on web.
+  Future<void> requestPermission() {
     throw UnimplementedError();
   }
 }
