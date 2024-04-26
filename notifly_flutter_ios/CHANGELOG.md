@@ -127,3 +127,8 @@
     notification click events.
   - Okhttp3 dependency is now removed from the SDK.
   - Proguard rules and consumer proguard rules are re-organized to avoid unexpected behavior.
+
+# 1.5.0
+
+- ios: bump iOS SDK version from 1.4.0 to 1.7.0
+  - add privacy manifest
