@@ -132,3 +132,7 @@
 
 - ios: bump iOS SDK version from 1.4.0 to 1.7.0
   - add privacy manifest
+
+# 1.5.1-rc1
+
+- Downgrade minimum required dart sdk version to 2.12.0

@@ -36,7 +36,7 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
       (function (w, d, p, u, a) {
         var s = d.createElement('script');
         s.async = !0;
-        s.src = 'https://cdn.jsdelivr.net/npm/${NOTIFLY_CONSTANTS.Config.JS_SDK_DEPENDENCY}/dist/index.global.min.js';
+        s.src = 'https://cdn.jsdelivr.net/npm/${NOTIFLY_CONSTANTS.Config.JAVASCRIPT_SDK_VERSION}/dist/index.global.min.js';
         s.onload = function () {
             w.notifly.setSdkType('${NOTIFLY_CONSTANTS.Config.SDK_TYPE}');
             w.notifly.setSdkVersion('${NOTIFLY_CONSTANTS.Config.SDK_VERSION}');
