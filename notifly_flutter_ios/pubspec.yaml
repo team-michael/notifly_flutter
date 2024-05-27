@@ -1,12 +1,12 @@
 name: notifly_flutter_ios
 description: iOS implementation of the notifly_flutter plugin, based on Notifly iOS SDK.
-version: 1.5.0
+version: 1.6.0
 homepage: https://notifly.tech/
 
 # publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ">=2.19.0 <4.0.0"
+  sdk: ">=2.12.0 <4.0.0"
   flutter: ">=1.20.0"
 
 flutter:
@@ -20,7 +20,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  notifly_flutter_platform_interface: 1.5.0 # Remove this line if you wish to locally test this package
+  notifly_flutter_platform_interface: 1.6.0 # Remove this line if you wish to locally test this package
   # notifly_flutter_platform_interface: # Remove this line if you wish to publish to pub.dev
   #   path: ../notifly_flutter_platform_interface # Remove this line if you wish to publish to pub.dev
 
@@ -29,4 +29,3 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   plugin_platform_interface: ^2.0.0
-  very_good_analysis: ^4.0.0

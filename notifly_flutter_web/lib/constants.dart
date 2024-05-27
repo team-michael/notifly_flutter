@@ -3,8 +3,8 @@ class Config {
   static const String SDK_TYPE = 'js-flutter';
 
   /// The version of the SDK.
-  static const String SDK_VERSION = '1.5.0';
+  static const String SDK_VERSION = '1.6.0';
 
   /// The dependency of the Javascript SDK being used.
-  static const String JS_SDK_DEPENDENCY = 'notifly-js-sdk@2.7.8';
+  static const String JAVASCRIPT_SDK_VERSION = 'notifly-js-sdk@2.10.3';
 }

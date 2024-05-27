@@ -65,4 +65,14 @@ Initial release
 # 1.5.0
 
 - ios: bump iOS SDK version from 1.4.0 to 1.7.0
-  - add privacy manifest
+- add privacy manifest
+
+# 1.5.1-rc1
+
+- Downgrade minimum required dart sdk version to 2.12.0
+
+# 1.6.0
+
+- Downgrade minimum required dart sdk version to 2.12.0
+- Use Android Native SDK version to 1.6.0
+- Use iOS Native SDK version to 1.9.0

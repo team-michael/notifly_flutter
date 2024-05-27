@@ -16,12 +16,12 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 
 import tech.notifly.Notifly
-import tech.notifly.NotiflySdkType
-import tech.notifly.NotiflyControlToken
+import tech.notifly.sdk.NotiflySdkWrapperType
+import tech.notifly.sdk.NotiflySdkControlToken
 import tech.notifly.push.interfaces.INotificationClickEvent
 import tech.notifly.push.interfaces.INotificationClickListener
 
-class NotiflyControlTokenImpl : NotiflyControlToken
+class NotiflyControlTokenImpl : NotiflySdkControlToken
 
 class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
@@ -164,7 +164,7 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val password = call.argument<String>("password")
             ?: throw IllegalArgumentException("Password was not provided")
 
-        Notifly.setSdkType(NotiflyControlTokenImpl(), NotiflySdkType.FLUTTER)
+        Notifly.setSdkType(NotiflyControlTokenImpl(), NotiflySdkWrapperType.FLUTTER)
         Notifly.setSdkVersion(NotiflyControlTokenImpl(), NOTIFLY_FLUTTER_PLUGIN_VERSION)
 
         Notifly.initialize(context!!, projectId, username, password)
