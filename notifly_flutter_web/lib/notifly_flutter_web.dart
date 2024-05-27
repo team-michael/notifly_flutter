@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:html';
 import 'dart:js' as js;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';

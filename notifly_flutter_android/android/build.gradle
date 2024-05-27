@@ -1,5 +1,5 @@
 group 'tech.notifly.flutter'
-version '1.5.1'
+version '1.6.0'
 
 buildscript {
     ext.kotlin_version = '1.8.10'
@@ -51,5 +51,5 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'com.github.team-michael:notifly-android-sdk:1.5.0'
+    implementation 'com.github.team-michael:notifly-android-sdk:1.6.0'
 }
