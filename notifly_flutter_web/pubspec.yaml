@@ -1,7 +1,7 @@
 name: notifly_flutter_web
 description: Notifly website SDK for notifly_flutter plugin
 
-version: 1.6.0
+version: 1.7.0
 homepage: https://notifly.tech/
 
 # publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -24,7 +24,7 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   js: ^0.6.3
-  notifly_flutter_platform_interface: 1.6.0 # Remove this line if you wish to locally test this package
+  notifly_flutter_platform_interface: 1.7.0 # Remove this line if you wish to locally test this package
 
   # notifly_flutter_platform_interface: # Remove this line if you wish to publish to pub.dev
   #   path: ../notifly_flutter_platform_interface # Remove this line if you wish to publish to pub.dev
