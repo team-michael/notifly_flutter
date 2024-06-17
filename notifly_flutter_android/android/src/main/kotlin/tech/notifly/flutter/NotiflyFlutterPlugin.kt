@@ -99,6 +99,36 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     }
                 }
 
+                "setEmail" -> {
+                    errorCodeOnError = "SET_EMAIL_FAILED"
+                    errorMessageOnError = "Failed to set email"
+
+                    setEmail(call)
+                    runOnMainThread {
+                        result.success(true)
+                    }
+                }
+
+                "setPhoneNumber" -> {
+                    errorCodeOnError = "SET_PHONE_NUMBER_FAILED"
+                    errorMessageOnError = "Failed to set phone number"
+
+                    setPhoneNumber(call)
+                    runOnMainThread {
+                        result.success(true)
+                    }
+                }
+
+                "setTimezone" -> {
+                    errorCodeOnError = "SET_TIMEZONE_FAILED"
+                    errorMessageOnError = "Failed to set timezone"
+
+                    setTimezone(call)
+                    runOnMainThread {
+                        result.success(true)
+                    }
+                }
+
                 "trackEvent" -> {
                     errorCodeOnError = "TRACK_EVENT_FAILED"
                     errorMessageOnError = "Failed to track event"
@@ -189,6 +219,39 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             ?: throw IllegalArgumentException("Params was not provided")
 
         Notifly.setUserProperties(context!!, params)
+    }
+
+    @Throws(IllegalArgumentException::class, Exception::class)
+    private fun setEmail(call: MethodCall) {
+        if (context == null) {
+            throw Exception("Context is null")
+        }
+        val email = call.argument<String>("email")
+            ?: throw IllegalArgumentException("Email was not provided")
+
+        Notifly.setEmail(context!!, email)
+    }
+
+    @Throws(IllegalArgumentException::class, Exception::class)
+    private fun setPhoneNumber(call: MethodCall) {
+        if (context == null) {
+            throw Exception("Context is null")
+        }
+        val phoneNumber = call.argument<String>("phoneNumber")
+            ?: throw IllegalArgumentException("PhoneNumber was not provided")
+        
+        Notifly.setPhoneNumber(context!!, phoneNumber)
+    }
+
+    @Throws(IllegalArgumentException::class, Exception::class)
+    private fun setTimezone(call: MethodCall) {
+        if (context == null) {
+            throw Exception("Context is null")
+        }
+        val timezone = call.argument<String>("timezone")
+            ?: throw IllegalArgumentException("Timezone was not provided")
+
+        Notifly.setTimezone(context!!, timezone)
     }
 
     @Throws(IllegalArgumentException::class, Exception::class)

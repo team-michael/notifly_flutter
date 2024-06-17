@@ -63,6 +63,33 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
       }
       result(nil)
 
+    case "setEmail":
+      if let arguments = call.arguments as? [String: Any] {
+        let userId = arguments["email"] as String
+        Notifly.setEmail(email)
+      } else {
+        log(funcName: "setEmail", message: "Invalid arguments")
+      }
+      result(nil)
+
+    case "setPhoneNumber":
+      if let arguments = call.arguments as? [String: Any] {
+        let phoneNumber = arguments["phoneNumber"] as String
+        Notifly.setPhoneNumber(phoneNumber)
+      } else {
+        log(funcName: "setPhoneNumber", message: "Invalid arguments")
+      }
+      result(nil)
+
+    case "setTimezone":
+      if let arguments = call.arguments as? [String: Any] {
+        let timezone = arguments["timezone"] as String
+        Notifly.setTimezone(timezone)
+      } else {
+        log(funcName: "setTimezone", message: "Invalid arguments")
+      }
+      result(nil)
+
     case "trackEvent":
       if let arguments = call.arguments as? [String: Any],
          let eventName = arguments["eventName"] as? String

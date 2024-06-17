@@ -56,6 +56,21 @@ abstract class NotiflyFlutterPlatform extends PlatformInterface {
     throw UnimplementedError();
   }
 
+  /// Sets the email for current user.
+  Future<void> setEmail(String email) {
+    throw UnimplementedError();
+  }
+
+  /// Sets the phone number for current user.
+  Future<void> setPhoneNumber(String phoneNumber) {
+    throw UnimplementedError();
+  }
+
+  /// Sets the timezone for current user.
+  Future<void> setTimezone(String timezone) {
+    throw UnimplementedError();
+  }
+
   /// Track an event.
   Future<void> trackEvent(
     String eventName,

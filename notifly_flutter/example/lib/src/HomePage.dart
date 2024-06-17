@@ -55,6 +55,12 @@ class _HomePageState extends State<HomePage> {
       TextEditingController();
   final TextEditingController _userPropertiesKeyInputController =
       TextEditingController();
+  final TextEditingController _userEmailInputController =
+      TextEditingController();
+  final TextEditingController _userPhoneNumberInputController =
+      TextEditingController();
+  final TextEditingController _userTimezoneInputController =
+      TextEditingController();
   final TextEditingController _userPropertiesValueInputController =
       TextEditingController();
   final TextEditingController _eventNameInputController =
@@ -121,6 +127,85 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                   child: const Text('Set User Id'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: TextField(
+                    controller: _userEmailInputController,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      final emailInput = _userEmailInputController.text;
+                      if (emailInput.isEmpty) {
+                        _showError('Email cannot be empty');
+                        return;
+                      }
+                      await NotiflyPlugin.setEmail(emailInput);
+                      _showMessage(
+                          'User email successfully set to $emailInput');
+                    } catch (error) {
+                      _showError(error);
+                    }
+                  },
+                  child: const Text('Set Email'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: TextField(
+                    controller: _userPhoneNumberInputController,
+                    decoration: const InputDecoration(
+                      labelText: 'Phone Number',
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      final phoneNumberInput =
+                          _userPhoneNumberInputController.text;
+                      if (phoneNumberInput.isEmpty) {
+                        _showError('Email cannot be empty');
+                        return;
+                      }
+                      await NotiflyPlugin.setPhoneNumber(phoneNumberInput);
+                      _showMessage(
+                          'User phone number successfully set to $phoneNumberInput');
+                    } catch (error) {
+                      _showError(error);
+                    }
+                  },
+                  child: const Text('Set Phone Number'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: TextField(
+                    controller: _userTimezoneInputController,
+                    decoration: const InputDecoration(
+                      labelText: 'Timezone',
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      final timezone = _userTimezoneInputController.text;
+                      if (timezone.isEmpty) {
+                        _showError('Timezone cannot be empty');
+                        return;
+                      }
+                      await NotiflyPlugin.setTimezone(timezone);
+                      _showMessage(
+                          'User timezone successfully set to $timezone');
+                    } catch (error) {
+                      _showError(error);
+                    }
+                  },
+                  child: const Text('Set Timezone'),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),
