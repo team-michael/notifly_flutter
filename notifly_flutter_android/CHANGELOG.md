@@ -64,19 +64,6 @@
 - In-App-Messsage: Improved stability and performance.
 - In-App-Messsage: Fix problems which occur when the url of main button is invalid.
 
-# 1.2.1
-
-- Support Web Platofrm
-- ios: push-extension for rich push notification
-
-# 1.2.2
-
-- android: directory structure change
-
-# 1.2.3
-
-- ios: fix issue with push-extension
-
 # 1.2.4
 
 - android: fix issue with invocation misordering between `setUserId` and `setUserProperties`
@@ -131,13 +118,17 @@
 # 1.5.0
 
 - ios: bump iOS SDK version from 1.4.0 to 1.7.0
-  - add privacy manifest
+- add privacy manifest
 
 # 1.5.1-rc1
 
 - Downgrade minimum required dart sdk version to 2.12.0
 
 # 1.6.0
+
+- THIS VERSION IS PROBLEMETIC FOR IOS PLATFORM. PLEASE DO NOT USE THIS VERSION!!!
+
+# 1.7.0
 
 - Downgrade minimum required dart sdk version to 2.12.0
 - Use Android Native SDK version to 1.6.0
