@@ -86,6 +86,33 @@ class NotiflyPlugin {
     }
   }
 
+  /// Sets the email for the current user.
+  static Future<void> setEmail(String email) async {
+    try {
+      await _platform.setEmail(email);
+    } catch (e) {
+      _logger.e('Failed to', e);
+    }
+  }
+
+  /// Sets the phone number for the current user.
+  static Future<void> setPhoneNumber(String phoneNumber) async {
+    try {
+      await _platform.setPhoneNumber(phoneNumber);
+    } catch (e) {
+      _logger.e('Failed to', e);
+    }
+  }
+
+  /// Sets the timezone for the current user.
+  static Future<void> setTimezone(String timezone) async {
+    try {
+      await _platform.setTimezone(timezone);
+    } catch (e) {
+      _logger.e('Failed to', e);
+    }
+  }
+
   /// Track an event.
   static Future<void> trackEvent({
     required String eventName,

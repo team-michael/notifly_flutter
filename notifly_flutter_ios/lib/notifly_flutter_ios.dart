@@ -51,6 +51,27 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
   }
 
   @override
+  Future<void> setEmail(String email) async {
+    await channel.invokeMethod('setEmail', {
+      'email': email,
+    });
+  }
+
+  @override
+  Future<void> setPhoneNumber(String phoneNumber) async {
+    await channel.invokeMethod('setPhoneNumber', {
+      'phoneNumber': phoneNumber,
+    });
+  }
+
+  @override
+  Future<void> setTimezone(String timezone) async {
+    await channel.invokeMethod('setTimezone', {
+      'timezone': timezone,
+    });
+  }
+
+  @override
   Future<void> trackEvent(
     String eventName,
     Map<String, Object>? eventParams,

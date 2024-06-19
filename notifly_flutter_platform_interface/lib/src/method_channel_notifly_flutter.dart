@@ -49,6 +49,30 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
   }
 
   @override
+  Future<void> setEmail(String email) {
+    final args = <String, dynamic>{
+      'email': email,
+    };
+    return channel.invokeMethod<void>('setEmail', args);
+  }
+
+  @override
+  Future<void> setPhoneNumber(String phoneNumber) {
+    final args = <String, dynamic>{
+      'phoneNumber': phoneNumber,
+    };
+    return channel.invokeMethod<void>('setPhoneNumber', args);
+  }
+
+  @override
+  Future<void> setTimezone(String timezone) {
+    final args = <String, dynamic>{
+      'timezone': timezone,
+    };
+    return channel.invokeMethod<void>('setTimezone', args);
+  }
+
+  @override
   Future<void> trackEvent(
     String eventName,
     Map<String, Object>? eventParams,

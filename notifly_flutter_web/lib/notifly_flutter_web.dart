@@ -128,6 +128,57 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
   }
 
   @override
+  Future<void> setEmail(String email) async {
+    final completer = Completer<void>();
+    js.context.callMethod('callNotiflyMethod', [
+      'setEmail',
+      js.JsArray.from([jsonEncode(email)]),
+      js.allowInterop((bool suc) {
+        if (suc == true) {
+          completer.complete();
+        } else {
+          completer.completeError('Failed to set email');
+        }
+      }),
+    ]);
+    return completer.future;
+  }
+
+  @override
+  Future<void> setPhoneNumber(String phoneNumber) async {
+    final completer = Completer<void>();
+    js.context.callMethod('callNotiflyMethod', [
+      'setPhoneNumber',
+      js.JsArray.from([jsonEncode(phoneNumber)]),
+      js.allowInterop((bool suc) {
+        if (suc == true) {
+          completer.complete();
+        } else {
+          completer.completeError('Failed to set phone number');
+        }
+      }),
+    ]);
+    return completer.future;
+  }
+
+  @override
+  Future<void> setTimezone(String timezone) async {
+    final completer = Completer<void>();
+    js.context.callMethod('callNotiflyMethod', [
+      'setTimezone',
+      js.JsArray.from([jsonEncode(timezone)]),
+      js.allowInterop((bool suc) {
+        if (suc == true) {
+          completer.complete();
+        } else {
+          completer.completeError('Failed to set user properties');
+        }
+      }),
+    ]);
+    return completer.future;
+  }
+
+  @override
   Future<void> trackEvent(
     String eventName,
     Map<String, Object>? eventParams,

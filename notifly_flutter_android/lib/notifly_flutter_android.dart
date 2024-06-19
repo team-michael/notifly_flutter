@@ -80,6 +80,51 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
   }
 
   @override
+  Future<void> setEmail(String email) async {
+    final args = <String, dynamic>{
+      'email': email,
+    };
+
+    final success = await channel.invokeMethod<bool>('setEmail', args);
+    if (success == null || !success) {
+      throw PlatformException(
+        code: 'SET_EMAIL_FAILED',
+        message: 'Setting email failed',
+      );
+    }
+  }
+
+  @override
+  Future<void> setPhoneNumber(String phoneNumber) async {
+    final args = <String, dynamic>{
+      'phoneNumber': phoneNumber,
+    };
+
+    final success = await channel.invokeMethod<bool>('setPhoneNumber', args);
+    if (success == null || !success) {
+      throw PlatformException(
+        code: 'SET_PHONE_NUMBER_FAILED',
+        message: 'Setting phone number failed',
+      );
+    }
+  }
+
+  @override
+  Future<void> setTimezone(String timezone) async {
+    final args = <String, dynamic>{
+      'timezone': timezone,
+    };
+
+    final success = await channel.invokeMethod<bool>('setTimezone', args);
+    if (success == null || !success) {
+      throw PlatformException(
+        code: 'SET_TIMEZONE_FAILED',
+        message: 'Setting timezone failed',
+      );
+    }
+  }
+
+  @override
   Future<void> trackEvent(
     String eventName,
     Map<String, Object>? eventParams,

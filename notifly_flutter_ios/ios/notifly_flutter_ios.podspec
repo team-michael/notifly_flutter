@@ -3,14 +3,14 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'notifly_flutter_ios'
-  s.version          = '0.0.1'
+  s.version          = '1.8.0'
   s.summary          = 'An iOS implementation of the notifly_flutter plugin.'
   s.description      = <<-DESC
   An iOS implementation of the notifly_flutter plugin.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'http://notifly.tech/'
   s.license          = { :type => 'BSD', :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Grey Box Inc.' => 'team@greyboxhq.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
@@ -20,5 +20,5 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
   s.swift_version = '5.0'
 
-  s.dependency 'notifly_sdk', '1.9.0'
+  s.dependency 'notifly_sdk', '1.10.0'
 end
