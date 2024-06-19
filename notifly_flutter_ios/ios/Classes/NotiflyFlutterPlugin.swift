@@ -65,7 +65,11 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
 
     case "setEmail":
       if let arguments = call.arguments as? [String: Any] {
-        let userId = arguments["email"] as String
+        guard let email = arguments["email"] as? String else {
+          log(funcName: "setEmail", message: "Email is required")
+          result(nil)
+          return
+        }
         Notifly.setEmail(email)
       } else {
         log(funcName: "setEmail", message: "Invalid arguments")
@@ -74,7 +78,11 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
 
     case "setPhoneNumber":
       if let arguments = call.arguments as? [String: Any] {
-        let phoneNumber = arguments["phoneNumber"] as String
+        guard let phoneNumber = arguments["phoneNumber"] as? String else {
+          log(funcName: "setPhoneNumber", message: "Phone number is required")
+          result(nil)
+          return
+        }
         Notifly.setPhoneNumber(phoneNumber)
       } else {
         log(funcName: "setPhoneNumber", message: "Invalid arguments")
@@ -83,7 +91,11 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
 
     case "setTimezone":
       if let arguments = call.arguments as? [String: Any] {
-        let timezone = arguments["timezone"] as String
+        guard let timezone = arguments["timezone"] as? String else {
+          log(funcName: "setTimezone", message: "Timezone is required")
+          result(nil)
+          return
+        }
         Notifly.setTimezone(timezone)
       } else {
         log(funcName: "setTimezone", message: "Invalid arguments")
