@@ -35,7 +35,7 @@ end
 
 target 'NotiflyNotificationExtension' do
   use_frameworks! :linkage => :static
-  pod 'notifly_sdk', '~> 1.10.0', :subspecs => ['Extension']
+  pod 'notifly_sdk', '~> 1.10.1', :subspecs => ['Extension']
 end
 
 post_install do |installer|

@@ -139,3 +139,7 @@
 - Downgrade minimum required dart sdk version to 2.12.0
 - Now SDK automatically tracks the current timezone configuration of device
 - Introducing new methods: `setEmail`, `setPhoneNumber`, `setTimezone`
+
+# 1.8.2
+
+- Use iOS native SDK version 1.10.1
