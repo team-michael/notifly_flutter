@@ -143,3 +143,8 @@
 # 1.8.2
 
 - Use iOS native SDK version 1.10.1
+
+# 1.9.0
+
+- Use Android Native SDK version 1.8.2
+- Use iOS Native SDK version 1.13.1

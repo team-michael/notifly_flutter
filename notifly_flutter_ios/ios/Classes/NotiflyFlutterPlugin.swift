@@ -1,11 +1,12 @@
 import Flutter
 import Foundation
-import notifly_sdk
 import UIKit
+import notifly_sdk
 
 public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "notifly_flutter_ios", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(
+      name: "notifly_flutter_ios", binaryMessenger: registrar.messenger())
     let instance = NotiflyFlutterPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
@@ -17,10 +18,9 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
 
     case "initialize":
       if let arguments = call.arguments as? [String: Any],
-         let projectId = arguments["projectId"] as? String,
-         let username = arguments["username"] as? String,
-         let password = arguments["password"] as? String
-      {
+        let projectId = arguments["projectId"] as? String,
+        let username = arguments["username"] as? String,
+        let password = arguments["password"] as? String {
         Notifly.setSdkType(type: "flutter")
         Notifly.setSdkVersion(version: Constants.SDK_VERSION)
         Notifly.initialize(projectId: projectId, username: username, password: password)
@@ -40,24 +40,9 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
 
     case "setUserProperties":
       if let arguments = call.arguments as? [String: Any],
-         var userProperties = arguments["userProperties"] as? [String: Any],
-         let typeMap = arguments["typeMap"] as? [String: String]
-      {
-        for (key, value) in typeMap {
-          switch value {
-          case "int":
-            if let intValue = userProperties[key] as? Int {
-              userProperties[key] = intValue
-            }
-          case "bool":
-            if let boolValue = userProperties[key] as? Bool {
-              userProperties[key] = boolValue
-            }
-          default:
-            continue
-          }
-        }
-        Notifly.setUserProperties(userProperties: userProperties)
+        let userProperties = arguments["userProperties"] as? String,
+        let parsedUserProperties = NotiflyAnyCodable.parseJsonString(userProperties) {
+        Notifly.setUserProperties(userProperties: parsedUserProperties)
       } else {
         log(funcName: "setUserProperties", message: "Invalid arguments")
       }
@@ -104,11 +89,18 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
 
     case "trackEvent":
       if let arguments = call.arguments as? [String: Any],
-         let eventName = arguments["eventName"] as? String
-      {
-        let eventParams = arguments["eventParams"] as? [String: Any]
+        let eventName = arguments["eventName"] as? String {
         let segmentationEventParamKeys = arguments["segmentationEventParamKeys"] as? [String]
-        Notifly.trackEvent(eventName: eventName, eventParams: eventParams, segmentationEventParamKeys: segmentationEventParamKeys)
+        if let eventParams = arguments["eventParams"] as? String,
+           let parsedEventParams = NotiflyAnyCodable.parseJsonString(eventParams) {
+            Notifly.trackEvent(
+            eventName: eventName, eventParams: parsedEventParams,
+            segmentationEventParamKeys: segmentationEventParamKeys)
+        } else {
+          Notifly.trackEvent(
+            eventName: eventName, eventParams: nil,
+            segmentationEventParamKeys: segmentationEventParamKeys)
+        }
       } else {
         log(funcName: "trackEvent", message: "Invalid arguments")
       }
