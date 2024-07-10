@@ -21,9 +21,9 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  # notifly_flutter_platform_interface: 1.9.0 # Remove this line if you wish to locally test this package
-  notifly_flutter_platform_interface: # Remove this line if you wish to publish to pub.dev
-    path: ../notifly_flutter_platform_interface # Remove this line if you wish to publish to pub.dev
+  notifly_flutter_platform_interface: 1.9.0 # Remove this line if you wish to locally test this package
+  # notifly_flutter_platform_interface: # Remove this line if you wish to publish to pub.dev
+  #   path: ../notifly_flutter_platform_interface # Remove this line if you wish to publish to pub.dev
 
 dev_dependencies:
   flutter_test:
