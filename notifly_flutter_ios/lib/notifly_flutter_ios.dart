@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 
@@ -37,16 +38,9 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
 
   @override
   Future<void> setUserProperties(Map<String, Object> params) async {
-    final typeMap = <String, String>{};
-    params.forEach((key, value) {
-      if (value is int || value is bool) {
-        typeMap[key] = value.runtimeType.toString();
-      }
-    });
-
+    final stringifiedParams = jsonEncode(params);
     await channel.invokeMethod('setUserProperties', {
-      'userProperties': params,
-      'typeMap': typeMap,
+      'userProperties': stringifiedParams,
     });
   }
 
@@ -77,9 +71,12 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
     Map<String, Object>? eventParams,
     List<String>? segmentationEventParamKeys,
   ) async {
+    final stringifiedParams =
+        eventParams == null ? null : jsonEncode(eventParams);
+
     await channel.invokeMethod('trackEvent', {
       'eventName': eventName,
-      'eventParams': eventParams,
+      'eventParams': stringifiedParams,
       'segmentationEventParamKeys': segmentationEventParamKeys,
     });
   }
