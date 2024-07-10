@@ -3,7 +3,7 @@ description: Notifly Flutter Plugin is a cross-platform SDK for integrating Noti
 version: 1.9.0
 homepage: https://notifly.tech/
 
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+# publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 environment:
   sdk: ">=2.12.0 < 4.0.0"
