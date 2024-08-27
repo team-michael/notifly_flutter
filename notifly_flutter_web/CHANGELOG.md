@@ -148,3 +148,8 @@
 
 - Use Android Native SDK version 1.8.2
 - Use iOS Native SDK version 1.13.1
+
+# 1.9.1
+
+- User ios Native SDK version 1.14.0
+  - feat: support user metadata condition for in-app-message campaign
