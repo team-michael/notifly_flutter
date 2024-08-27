@@ -1,4 +1,4 @@
 import Foundation
 struct Constants {
-    static let SDK_VERSION: String = "1.9.0"
+    static let SDK_VERSION: String = "1.9.1"
 }
