@@ -151,5 +151,9 @@
 
 # 1.9.1
 
-- User ios Native SDK version 1.14.0
+- Use ios Native SDK version 1.14.0
   - feat: support user metadata condition for in-app-message campaign
+
+# 1.9.2
+
+- Change event tracking partition key as notifly_device_id
