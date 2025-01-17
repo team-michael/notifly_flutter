@@ -80,6 +80,11 @@ abstract class NotiflyFlutterPlatform extends PlatformInterface {
     throw UnimplementedError();
   }
 
+  /// Returns the Notifly user ID for the current user.
+  Future<String?> getNotiflyUserId() {
+    throw UnimplementedError();
+  }
+
   /// Requests web push permission. Only works on web.
   Future<void> requestPermission() {
     throw UnimplementedError();

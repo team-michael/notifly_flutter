@@ -21,12 +21,19 @@ import tech.notifly.sdk.NotiflySdkControlToken
 import tech.notifly.push.interfaces.INotificationClickEvent
 import tech.notifly.push.interfaces.INotificationClickListener
 
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 class NotiflyControlTokenImpl : NotiflySdkControlToken
 
 class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
     private var context: Context? = null
     private var isNativeNotificationClickListenersAdded = false
+
+    private val pluginScope = MainScope()
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(binding.binaryMessenger, "notifly_flutter_android")
@@ -136,6 +143,22 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     trackEvent(call)
                     runOnMainThread {
                         result.success(true)
+                    }
+                }
+
+                "getNotiflyUserId" -> {
+                    errorCodeOnError = "GET_NOTIFLY_USER_ID_FAILED"
+                    errorMessageOnError = "Failed to get Notifly user id"
+
+                    pluginScope.launch {
+                        try {
+                            val notiflyUserId = withContext(Dispatchers.IO) {
+                                getNotiflyUserId(call)
+                            }
+                            result.success(notiflyUserId)
+                        } catch (e: Exception) {
+                            result.error(errorCodeOnError, errorMessageOnError, e.toString())
+                        }
                     }
                 }
 
@@ -268,6 +291,15 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             call.argument<List<String>>("segmentationEventParamKeys") ?: null
 
         Notifly.trackEvent(context!!, eventName, eventParams, segmentationEventParamKeys)
+    }
+
+    @Throws(IllegalArgumentException::class, Exception::class)
+    private suspend fun getNotiflyUserId(call: MethodCall): String? {
+        if (context == null) {
+            throw Exception("Context is null")
+        }
+
+        return Notifly.getNotiflyUserId(context!!)
     }
 
     @Throws(IllegalArgumentException::class, Exception::class)
