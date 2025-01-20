@@ -81,6 +81,11 @@ class NotiflyFlutterIOS extends NotiflyFlutterPlatform {
     });
   }
 
+  @override
+  Future<String?> getNotiflyUserId() {
+    return channel.invokeMethod<String>('getNotiflyUserId');
+  }
+
   /// Registers this class as the default instance of [NotiflyFlutterPlatform]
   static void registerWith() {
     NotiflyFlutterPlatform.instance = NotiflyFlutterIOS();

@@ -106,6 +106,13 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
       }
       result(nil)
 
+    case "getNotiflyUserId":
+      if let notiflyUserId = Notifly.getNotiflyUserId() {
+        result(notiflyUserId)
+      } else {
+        result(nil)
+      }
+
     default:
       result(FlutterMethodNotImplemented)
     }
