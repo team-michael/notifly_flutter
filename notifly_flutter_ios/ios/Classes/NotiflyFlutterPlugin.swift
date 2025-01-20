@@ -107,7 +107,8 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
       result(nil)
 
     case "getNotiflyUserId":
-      if let notiflyUserId = Notifly.getNotiflyUserId() {
+      let notiflyUserId = Notifly.getNotiflyUserId()
+      if notiflyUserId != nil {
         result(notiflyUserId)
       } else {
         result(nil)

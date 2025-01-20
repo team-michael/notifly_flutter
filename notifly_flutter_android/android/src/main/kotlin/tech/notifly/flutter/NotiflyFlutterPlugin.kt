@@ -21,7 +21,7 @@ import tech.notifly.sdk.NotiflySdkControlToken
 import tech.notifly.push.interfaces.INotificationClickEvent
 import tech.notifly.push.interfaces.INotificationClickListener
 
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -33,7 +33,7 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var context: Context? = null
     private var isNativeNotificationClickListenersAdded = false
 
-    private val pluginScope = MainScope()
+    private val pluginScope = CoroutineScope(Dispatchers.Default)
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(binding.binaryMessenger, "notifly_flutter_android")
