@@ -87,6 +87,11 @@ class MethodChannelNotiflyFlutter extends NotiflyFlutterPlatform {
   }
 
   @override
+  Future<String?> getNotiflyUserId() {
+    return channel.invokeMethod<String>('getNotiflyUserId');
+  }
+
+  @override
   Future<void> requestPermission() {
     return channel.invokeMethod<void>('requestPermission');
   }

@@ -130,6 +130,16 @@ class NotiflyPlugin {
     }
   }
 
+  /// Returns the Notifly user ID for the current user.
+  static Future<String?> getNotiflyUserId() async {
+    try {
+      return await _platform.getNotiflyUserId();
+    } catch (e) {
+      _logger.e('Failed to', e);
+      return null;
+    }
+  }
+
   /// Add notification click listener (Supported for Android platform only).
   static Future<void> addNotificationClickListener(
     NotificationClickListener listener,

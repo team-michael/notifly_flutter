@@ -145,6 +145,11 @@ class NotiflyFlutterAndroid extends NotiflyFlutterPlatform {
     }
   }
 
+  @override
+  Future<String?> getNotiflyUserId() async {
+    return channel.invokeMethod<String>('getNotiflyUserId');
+  }
+
   /// Registers this class as the default instance of [NotiflyFlutterPlatform]
   static void registerWith() {
     NotiflyFlutterPlatform.instance = NotiflyFlutterAndroid();

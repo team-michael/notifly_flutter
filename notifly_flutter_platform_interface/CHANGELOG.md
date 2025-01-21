@@ -157,3 +157,7 @@
 # 1.9.2
 
 - Change event tracking partition key as notifly_device_id
+
+# 1.10.0
+
+- Added `getNotiflyUserId` method to get the Notifly user ID.

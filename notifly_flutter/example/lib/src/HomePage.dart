@@ -99,6 +99,27 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                FutureBuilder<String?>(
+                  future: NotiflyPlugin.getNotiflyUserId(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Notifly User ID',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          snapshot.hasError ? 'Error: ${snapshot.error}' : '${snapshot.data}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    );
+                  },
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: TextField(

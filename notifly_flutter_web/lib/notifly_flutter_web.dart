@@ -203,6 +203,11 @@ class NotiflyFlutterWeb extends NotiflyFlutterPlatform {
     return completer.future;
   }
 
+  @override
+  Future<String?> getNotiflyUserId() {
+    return Future.value(null);
+  }
+
   /// Registers this class as the default instance of [NotiflyFlutterPlatform]
   static void registerWith(Registrar registrar) {
     NotiflyFlutterPlatform.instance = NotiflyFlutterWeb();
