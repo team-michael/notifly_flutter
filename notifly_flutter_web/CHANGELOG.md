@@ -161,3 +161,7 @@
 # 1.10.0
 
 - Added `getNotiflyUserId` method to get the Notifly user ID for iOS and Android platforms.
+
+# 1.11.0
+
+- Support in-app message template with transparent background.
