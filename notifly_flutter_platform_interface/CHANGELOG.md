@@ -165,3 +165,8 @@
 # 1.11.0
 
 - Support in-app message template with transparent background.
+
+# 1.12.0
+
+- Force software rendering for in-app message WebView to avoid hardware acceleration issues on Samsung Galaxy S25 device family.
+- Add event logs when push notification delivery is not successful.
