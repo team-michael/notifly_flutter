@@ -171,6 +171,6 @@
 - Force software rendering for in-app message WebView to avoid hardware acceleration issues on Samsung Galaxy S25 device family.
 - Add event logs when push notification delivery is not successful.
 
-# 2.0.0
+# 2.0.1
 
 - Update Logger verion to 2.6.1
