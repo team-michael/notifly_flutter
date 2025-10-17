@@ -1,6 +1,6 @@
 name: notifly_flutter
 description: Notifly Flutter Plugin is a cross-platform SDK for integrating Notifly services into your Flutter apps.
-version: 2.0.1
+version: 2.0.2
 homepage: https://notifly.tech/
 
 # publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -24,10 +24,10 @@ dependencies:
     sdk: flutter
   logger: ^2.6.1
 
-  notifly_flutter_android: 2.0.1 # Remove this line if you wish to locally test this package
-  notifly_flutter_ios: 2.0.1 # Remove this line if you wish to locally test this package
-  notifly_flutter_platform_interface: 2.0.1 # Remove this line if you wish to locally test this package
-  notifly_flutter_web: 2.0.1 # Remove this line if you wish to locally test this package
+  notifly_flutter_android: 2.0.2 # Remove this line if you wish to locally test this package
+  notifly_flutter_ios: 2.0.2 # Remove this line if you wish to locally test this package
+  notifly_flutter_platform_interface: 2.0.2 # Remove this line if you wish to locally test this package
+  notifly_flutter_web: 2.0.2 # Remove this line if you wish to locally test this package
 
   # notifly_flutter_android: # Remove this line if you wish to publish to pub.dev
   #   path: ../notifly_flutter_android # Remove this line if you wish to publish to pub.dev
@@ -42,4 +42,4 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mocktail: ^0.3.0
-  plugin_platform_interface: ^2.0.1
+  plugin_platform_interface: ^2.0.2

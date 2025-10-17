@@ -174,3 +174,7 @@
 # 2.0.1
 
 - Update Logger verion to 2.6.1
+
+# 2.0.2
+
+- Fix Build issue

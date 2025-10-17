@@ -1,6 +1,6 @@
 name: notifly_flutter_android
 description: Android implementation of the notifly_flutter plugin, based on Notifly Android SDK.
-version: 2.0.1
+version: 2.0.2
 homepage: https://notifly.tech/
 
 # publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -21,11 +21,11 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  notifly_flutter_platform_interface: 2.0.1 # Remove this line if you wish to locally test this package
+  notifly_flutter_platform_interface: 2.0.2 # Remove this line if you wish to locally test this package
   # notifly_flutter_platform_interface: # Remove this line if you wish to publish to pub.dev
   #   path: ../notifly_flutter_platform_interface # Remove this line if you wish to publish to pub.dev
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  plugin_platform_interface: ^2.0.1
+  plugin_platform_interface: ^2.0.2
