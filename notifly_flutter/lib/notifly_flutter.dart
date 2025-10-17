@@ -42,7 +42,7 @@ class NotiflyPlugin {
         _logger.w('Notifly Flutter is already initialized.');
       }
     } catch (e) {
-      _logger.e('Failed to', e);
+      _logger.e('Failed to', error: e);
     }
   }
 
@@ -52,7 +52,7 @@ class NotiflyPlugin {
       try {
         await _platform.requestPermission();
       } catch (e) {
-        _logger.e('Failed to', e);
+        _logger.e('Failed to', error: e);
       }
     } else {
       _logger.w('This method is only available on web.');
@@ -64,7 +64,7 @@ class NotiflyPlugin {
     try {
       await _platform.setLogLevel(logLevel);
     } catch (e) {
-      _logger.e('Failed to', e);
+      _logger.e('Failed to', error: e);
     }
   }
 
@@ -73,7 +73,7 @@ class NotiflyPlugin {
     try {
       await _platform.setUserId(userId);
     } catch (e) {
-      _logger.e('Failed to', e);
+      _logger.e('Failed to', error: e);
     }
   }
 
@@ -82,7 +82,7 @@ class NotiflyPlugin {
     try {
       await _platform.setUserProperties(params);
     } catch (e) {
-      _logger.e('Failed to', e);
+      _logger.e('Failed to', error: e);
     }
   }
 
@@ -91,7 +91,7 @@ class NotiflyPlugin {
     try {
       await _platform.setEmail(email);
     } catch (e) {
-      _logger.e('Failed to', e);
+      _logger.e('Failed to', error: e);
     }
   }
 
@@ -100,7 +100,7 @@ class NotiflyPlugin {
     try {
       await _platform.setPhoneNumber(phoneNumber);
     } catch (e) {
-      _logger.e('Failed to', e);
+      _logger.e('Failed to', error: e);
     }
   }
 
@@ -109,7 +109,7 @@ class NotiflyPlugin {
     try {
       await _platform.setTimezone(timezone);
     } catch (e) {
-      _logger.e('Failed to', e);
+      _logger.e('Failed to', error: e);
     }
   }
 
@@ -126,7 +126,7 @@ class NotiflyPlugin {
         segmentationEventParamKeys,
       );
     } catch (e) {
-      _logger.e('Failed to', e);
+      _logger.e('Failed to', error: e);
     }
   }
 
@@ -135,7 +135,7 @@ class NotiflyPlugin {
     try {
       return await _platform.getNotiflyUserId();
     } catch (e) {
-      _logger.e('Failed to', e);
+      _logger.e('Failed to', error: e);
       return null;
     }
   }
@@ -156,7 +156,7 @@ class NotiflyPlugin {
         }
         _notificationClickListeners.add(listener);
       } catch (e) {
-        _logger.e('Failed to', e);
+        _logger.e('Failed to', error: e);
       }
     } else {
       _logger.w('This method is only available on Android. '
