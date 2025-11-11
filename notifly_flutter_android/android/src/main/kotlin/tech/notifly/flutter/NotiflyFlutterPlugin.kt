@@ -12,6 +12,9 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import io.flutter.plugin.common.EventChannel
+import io.flutter.plugin.common.EventChannel.EventSink
+import io.flutter.plugin.common.EventChannel.StreamHandler
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 
@@ -20,6 +23,7 @@ import tech.notifly.sdk.NotiflySdkWrapperType
 import tech.notifly.sdk.NotiflySdkControlToken
 import tech.notifly.push.interfaces.INotificationClickEvent
 import tech.notifly.push.interfaces.INotificationClickListener
+import tech.notifly.push.interfaces.IInAppMessageEventListener
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -28,10 +32,31 @@ import kotlinx.coroutines.withContext
 
 class NotiflyControlTokenImpl : NotiflySdkControlToken
 
-class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, StreamHandler {
     private lateinit var channel: MethodChannel
+    private lateinit var inAppEventChannel: EventChannel
     private var context: Context? = null
     private var isNativeNotificationClickListenersAdded = false
+    private var isNativeInAppMessageEventListenerAdded = false
+    private var eventSink: EventSink? = null
+    private val inAppMessageEventListener = object : IInAppMessageEventListener {
+        override fun handleEvent(eventName: String, eventParams: Map<String, Any?>?) {
+            runOnMainThread {
+                try {
+                    val payload = mapOf(
+                        "name" to eventName,
+                        "params" to (eventParams ?: emptyMap<String, Any?>()),
+                        "platform" to "android",
+                        "ts" to System.currentTimeMillis()
+                    )
+                    eventSink?.success(payload)
+                } catch (e: Exception) {
+                    // Silently fail, just log (following existing pattern)
+                    android.util.Log.e("NotiflyFlutterPlugin", "Failed to send in-app event", e)
+                }
+            }
+        }
+    }
 
     private val pluginScope = CoroutineScope(Dispatchers.Default)
 
@@ -39,6 +64,10 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         channel = MethodChannel(binding.binaryMessenger, "notifly_flutter_android")
         channel.setMethodCallHandler(this)
         context = binding.applicationContext
+
+        // Setup EventChannel for in-app message events
+        inAppEventChannel = EventChannel(binding.binaryMessenger, "notifly_flutter/in_app_events")
+        inAppEventChannel.setStreamHandler(this)
 
         // Initialize Webview
         val webView = WebView(context!!)
@@ -49,6 +78,8 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        inAppEventChannel.setStreamHandler(null)
+        eventSink = null
         context = null
     }
 
@@ -333,5 +364,22 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val handler = Handler(Looper.getMainLooper())
             handler.post(runnable)
         }
+    }
+
+    // EventChannel.StreamHandler implementation
+    override fun onListen(arguments: Any?, events: EventSink?) {
+        eventSink = events
+        
+        // Register native listener only once (singleton pattern for hot reload)
+        if (!isNativeInAppMessageEventListenerAdded) {
+            isNativeInAppMessageEventListenerAdded = true
+            Notifly.addInAppMessageEventListener(inAppMessageEventListener)
+        }
+    }
+
+    override fun onCancel(arguments: Any?) {
+        eventSink = null
+        // Note: We don't remove the native listener here to support hot reload
+        // The listener will be reused if the stream is re-subscribed
     }
 }
