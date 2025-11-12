@@ -57,7 +57,14 @@ class NotiflyPlugin {
   /// // Later...
   /// subscription.cancel();
   /// ```
-  static Stream<InAppMessageEvent> get inAppEvents => _inAppEventsController.stream;
+  static Stream<InAppMessageEvent> get inAppEvents {
+    _logger.d('[Flutter] ========== inAppEvents getter accessed ==========');
+    _logger.d('[Flutter] EventChannel wired: $_inAppEventsWired');
+    _logger.d('[Flutter] Current listener count: ${_inAppEventsController.hasListener ? "has listeners" : "no listeners"}');
+    _logger.d('[Flutter] StreamController state: ${_inAppEventsController.isClosed ? "closed" : "open"}');
+    _logger.d('[Flutter] Returning broadcast stream');
+    return _inAppEventsController.stream;
+  }
 
   /// Initialize Notifly Flutter.
   static Future<void> initialize({
@@ -65,58 +72,95 @@ class NotiflyPlugin {
     required String username,
     required String password,
   }) async {
+    _logger.d('[Flutter] ========== initialize() START ==========');
+    _logger.d('[Flutter] Already initialized: $_isInitialized');
+    _logger.d('[Flutter] Platform check: kIsWeb=$kIsWeb, isAndroid=${!kIsWeb && Platform.isAndroid}, isIOS=${!kIsWeb && Platform.isIOS}');
+    
     try {
       if (!_isInitialized) {
+        _logger.d('[Flutter] Not initialized yet - proceeding with initialization');
+        
         if (!kIsWeb && Platform.isAndroid) {
-          // Currently only Android platform requires method call handler.
+          _logger.d('[Flutter] Step 1: Setting up Android method call handler...');
           _platform.channel.setMethodCallHandler(_handleMethodCall);
+          _logger.d('[Flutter] ✓ Android method call handler set');
+        } else {
+          _logger.d('[Flutter] Step 1: Skipping Android method call handler (not Android platform)');
         }
+        
+        _logger.d('[Flutter] Step 2: Calling platform.initialize()...');
+        _logger.d('[Flutter]   - projectId: $projectId');
+        _logger.d('[Flutter]   - username: $username');
+        _logger.d('[Flutter]   - password: ${password.isNotEmpty ? "***" : "empty"}');
         await _platform.initialize(projectId, username, password);
+        _logger.d('[Flutter] ✓ Platform initialization completed');
+        
+        _logger.d('[Flutter] Step 3: Calling _wireInAppEvents()...');
         _wireInAppEvents();
+        
         _isInitialized = true;
+        _logger.d('[Flutter] ✓ NotiflyPlugin initialization completed successfully');
+        _logger.d('[Flutter] ========== initialize() COMPLETED ==========');
       } else {
-        _logger.w('Notifly Flutter is already initialized.');
+        _logger.w('[Flutter] ⚠ Notifly Flutter is already initialized - skipping');
+        _logger.d('[Flutter] ========== initialize() SKIPPED (already initialized) ==========');
       }
-    } catch (e) {
-      _logger.e('Failed to', error: e);
+    } catch (e, stackTrace) {
+      _logger.e('[Flutter] ✗ ERROR: Failed to initialize NotiflyPlugin', error: e, stackTrace: stackTrace);
+      _logger.e('[Flutter] Error type: ${e.runtimeType}');
+      _logger.e('[Flutter] Error details: $e');
+      _logger.e('[Flutter] ========== initialize() FAILED ==========');
+      rethrow;
     }
   }
 
   /// Wires the in-app events EventChannel to the stream controller.
   /// This is called automatically during initialization.
   static void _wireInAppEvents() {
+    _logger.d('[Flutter] 🔌 Connecting EventChannel for in-app events');
+
     if (kIsWeb) {
-      // Web platform is not supported
+      _logger.d('[Flutter] ⏭️ Skipping EventChannel (web platform)');
       return;
     }
 
     if (_inAppEventsWired) {
-      // Already wired, skip
+      _logger.d('[Flutter] ♻️ EventChannel already connected');
       return;
     }
 
     try {
-      _inAppEventChannel.receiveBroadcastStream().listen(
+      final stream = _inAppEventChannel.receiveBroadcastStream();
+
+      stream.listen(
         (dynamic event) {
           try {
             if (event is Map) {
               final eventMap = Map<String, dynamic>.from(event);
               final inAppEvent = InAppMessageEvent.fromMap(eventMap);
+
+              _logger.d('[Flutter] 📨 In-app event received: ${inAppEvent.name} (${inAppEvent.platform})');
               _inAppEventsController.add(inAppEvent);
             } else {
-              _logger.w('Received invalid in-app event format: $event');
+              _logger.w('[Flutter] ⚠️ Invalid event format: ${event.runtimeType}');
             }
-          } catch (e) {
-            _logger.e('Failed to process in-app event', error: e);
+          } catch (e, stackTrace) {
+            _logger.e('[Flutter] ❌ Failed to process event', error: e, stackTrace: stackTrace);
           }
         },
-        onError: (error) {
-          _logger.e('Error receiving in-app events', error: error);
+        onError: (error, stackTrace) {
+          _logger.e('[Flutter] ❌ EventChannel error', error: error, stackTrace: stackTrace);
         },
+        onDone: () {
+          _logger.d('[Flutter] 🔕 EventChannel stream closed');
+        },
+        cancelOnError: false,
       );
+
       _inAppEventsWired = true;
-    } catch (e) {
-      _logger.e('Failed to wire in-app events', error: e);
+      _logger.d('[Flutter] ✅ EventChannel connected successfully');
+    } catch (e, stackTrace) {
+      _logger.e('[Flutter] ❌ Failed to connect EventChannel', error: e, stackTrace: stackTrace);
     }
   }
 
