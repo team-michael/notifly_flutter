@@ -398,8 +398,6 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, St
         })
     }
 
-    // Removed - using companion object version instead
-
     // EventChannel.StreamHandler implementation
     override fun onListen(arguments: Any?, events: EventSink?) {
         android.util.Log.i("NotiflyFlutterPlugin", "📡 [Notifly] InApp stream subscribed")
