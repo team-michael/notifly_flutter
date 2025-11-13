@@ -9,12 +9,6 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
   private static var isNativeInAppMessageEventListenerAdded = false
 
   public static func register(with registrar: FlutterPluginRegistrar) {
-    // Defensive check for registrar validity
-    guard registrar.messenger() != nil else {
-      print("❌ [Notifly] Plugin attach failed: registrar.messenger() is nil")
-      fatalError("Failed to register Notifly plugin: messenger is nil")
-    }
-
     let channel = FlutterMethodChannel(
       name: "notifly_flutter_ios", binaryMessenger: registrar.messenger())
     let instance = NotiflyFlutterPlugin()
