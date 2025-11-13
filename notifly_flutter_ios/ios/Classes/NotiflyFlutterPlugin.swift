@@ -154,9 +154,11 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
               return
             }
 
-          let payload: [String: Any?] = [
+          let sanitizedParams = (eventParams as Any?) ?? NSNull()
+
+          let payload: [String: Any] = [
             "eventName": eventName,
-            "eventParams": eventParams
+            "eventParams": sanitizedParams
           ]
           sink(payload)
         }
