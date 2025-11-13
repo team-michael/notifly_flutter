@@ -85,7 +85,7 @@ class NotiflyPlugin {
         _isInitialized = true;
         _logger.i('🚀 [Notifly] Initialized (project: $projectId)');
       } else {
-        _logger.w('⚠️ [Notifly] Already initialized - skipping');
+        _logger.w('⚠️ [Notifly] Flutter is already initialized - skipping');
       }
     } catch (e, stackTrace) {
       _logger.e('❌ [Notifly] Initialization failed', error: e, stackTrace: stackTrace);
@@ -114,7 +114,7 @@ class NotiflyPlugin {
               final eventMap = Map<String, dynamic>.from(event);
               final inAppEvent = InAppMessageEvent.fromMap(eventMap);
 
-              _logger.i('📨 [Notifly] Event: ${inAppEvent.name}');
+              _logger.i('📨 [Notifly] Event: ${inAppEvent.eventName}');
               _inAppEventsController.add(inAppEvent);
             } else {
               _logger.w('⚠️ [Notifly] Event dropped (invalid format)');

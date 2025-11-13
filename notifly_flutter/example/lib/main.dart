@@ -171,10 +171,8 @@ class _MyAppState extends State<MyApp> {
     _inAppEventSubscription = NotiflyPlugin.inAppEvents.listen(
       (event) {
         print('🔥 [TEST] In-App Event Received:');
-        print('  Type: ${event.name}');
-        print('  Params: ${event.params}');
-        print('  Platform: ${event.platform}');
-        print('  Timestamp: ${event.timestampMillis}');
+        print('  Event Name: ${event.eventName}');
+        print('  Event Params: ${event.eventParams}');
         print('  ---');
       },
       onError: (error) {
