@@ -55,10 +55,8 @@ class NotiflyFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, St
                         }
 
                         val payload = mapOf(
-                            "name" to eventName,
-                            "params" to (eventParams ?: emptyMap<String, Any?>()),
-                            "platform" to "android",
-                            "ts" to System.currentTimeMillis()
+                            "eventName" to eventName,
+                            "eventParams" to eventParams
                         )
                         sharedEventSink?.success(payload)
                     } catch (e: Exception) {

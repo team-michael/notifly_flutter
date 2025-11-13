@@ -24,7 +24,6 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
     switch call.method {
     case "getPlatformName":
       result("ios")
-      return
 
     case "initialize":
       if let arguments = call.arguments as? [String: Any],
@@ -156,11 +155,9 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
               return
             }
 
-            let payload: [String: Any] = [
-              "name": eventName,
-              "params": eventParams ?? [:],
-              "platform": "ios",
-              "ts": Int(Date().timeIntervalSince1970 * 1000)
+            let payload: [String: Any?] = [
+              "eventName": eventName,
+              "eventParams": eventParams
             ]
             sink(payload)
           } catch {
