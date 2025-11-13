@@ -29,12 +29,10 @@ jobs:
       flutter_version: 3.10.0
       working_directory: notifly_flutter
       min_coverage: 0
-      setup: |        
+      setup: |
         dart --disable-analytics || true
         flutter --disable-telemetry || true
-        mkdir -p ~/.very_good && printf '{"telemetry":false}\n' > ~/.very_good/config.json || true
-
-        printf 'n\n' | script -q -e -c "flutter pub global activate very_good_cli" /dev/null
+        flutter pub global activate very_good_cli
     secrets: inherit
 
   android:
