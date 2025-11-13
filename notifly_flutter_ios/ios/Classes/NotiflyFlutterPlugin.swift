@@ -146,16 +146,6 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
   public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
     print("📡 [Notifly] InApp stream subscribed")
 
-    // Defensive check for EventSink validity
-    guard events != nil else {
-      print("❌ [Notifly] Failed to subscribe: EventSink is nil")
-      return FlutterError(
-        code: "SUBSCRIBE_FAILED",
-        message: "Failed to subscribe to in-app events",
-        details: "EventSink is nil"
-      )
-    }
-
     NotiflyFlutterPlugin.sharedEventSink = events
 
     // Register native listener only once (singleton pattern for hot reload)
