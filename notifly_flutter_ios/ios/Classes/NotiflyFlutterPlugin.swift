@@ -147,22 +147,18 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
       NotiflyFlutterPlugin.isNativeInAppMessageEventListenerAdded = true
       Notifly.addInAppMessageEventListener { eventName, eventParams in
         DispatchQueue.main.async {
-          do {
-            print("📨 [Notifly] Event: \(eventName)")
+          print("📨 [Notifly] Event: \(eventName)")
 
-            guard let sink = NotiflyFlutterPlugin.sharedEventSink else {
+          guard let sink = NotiflyFlutterPlugin.sharedEventSink else {
               print("⚠️ [Notifly] Event dropped (no subscription)")
               return
             }
 
-            let payload: [String: Any?] = [
-              "eventName": eventName,
-              "eventParams": eventParams
-            ]
-            sink(payload)
-          } catch {
-            print("❌ [Notifly] Failed to send event: \(error.localizedDescription)")
-          }
+          let payload: [String: Any?] = [
+            "eventName": eventName,
+            "eventParams": eventParams
+          ]
+          sink(payload)
         }
       }
       print("📡 [Notifly] InApp listener registered")

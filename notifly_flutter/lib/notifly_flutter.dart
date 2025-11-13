@@ -47,7 +47,7 @@ class NotiflyPlugin {
   /// **Usage**:
   /// ```dart
   /// NotiflyPlugin.inAppEvents.listen((event) {
-  ///   print('Event: ${event.name}, Params: ${event.params}');
+  ///   print('Event: ${event.eventName}, Params: ${event.eventParams}');
   /// });
   /// ```
   /// 
@@ -133,6 +133,7 @@ class NotiflyPlugin {
       _logger.i('📡 [Notifly] InApp listener ready');
     } catch (e, stackTrace) {
       _logger.e('❌ [Notifly] Failed to connect EventChannel', error: e, stackTrace: stackTrace);
+      rethrow;
     }
   }
 
