@@ -9,6 +9,12 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
   private static var isNativeInAppMessageEventListenerAdded = false
 
   public static func register(with registrar: FlutterPluginRegistrar) {
+    // Defensive check for registrar validity
+    guard registrar.messenger() != nil else {
+      print("❌ [Notifly] Plugin attach failed: registrar.messenger() is nil")
+      fatalError("Failed to register Notifly plugin: messenger is nil")
+    }
+
     let channel = FlutterMethodChannel(
       name: "notifly_flutter_ios", binaryMessenger: registrar.messenger())
     let instance = NotiflyFlutterPlugin()
@@ -140,6 +146,16 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
   public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
     print("📡 [Notifly] InApp stream subscribed")
 
+    // Defensive check for EventSink validity
+    guard events != nil else {
+      print("❌ [Notifly] Failed to subscribe: EventSink is nil")
+      return FlutterError(
+        code: "SUBSCRIBE_FAILED",
+        message: "Failed to subscribe to in-app events",
+        details: "EventSink is nil"
+      )
+    }
+
     NotiflyFlutterPlugin.sharedEventSink = events
 
     // Register native listener only once (singleton pattern for hot reload)
@@ -160,6 +176,7 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
             "eventName": eventName,
             "eventParams": sanitizedParams
           ]
+
           sink(payload)
         }
       }
