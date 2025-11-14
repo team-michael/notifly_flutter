@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -133,6 +134,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  StreamSubscription<InAppMessageEvent>? _inAppEventSubscription;
+
   Future<void> initNotifly() async {
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -157,6 +160,26 @@ class _MyAppState extends State<MyApp> {
             '🔥 [NotiflyFlutterPackage]: Notification clicked: ${notification.notification.customData}');
       });
     }
+
+    // Subscribe to in-app message events
+    if (!kIsWeb) {
+      _subscribeToInAppEvents();
+    }
+  }
+
+  void _subscribeToInAppEvents() {
+    _inAppEventSubscription = NotiflyPlugin.inAppEvents.listen(
+      (event) {
+        print('🔥 [TEST] In-App Event Received:');
+        print('  Event Name: ${event.eventName}');
+        print('  Event Params: ${event.eventParams}');
+        print('  ---');
+      },
+      onError: (error) {
+        print('🔥 [TEST] In-App Event Error: $error');
+      },
+    );
+    print('🔥 [TEST] In-App Event Listener: Subscribed');
   }
 
   @override
@@ -166,6 +189,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
+    _inAppEventSubscription?.cancel();
+    print('🔥 [TEST] In-App Event Listener: Subscription cancelled');
     super.dispose();
   }
 

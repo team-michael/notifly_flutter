@@ -24,19 +24,19 @@ dependencies:
     sdk: flutter
   logger: ^2.6.1
 
-  notifly_flutter_android: 2.0.2 # Remove this line if you wish to locally test this package
-  notifly_flutter_ios: 2.0.2 # Remove this line if you wish to locally test this package
-  notifly_flutter_platform_interface: 2.0.2 # Remove this line if you wish to locally test this package
-  notifly_flutter_web: 2.0.2 # Remove this line if you wish to locally test this package
+  # notifly_flutter_android: 2.0.2 # Remove this line if you wish to locally test this package
+  # notifly_flutter_ios: 2.0.2 # Remove this line if you wish to locally test this package
+  # notifly_flutter_platform_interface: 2.0.2 # Remove this line if you wish to locally test this package
+  # notifly_flutter_web: 2.0.2 # Remove this line if you wish to locally test this package
 
-  # notifly_flutter_android: # Remove this line if you wish to publish to pub.dev
-  #   path: ../notifly_flutter_android # Remove this line if you wish to publish to pub.dev
-  # notifly_flutter_ios: # Remove this line if you wish to publish to pub.dev
-  #   path: ../notifly_flutter_ios # Remove this line if you wish to publish to pub.dev
-  # notifly_flutter_platform_interface: # Remove this line if you wish to publish to pub.dev
-  #   path: ../notifly_flutter_platform_interface # Remove this line if you wish to publish to pub.dev
-  # notifly_flutter_web: # Remove this line if you wish to publish to pub.dev
-  #   path: ../notifly_flutter_web # Remove this line if you wish to publish to pub.dev
+  notifly_flutter_android: # Remove this line if you wish to publish to pub.dev
+    path: ../notifly_flutter_android # Remove this line if you wish to publish to pub.dev
+  notifly_flutter_ios: # Remove this line if you wish to publish to pub.dev
+    path: ../notifly_flutter_ios # Remove this line if you wish to publish to pub.dev
+  notifly_flutter_platform_interface: # Remove this line if you wish to publish to pub.dev
+    path: ../notifly_flutter_platform_interface # Remove this line if you wish to publish to pub.dev
+  notifly_flutter_web: # Remove this line if you wish to publish to pub.dev
+    path: ../notifly_flutter_web # Remove this line if you wish to publish to pub.dev
 
 dev_dependencies:
   flutter_test:

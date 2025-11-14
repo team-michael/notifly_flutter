@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+import 'package:notifly_flutter/src/in_app_message.dart';
 import 'package:notifly_flutter/src/notification.dart';
 import 'package:notifly_flutter_platform_interface/notifly_flutter_platform_interface.dart';
 
+export 'package:notifly_flutter/src/in_app_message.dart';
 export 'package:notifly_flutter/src/notification.dart';
 
 NotiflyFlutterPlatform get _platform => NotiflyFlutterPlatform.instance;
@@ -24,6 +27,46 @@ class NotiflyPlugin {
   static final _notificationClickListeners = <NotificationClickListener>{};
   static bool _isClickListenerRegistered = false;
 
+  // In-app message event stream
+  static const _inAppEventChannel = EventChannel('notifly_flutter/in_app_events');
+  static final _inAppEventsController = StreamController<InAppMessageEvent>.broadcast();
+  static bool _inAppEventsWired = false;
+
+  /// Stream of in-app message events.
+  /// 
+  /// This stream provides events from in-app popups such as:
+  /// - `in_app_message_show`: In-app popup displayed
+  /// - `main_button_click`: Main button clicked
+  /// - `hide_in_app_message_button_click`: "Don't show again" button clicked
+  /// - `close_button_click`: Close button clicked
+  /// - `survey_submit_button_click`: Survey submit button clicked
+  /// 
+  /// **Note**: This stream is only available on Android and iOS platforms.
+  /// Web platform is not supported.
+  /// 
+  /// **Usage**:
+  /// ```dart
+  /// NotiflyPlugin.inAppEvents.listen((event) {
+  ///   print('Event: ${event.eventName}, Params: ${event.eventParams}');
+  /// });
+  /// ```
+  /// 
+  /// **Important**: Make sure to cancel the subscription when done:
+  /// ```dart
+  /// final subscription = NotiflyPlugin.inAppEvents.listen((event) { ... });
+  /// // Later...
+  /// subscription.cancel();
+  /// ```
+  static Stream<InAppMessageEvent> get inAppEvents {
+    if (!_isInitialized) {
+      throw StateError(
+        'NotiflyPlugin.initialize() must be called before accessing inAppEvents. '
+        'Please call NotiflyPlugin.initialize() first.'
+      );
+    }
+    return _inAppEventsController.stream;
+  }
+
   /// Initialize Notifly Flutter.
   static Future<void> initialize({
     required String projectId,
@@ -33,16 +76,64 @@ class NotiflyPlugin {
     try {
       if (!_isInitialized) {
         if (!kIsWeb && Platform.isAndroid) {
-          // Currently only Android platform requires method call handler.
           _platform.channel.setMethodCallHandler(_handleMethodCall);
         }
+
         await _platform.initialize(projectId, username, password);
+        _wireInAppEvents();
+
         _isInitialized = true;
+        _logger.i('🚀 [Notifly] Initialized (project: $projectId)');
       } else {
-        _logger.w('Notifly Flutter is already initialized.');
+        _logger.w('⚠️ [Notifly] Flutter is already initialized - skipping');
       }
-    } catch (e) {
-      _logger.e('Failed to', error: e);
+    } catch (e, stackTrace) {
+      _logger.e('❌ [Notifly] Initialization failed', error: e, stackTrace: stackTrace);
+      rethrow;
+    }
+  }
+
+  /// Wires the in-app events EventChannel to the stream controller.
+  /// This is called automatically during initialization.
+  static void _wireInAppEvents() {
+    if (kIsWeb) {
+      return;
+    }
+
+    if (_inAppEventsWired) {
+      return;
+    }
+
+    try {
+      final stream = _inAppEventChannel.receiveBroadcastStream();
+
+      stream.listen(
+        (dynamic event) {
+          try {
+            if (event is Map) {
+              final eventMap = Map<String, dynamic>.from(event);
+              final inAppEvent = InAppMessageEvent.fromMap(eventMap);
+
+              _logger.i('📨 [Notifly] Event: ${inAppEvent.eventName}');
+              _inAppEventsController.add(inAppEvent);
+            } else {
+              _logger.w('⚠️ [Notifly] Event dropped (invalid format)');
+            }
+          } catch (e, stackTrace) {
+            _logger.e('❌ [Notifly] Failed to process event', error: e, stackTrace: stackTrace);
+          }
+        },
+        onError: (error, stackTrace) {
+          _logger.e('❌ [Notifly] EventChannel error', error: error, stackTrace: stackTrace);
+        },
+        cancelOnError: false,
+      );
+
+      _inAppEventsWired = true;
+      _logger.i('📡 [Notifly] InApp listener ready');
+    } catch (e, stackTrace) {
+      _logger.e('❌ [Notifly] Failed to connect EventChannel', error: e, stackTrace: stackTrace);
+      rethrow;
     }
   }
 
