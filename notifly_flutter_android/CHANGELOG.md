@@ -178,3 +178,9 @@
 # 2.0.2
 
 - Fix Build issue
+
+# 2.1.0
+
+- Add in-app message event listener support via StreamHandler
+- Implement native bridge for in-app message events using EventChannel
+- Add singleton pattern to prevent duplicate event listener registration
