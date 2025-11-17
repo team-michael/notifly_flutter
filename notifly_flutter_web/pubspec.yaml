@@ -24,9 +24,9 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   js: ^0.6.3
-  notifly_flutter_platform_interface: 2.1.0
-  # notifly_flutter_platform_interface: # Remove this line if you wish to locally test this package
-  #   path: ../notifly_flutter_platform_interface # Remove this line if you wish to locally test this package
+  notifly_flutter_platform_interface: 2.1.0 # Remove this line if you wish to locally test this package
+  # notifly_flutter_platform_interface: # Remove this line if you wish to publish to pub.dev
+  #   path: ../notifly_flutter_platform_interface # Remove this line if you wish to publish to pub.dev
 
 dev_dependencies:
   dart_style: ^2.2.1
