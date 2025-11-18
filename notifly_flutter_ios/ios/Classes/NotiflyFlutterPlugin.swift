@@ -3,12 +3,21 @@ import Foundation
 import UIKit
 import notifly_sdk
 
-public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
+public class NotiflyFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
+  // Static variables shared across all instances (singleton pattern for hot reload)
+  private static var sharedEventSink: FlutterEventSink?
+  private static var isNativeInAppMessageEventListenerAdded = false
+
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(
       name: "notifly_flutter_ios", binaryMessenger: registrar.messenger())
     let instance = NotiflyFlutterPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
+
+    // Setup EventChannel for in-app message events
+    let eventChannel = FlutterEventChannel(
+      name: "notifly_flutter/in_app_events", binaryMessenger: registrar.messenger())
+    eventChannel.setStreamHandler(instance)
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -21,9 +30,12 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
         let projectId = arguments["projectId"] as? String,
         let username = arguments["username"] as? String,
         let password = arguments["password"] as? String {
+
         Notifly.setSdkType(type: "flutter")
         Notifly.setSdkVersion(version: Constants.SDK_VERSION)
         Notifly.initialize(projectId: projectId, username: username, password: password)
+
+        print("🚀 [Notifly] Initialized (project: \(projectId))")
       } else {
         log(funcName: "initialize", message: "Invalid arguments")
       }
@@ -115,11 +127,57 @@ public class NotiflyFlutterPlugin: NSObject, FlutterPlugin {
       }
 
     default:
+      print("⚠️ [Notifly] Unknown method: \(call.method)")
       result(FlutterMethodNotImplemented)
     }
   }
 
   private func log(funcName: String, message: String) {
-    print("🔥 [Notifly Error] \(funcName) Failed: \(message)")
+    print("❌ [Notifly] \(funcName) failed: \(message)")
+  }
+  
+  // FlutterStreamHandler implementation
+  public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+    print("📡 [Notifly] InApp stream subscribed")
+
+    NotiflyFlutterPlugin.sharedEventSink = events
+
+    // Register native listener only once (singleton pattern for hot reload)
+    if !NotiflyFlutterPlugin.isNativeInAppMessageEventListenerAdded {
+      NotiflyFlutterPlugin.isNativeInAppMessageEventListenerAdded = true
+      Notifly.addInAppMessageEventListener { eventName, eventParams in
+        DispatchQueue.main.async {
+          print("📨 [Notifly] Event: \(eventName)")
+
+          guard let sink = NotiflyFlutterPlugin.sharedEventSink else {
+              print("⚠️ [Notifly] Event dropped (no subscription)")
+              return
+            }
+
+          let sanitizedParams = (eventParams as Any?) ?? NSNull()
+
+          let payload: [String: Any] = [
+            "eventName": eventName,
+            "eventParams": sanitizedParams
+          ]
+
+          sink(payload)
+        }
+      }
+      print("📡 [Notifly] InApp listener registered")
+    } else {
+      print("♻️ [Notifly] Reusing existing listener")
+    }
+
+    return nil
+  }
+
+  public func onCancel(withArguments arguments: Any?) -> FlutterError? {
+    print("🔌 [Notifly] InApp stream unsubscribed")
+
+    NotiflyFlutterPlugin.sharedEventSink = nil
+    // Note: We keep the native listener for hot reload support
+
+    return nil
   }
 }

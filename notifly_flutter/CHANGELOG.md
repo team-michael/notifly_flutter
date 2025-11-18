@@ -178,3 +178,9 @@
 # 2.0.2
 
 - Fix Build issue
+
+# 2.1.0
+
+- Add in-app message event listener support via `NotiflyPlugin.inAppEvents` stream
+- Add `InAppMessageEvent` model for handling in-app message events
+- Implement EventChannel-based streaming for cross-platform event handling

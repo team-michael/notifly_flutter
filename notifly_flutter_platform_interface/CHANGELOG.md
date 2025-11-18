@@ -178,3 +178,7 @@
 # 2.0.2
 
 - Fix Build issue
+
+# 2.1.0
+
+- Add `InAppMessageEvent` model for platform interface

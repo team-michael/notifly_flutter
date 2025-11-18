@@ -178,3 +178,7 @@
 # 2.0.2
 
 - Fix Build issue
+
+# 2.1.0
+
+- No changes (web platform does not support in-app message events)
