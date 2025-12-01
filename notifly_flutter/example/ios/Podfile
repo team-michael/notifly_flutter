@@ -1,5 +1,6 @@
-# Uncomment this line to define a global platform for your project
-platform :ios, '13.0'
+# Minimum supported iOS version for Notifly SDK 2.0.0+
+minimum_ios_version = '15.0'
+platform :ios, minimum_ios_version
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -29,7 +30,6 @@ flutter_ios_podfile_setup
 use_frameworks!
 
 target 'Runner' do
-  use_modular_headers!
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
@@ -41,5 +41,16 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+
+    target.build_configurations.each do |config|
+      # Keep every Pod target at or above the app's minimum iOS version so notifly_sdk links cleanly.
+      current = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+      # Allow Firebase headers to be used inside Swift modules (avoids non-modular include errors from firebase_messaging).
+      config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+
+      next unless current.nil? || Gem::Version.new(current) < Gem::Version.new(minimum_ios_version)
+
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = minimum_ios_version
+    end
   end
 end

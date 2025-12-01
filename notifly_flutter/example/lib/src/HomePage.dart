@@ -21,24 +21,21 @@ Object _castValue(String value, String? type) {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class KeyValueInput extends StatefulWidget {
+
+  KeyValueInput({required this.keyController, required this.valueController, required this.valueTypes, super.key,
+    this.selectedValueType,
+  });
   final TextEditingController keyController;
   final TextEditingController valueController;
   final List<String> valueTypes;
   String? selectedValueType;
-
-  KeyValueInput({
-    required this.keyController,
-    required this.valueController,
-    required this.valueTypes,
-    this.selectedValueType,
-  });
 
   @override
   _KeyValueInputState createState() => _KeyValueInputState();
@@ -70,13 +67,13 @@ class _HomePageState extends State<HomePage> {
     KeyValueInput(
       keyController: TextEditingController(),
       valueController: TextEditingController(),
-      valueTypes: [
+      valueTypes: const [
         'TEXT',
         'INT',
         'BOOL',
         'ARRAY',
       ],
-    )
+    ),
   ];
 
   final TextEditingController _routeIdInputController = TextEditingController();
@@ -103,18 +100,18 @@ class _HomePageState extends State<HomePage> {
                   future: NotiflyPlugin.getNotiflyUserId(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Notifly User ID',
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           snapshot.hasError ? 'Error: ${snapshot.error}' : '${snapshot.data}',
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ],
                     );
@@ -168,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                       }
                       await NotiflyPlugin.setEmail(emailInput);
                       _showMessage(
-                          'User email successfully set to $emailInput');
+                          'User email successfully set to $emailInput',);
                     } catch (error) {
                       _showError(error);
                     }
@@ -195,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                       }
                       await NotiflyPlugin.setPhoneNumber(phoneNumberInput);
                       _showMessage(
-                          'User phone number successfully set to $phoneNumberInput');
+                          'User phone number successfully set to $phoneNumberInput',);
                     } catch (error) {
                       _showError(error);
                     }
@@ -221,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                       }
                       await NotiflyPlugin.setTimezone(timezone);
                       _showMessage(
-                          'User timezone successfully set to $timezone');
+                          'User timezone successfully set to $timezone',);
                     } catch (error) {
                       _showError(error);
                     }
@@ -319,11 +316,11 @@ class _HomePageState extends State<HomePage> {
                             keyController: TextEditingController(),
                             valueController: TextEditingController(),
                             valueTypes: valueTypes,
-                          ));
+                          ),);
                         });
                       },
-                      child: Text('Add Event Param',
-                          style: const TextStyle(fontSize: 16)),
+                      child: const Text('Add Event Param',
+                          style: TextStyle(fontSize: 16),),
                     ),
                   ),
                 ),
@@ -331,11 +328,9 @@ class _HomePageState extends State<HomePage> {
                 //  params input
                 ElevatedButton(
                   onPressed: () {
-                    setState(() {
-                      _eventParamsInputs.removeLast();
-                    });
+                    setState(_eventParamsInputs.removeLast);
                   },
-                  child: Text('Remove Event Param'),
+                  child: const Text('Remove Event Param'),
                 ), // add event params input
                 ..._eventParamsInputs.map((input) {
                   return Padding(
@@ -410,10 +405,10 @@ class _HomePageState extends State<HomePage> {
     _userPropertiesKeyInputController.dispose();
     _userPropertiesValueInputController.dispose();
     _eventNameInputController.dispose();
-    _eventParamsInputs.forEach((input) {
+    for (final input in _eventParamsInputs) {
       input.keyController.dispose();
       input.valueController.dispose();
-    });
+    }
     _routeIdInputController.dispose();
 
     super.dispose();
