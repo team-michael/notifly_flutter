@@ -184,3 +184,9 @@
 - Add in-app message event listener support via FlutterStreamHandler
 - Implement native bridge for in-app message events using EventChannel
 - Add singleton pattern to prevent duplicate event listener registration
+
+# 2.1.1
+
+- Use iOS Native SDK version 2.2.0
+- Resolve race conditions between APNs/FCM token publisher, promise, and timeout, preventing rare runtime crashes
+- Ensure consistent token state updates during APNs/FCM registration and eliminate duplicate completion paths

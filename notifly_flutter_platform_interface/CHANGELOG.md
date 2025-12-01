@@ -182,3 +182,7 @@
 # 2.1.0
 
 - Add `InAppMessageEvent` model for platform interface
+
+# 2.1.1
+
+- No changes (version bump for compatibility)

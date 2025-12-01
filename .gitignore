@@ -51,3 +51,7 @@ build/
 google-services.json
 
 .env
+
+.claude/*
+# remove all files and directories under name .claude under any directory and subdirectory
+**/.claude/

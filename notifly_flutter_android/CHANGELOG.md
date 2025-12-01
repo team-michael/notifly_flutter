@@ -184,3 +184,7 @@
 - Add in-app message event listener support via StreamHandler
 - Implement native bridge for in-app message events using EventChannel
 - Add singleton pattern to prevent duplicate event listener registration
+
+# 2.1.1
+
+- Use Android Native SDK version 1.18.6

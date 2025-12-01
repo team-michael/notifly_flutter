@@ -182,3 +182,7 @@
 # 2.1.0
 
 - No changes (web platform does not support in-app message events)
+
+# 2.1.1
+
+- No changes (version bump for compatibility)

@@ -184,3 +184,8 @@
 - Add in-app message event listener support via `NotiflyPlugin.inAppEvents` stream
 - Add `InAppMessageEvent` model for handling in-app message events
 - Implement EventChannel-based streaming for cross-platform event handling
+
+# 2.1.1
+
+- android: Use Android Native SDK version 1.18.6
+- ios: Use iOS Native SDK version 2.2.0 (resolves race conditions between APNs/FCM token publisher, promise, and timeout, preventing rare runtime crashes, and ensures consistent token state updates)
