@@ -38,6 +38,20 @@ jobs:
           flutter-version: 3.10.0
           cache: true
 
+      - name: 🔗 Override Local Dependencies
+        run: |
+          cat > pubspec_overrides.yaml << 'EOF'
+          dependency_overrides:
+            notifly_flutter_platform_interface:
+              path: ../notifly_flutter_platform_interface
+            notifly_flutter_android:
+              path: ../notifly_flutter_android
+            notifly_flutter_ios:
+              path: ../notifly_flutter_ios
+            notifly_flutter_web:
+              path: ../notifly_flutter_web
+          EOF
+
       - name: 📦 Install Dependencies
         run: |
           dart --disable-analytics
