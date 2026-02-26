@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'notifly_flutter_ios'
-  s.version          = '2.1.1'
+  s.version          = '2.1.2'
   s.summary          = 'An iOS implementation of the notifly_flutter plugin.'
   s.description      = <<-DESC
   An iOS implementation of the notifly_flutter plugin.
