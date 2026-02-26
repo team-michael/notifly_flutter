@@ -190,3 +190,7 @@
 - Use iOS Native SDK version 2.2.0
 - Resolve race conditions between APNs/FCM token publisher, promise, and timeout, preventing rare runtime crashes
 - Ensure consistent token state updates during APNs/FCM registration and eliminate duplicate completion paths
+
+# 2.1.2
+
+- Use iOS Native SDK version 2.3.0 (support cancellation conditions for in-app message campaigns)

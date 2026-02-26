@@ -188,3 +188,7 @@
 # 2.1.1
 
 - Use Android Native SDK version 1.18.6
+
+# 2.1.2
+
+- Use Android Native SDK version 1.19.0 (support cancellation conditions for in-app message campaigns)
