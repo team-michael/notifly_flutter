@@ -28,29 +28,32 @@ class NotiflyPlugin {
   static bool _isClickListenerRegistered = false;
 
   // In-app message event stream
-  static const _inAppEventChannel = EventChannel('notifly_flutter/in_app_events');
-  static final _inAppEventsController = StreamController<InAppMessageEvent>.broadcast();
+  static const _inAppEventChannel = EventChannel(
+    'notifly_flutter/in_app_events',
+  );
+  static final _inAppEventsController =
+      StreamController<InAppMessageEvent>.broadcast();
   static bool _inAppEventsWired = false;
 
   /// Stream of in-app message events.
-  /// 
+  ///
   /// This stream provides events from in-app popups such as:
   /// - `in_app_message_show`: In-app popup displayed
   /// - `main_button_click`: Main button clicked
   /// - `hide_in_app_message_button_click`: "Don't show again" button clicked
   /// - `close_button_click`: Close button clicked
   /// - `survey_submit_button_click`: Survey submit button clicked
-  /// 
+  ///
   /// **Note**: This stream is only available on Android and iOS platforms.
   /// Web platform is not supported.
-  /// 
+  ///
   /// **Usage**:
   /// ```dart
   /// NotiflyPlugin.inAppEvents.listen((event) {
   ///   print('Event: ${event.eventName}, Params: ${event.eventParams}');
   /// });
   /// ```
-  /// 
+  ///
   /// **Important**: Make sure to cancel the subscription when done:
   /// ```dart
   /// final subscription = NotiflyPlugin.inAppEvents.listen((event) { ... });
@@ -61,7 +64,7 @@ class NotiflyPlugin {
     if (!_isInitialized) {
       throw StateError(
         'NotiflyPlugin.initialize() must be called before accessing inAppEvents. '
-        'Please call NotiflyPlugin.initialize() first.'
+        'Please call NotiflyPlugin.initialize() first.',
       );
     }
     return _inAppEventsController.stream;
@@ -88,7 +91,11 @@ class NotiflyPlugin {
         _logger.w('⚠️ [Notifly] Flutter is already initialized - skipping');
       }
     } catch (e, stackTrace) {
-      _logger.e('❌ [Notifly] Initialization failed', error: e, stackTrace: stackTrace);
+      _logger.e(
+        '❌ [Notifly] Initialization failed',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }
@@ -120,11 +127,19 @@ class NotiflyPlugin {
               _logger.w('⚠️ [Notifly] Event dropped (invalid format)');
             }
           } catch (e, stackTrace) {
-            _logger.e('❌ [Notifly] Failed to process event', error: e, stackTrace: stackTrace);
+            _logger.e(
+              '❌ [Notifly] Failed to process event',
+              error: e,
+              stackTrace: stackTrace,
+            );
           }
         },
         onError: (error, stackTrace) {
-          _logger.e('❌ [Notifly] EventChannel error', error: error, stackTrace: stackTrace);
+          _logger.e(
+            '❌ [Notifly] EventChannel error',
+            error: error,
+            stackTrace: stackTrace,
+          );
         },
         cancelOnError: false,
       );
@@ -132,7 +147,11 @@ class NotiflyPlugin {
       _inAppEventsWired = true;
       _logger.i('📡 [Notifly] InApp listener ready');
     } catch (e, stackTrace) {
-      _logger.e('❌ [Notifly] Failed to connect EventChannel', error: e, stackTrace: stackTrace);
+      _logger.e(
+        '❌ [Notifly] Failed to connect EventChannel',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }
@@ -238,8 +257,9 @@ class NotiflyPlugin {
     if (!kIsWeb && Platform.isAndroid) {
       try {
         if (!_isClickListenerRegistered) {
-          final success = await _platform.channel
-              .invokeMethod<bool>('addNotificationClickListener');
+          final success = await _platform.channel.invokeMethod<bool>(
+            'addNotificationClickListener',
+          );
           if (success == null || !success) {
             _logger.e('Failed to add notification click listener');
           }
@@ -250,8 +270,10 @@ class NotiflyPlugin {
         _logger.e('Failed to', error: e);
       }
     } else {
-      _logger.w('This method is only available on Android. '
-          'For iOS, use FCM message handler instead.');
+      _logger.w(
+        'This method is only available on Android. '
+        'For iOS, use FCM message handler instead.',
+      );
     }
   }
 

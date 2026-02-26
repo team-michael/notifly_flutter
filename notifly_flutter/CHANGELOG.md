@@ -189,3 +189,8 @@
 
 - android: Use Android Native SDK version 1.18.6
 - ios: Use iOS Native SDK version 2.2.0 (resolves race conditions between APNs/FCM token publisher, promise, and timeout, preventing rare runtime crashes, and ensures consistent token state updates)
+
+# 2.1.2
+
+- android: Use Android Native SDK version 1.19.0 (support cancellation conditions for in-app message campaigns)
+- ios: Use iOS Native SDK version 2.3.0 (support cancellation conditions for in-app message campaigns)

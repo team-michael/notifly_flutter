@@ -186,3 +186,7 @@
 # 2.1.1
 
 - No changes (version bump for compatibility)
+
+# 2.1.2
+
+- No changes (version bump for compatibility)

@@ -14,10 +14,7 @@ class InAppMessageEvent extends JSONStringRepresentable {
   }
 
   /// Constructs a new instance of [InAppMessageEvent].
-  InAppMessageEvent({
-    required this.eventName,
-    this.eventParams,
-  });
+  InAppMessageEvent({required this.eventName, this.eventParams});
 
   /// The name of the event (e.g., 'main_button_click', 'close_button_click').
   final String eventName;
@@ -43,4 +40,3 @@ class InAppMessageEvent extends JSONStringRepresentable {
     });
   }
 }
-
