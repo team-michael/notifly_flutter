@@ -192,3 +192,7 @@
 # 2.1.2
 
 - Use Android Native SDK version 1.19.0 (support cancellation conditions for in-app message campaigns)
+
+# 2.2.0
+
+- Use Android Native SDK version 1.20.0 (real-time campaign sync via SSE channel)

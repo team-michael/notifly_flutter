@@ -194,3 +194,7 @@
 # 2.1.2
 
 - Use iOS Native SDK version 2.3.0 (support cancellation conditions for in-app message campaigns)
+
+# 2.2.0
+
+- Use iOS Native SDK version 2.5.0 (real-time campaign sync via SSE channel)

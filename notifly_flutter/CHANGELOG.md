@@ -194,3 +194,8 @@
 
 - android: Use Android Native SDK version 1.19.0 (support cancellation conditions for in-app message campaigns)
 - ios: Use iOS Native SDK version 2.3.0 (support cancellation conditions for in-app message campaigns)
+
+# 2.2.0
+
+- android: Use Android Native SDK version 1.20.0 (real-time campaign sync via SSE channel)
+- ios: Use iOS Native SDK version 2.5.0 (real-time campaign sync via SSE channel)
