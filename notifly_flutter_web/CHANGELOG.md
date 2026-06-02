@@ -190,3 +190,7 @@
 # 2.1.2
 
 - No changes (version bump for compatibility)
+
+# 2.2.0
+
+- No changes (version bump for compatibility)
