@@ -198,3 +198,7 @@
 # 2.2.0
 
 - Use iOS Native SDK version 2.5.0 (real-time campaign sync via SSE channel)
+
+# 2.3.0
+
+- Use iOS Native SDK version 2.6.0 (ad push opt-out)
