@@ -196,3 +196,7 @@
 # 2.2.0
 
 - Use Android Native SDK version 1.20.0 (real-time campaign sync via SSE channel)
+
+# 2.3.0
+
+- Use Android Native SDK version 1.21.0 (ad push opt-out)

@@ -199,3 +199,8 @@
 
 - android: Use Android Native SDK version 1.20.0 (real-time campaign sync via SSE channel)
 - ios: Use iOS Native SDK version 2.5.0 (real-time campaign sync via SSE channel)
+
+# 2.3.0
+
+- android: Use Android Native SDK version 1.21.0 (ad push opt-out)
+- ios: Use iOS Native SDK version 2.6.0 (ad push opt-out)
