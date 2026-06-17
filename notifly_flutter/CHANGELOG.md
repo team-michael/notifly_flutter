@@ -204,3 +204,7 @@
 
 - android: Use Android Native SDK version 1.21.0 (ad push opt-out)
 - ios: Use iOS Native SDK version 2.6.0 (ad push opt-out)
+
+# 2.3.1
+
+- android: Use Android Native SDK version 1.21.1 (in-app popup onUserLeaveHint fix)

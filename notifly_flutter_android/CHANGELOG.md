@@ -200,3 +200,7 @@
 # 2.3.0
 
 - Use Android Native SDK version 1.21.0 (ad push opt-out)
+
+# 2.3.1
+
+- Use Android Native SDK version 1.21.1 (in-app popup onUserLeaveHint fix)
