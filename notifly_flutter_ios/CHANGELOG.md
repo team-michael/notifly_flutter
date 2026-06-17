@@ -202,3 +202,7 @@
 # 2.3.0
 
 - Use iOS Native SDK version 2.6.0 (ad push opt-out)
+
+# 2.3.1
+
+- No changes (version bump for compatibility)
