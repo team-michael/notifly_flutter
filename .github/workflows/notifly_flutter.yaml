@@ -40,7 +40,8 @@ jobs:
 
       - name: 📦 Install Dependencies
         run: |
-          cat > pubspec_overrides.yaml <<'EOF'
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            cat > pubspec_overrides.yaml <<'EOF'
           dependency_overrides:
             notifly_flutter_android:
               path: ../notifly_flutter_android
@@ -51,7 +52,7 @@ jobs:
             notifly_flutter_web:
               path: ../notifly_flutter_web
           EOF
-          cat > example/pubspec_overrides.yaml <<'EOF'
+            cat > example/pubspec_overrides.yaml <<'EOF'
           dependency_overrides:
             notifly_flutter_android:
               path: ../../notifly_flutter_android
@@ -62,6 +63,7 @@ jobs:
             notifly_flutter_web:
               path: ../../notifly_flutter_web
           EOF
+          fi
           dart --disable-analytics
           flutter --disable-telemetry
           flutter pub get
