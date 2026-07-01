@@ -53,7 +53,7 @@ jobs:
           EOF
           dart --disable-analytics
           flutter --disable-telemetry
-          flutter pub get
+          flutter pub get --no-example
 
       - name: ✨ Check Formatting
         run: dart format --set-exit-if-changed lib test
