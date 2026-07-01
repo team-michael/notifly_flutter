@@ -206,3 +206,7 @@
 # 2.3.1
 
 - No changes (version bump for compatibility)
+
+# 2.3.2
+
+- iOS: Add Swift Package Manager support while preserving CocoaPods integration.

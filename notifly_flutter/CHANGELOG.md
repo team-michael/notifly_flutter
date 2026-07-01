@@ -208,3 +208,7 @@
 # 2.3.1
 
 - android: Use Android Native SDK version 1.21.1 (in-app popup onUserLeaveHint fix)
+
+# 2.3.2
+
+- ios: Add Swift Package Manager support for the iOS Flutter wrapper.

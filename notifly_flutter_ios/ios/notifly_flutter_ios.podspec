@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'notifly_flutter_ios'
-  s.version          = '2.2.0'
+  s.version          = '2.3.2'
   s.summary          = 'An iOS implementation of the notifly_flutter plugin.'
   s.description      = <<-DESC
   An iOS implementation of the notifly_flutter plugin.
@@ -12,9 +12,9 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'BSD', :file => '../LICENSE' }
   s.author           = { 'Grey Box Inc.' => 'team@greyboxhq.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'notifly_flutter_ios/Sources/notifly_flutter_ios/**/*'
   s.dependency 'Flutter'
-  s.platform = :ios, '13.0'
+  s.platform = :ios, '15.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
