@@ -208,3 +208,7 @@
 # 2.3.1
 
 - android: Use Android Native SDK version 1.21.1 (in-app popup onUserLeaveHint fix)
+
+# 2.4.0
+
+- android: Use Android Native SDK version 1.22.0
