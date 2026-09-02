@@ -204,3 +204,7 @@
 # 2.3.1
 
 - Use Android Native SDK version 1.21.1 (in-app popup onUserLeaveHint fix)
+
+# 2.4.0
+
+- Use Android Native SDK version 1.22.0 (derive anonymous user IDs from stable device identity instead of a nullable or rotating FCM token)
