@@ -42,6 +42,28 @@ jobs:
         run: |
           dart --disable-analytics
           flutter --disable-telemetry
+          tee pubspec_overrides.yaml >/dev/null <<'EOF'
+          dependency_overrides:
+            notifly_flutter_android:
+              path: ../notifly_flutter_android
+            notifly_flutter_ios:
+              path: ../notifly_flutter_ios
+            notifly_flutter_platform_interface:
+              path: ../notifly_flutter_platform_interface
+            notifly_flutter_web:
+              path: ../notifly_flutter_web
+          EOF
+          tee example/pubspec_overrides.yaml >/dev/null <<'EOF'
+          dependency_overrides:
+            notifly_flutter_android:
+              path: ../../notifly_flutter_android
+            notifly_flutter_ios:
+              path: ../../notifly_flutter_ios
+            notifly_flutter_platform_interface:
+              path: ../../notifly_flutter_platform_interface
+            notifly_flutter_web:
+              path: ../../notifly_flutter_web
+          EOF
           flutter pub get
 
       - name: ✨ Check Formatting

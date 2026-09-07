@@ -208,3 +208,7 @@
 # 2.4.0
 
 - Use Android Native SDK version 1.22.0 (derive anonymous user IDs from stable device identity instead of a nullable or rotating FCM token)
+
+# 2.5.0
+
+- Use Android Native SDK version 1.23.0 (current-event count targeting and stable retry event IDs)
