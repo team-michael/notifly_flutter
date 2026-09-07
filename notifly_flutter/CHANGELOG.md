@@ -212,3 +212,8 @@
 # 2.4.0
 
 - android: Use Android Native SDK version 1.22.0
+
+# 2.5.0
+
+- android: Use Android Native SDK version 1.23.0 (current-event count targeting and stable retry event IDs)
+- ios: Use iOS Native SDK version 2.7.0 (track events before APNs token registration completes)

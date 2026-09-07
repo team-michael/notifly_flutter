@@ -206,3 +206,7 @@
 # 2.3.1
 
 - No changes (version bump for compatibility)
+
+# 2.5.0
+
+- Use iOS Native SDK version 2.7.0 (track events before APNs token registration completes)

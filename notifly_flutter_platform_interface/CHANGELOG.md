@@ -202,3 +202,7 @@
 # 2.3.1
 
 - No changes (version bump for compatibility)
+
+# 2.5.0
+
+- No changes (version bump for compatibility)
