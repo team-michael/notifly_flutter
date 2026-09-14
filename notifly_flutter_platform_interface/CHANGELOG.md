@@ -206,3 +206,7 @@
 # 2.5.0
 
 - No changes (version bump for compatibility)
+
+# 2.6.0-alpha.1
+
+- No API changes; align the version with the Flutter alpha packages.

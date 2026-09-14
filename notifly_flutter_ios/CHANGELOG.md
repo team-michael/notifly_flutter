@@ -210,3 +210,8 @@
 # 2.5.0
 
 - Use iOS Native SDK version 2.7.0 (track events before APNs token registration completes)
+
+# 2.6.0-alpha.1
+
+- Use iOS Native SDK version 2.8.0-alpha.1 with the shared KMP Core.
+- Align package and reported SDK versions at 2.6.0-alpha.1.
