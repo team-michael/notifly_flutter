@@ -217,3 +217,10 @@
 
 - android: Use Android Native SDK version 1.23.0 (current-event count targeting and stable retry event IDs)
 - ios: Use iOS Native SDK version 2.7.0 (track events before APNs token registration completes)
+
+# 2.6.0-alpha.1
+
+- android: Use Android Native SDK version 1.24.0-alpha.1 with the shared KMP Core.
+- ios: Use iOS Native SDK version 2.8.0-alpha.1 with the shared KMP Core.
+- web: Use JavaScript SDK version 2.21.0-alpha.1 with the shared KMP Core.
+- Align all Flutter packages at 2.6.0-alpha.1. No Flutter API changes are required.

@@ -206,3 +206,8 @@
 # 2.5.0
 
 - No changes (version bump for compatibility)
+
+# 2.6.0-alpha.1
+
+- Use JavaScript SDK version 2.21.0-alpha.1 with the shared KMP Core.
+- Align package and reported SDK versions at 2.6.0-alpha.1.
