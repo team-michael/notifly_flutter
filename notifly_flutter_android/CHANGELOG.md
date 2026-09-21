@@ -217,3 +217,9 @@
 
 - Use Android Native SDK version 1.24.0-alpha.1 with the shared KMP Core.
 - Align package and reported SDK versions at 2.6.0-alpha.1.
+
+# 2.6.0
+
+- Upgrade Android SDK to `1.24.0` for KMP-based popup personalization and shared user ID handling.
+- Inherit five-second suppression of unchanged user-property updates.
+- Align package and wrapper versions at `2.6.0` without public API changes.

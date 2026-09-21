@@ -215,3 +215,9 @@
 
 - Use iOS Native SDK version 2.8.0-alpha.1 with the shared KMP Core.
 - Align package and reported SDK versions at 2.6.0-alpha.1.
+
+# 2.6.0
+
+- Upgrade iOS SDK to `2.8.0` for KMP-based popup personalization and shared user ID handling.
+- Inherit five-second suppression of unchanged user-property updates.
+- Align package and wrapper versions at `2.6.0` without public API changes.

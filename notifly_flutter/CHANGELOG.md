@@ -224,3 +224,11 @@
 - ios: Use iOS Native SDK version 2.8.0-alpha.1 with the shared KMP Core.
 - web: Use JavaScript SDK version 2.21.0-alpha.1 with the shared KMP Core.
 - Align all Flutter packages at 2.6.0-alpha.1. No Flutter API changes are required.
+
+# 2.6.0
+
+- Upgrade Android SDK to `1.24.0`, iOS SDK to `2.8.0`, and JS SDK to `2.21.0`.
+- Support KMP-based popup personalization and shared user ID handling through the underlying SDKs.
+- Inherit five-second suppression of unchanged user-property updates.
+- Web also gains SSE campaign sync, popup cancellation, and targeting fixes from the JS upgrade.
+- Align all Flutter packages at `2.6.0` without public API changes.
