@@ -227,7 +227,11 @@
 
 # 2.6.0
 
-- android: Use Android Native SDK version 1.24.0 for server-rendered popup personalization.
-- ios: Use iOS Native SDK version 2.8.0 for server-rendered popup personalization.
-- web: Use JavaScript SDK version 2.21.0 for server-rendered popup personalization.
-- Align all Flutter packages at 2.6.0. No Flutter API changes are required.
+- android: Upgrade the native SDK from `1.23.0` to `1.24.0`.
+- ios: Upgrade the native SDK from `2.7.0` to `2.8.0` and align the example push extension version.
+- web: Upgrade the JavaScript SDK from `2.13.0` to `2.21.0`, including renderer `2.5.0` support.
+- Support server-rendered popup personalization through the underlying SDKs' KMP Core, including Liquid, catalogs, Connected Content, and render-abort handling. Existing event names and parameters provide the trigger context; static popups keep the URL-based path, and failed or aborted renders do not display raw templates.
+- Adopt shared user ID transition handling through the underlying SDKs, preserving their state synchronization, merging, and clearing behavior.
+- Inherit five-second suppression of unchanged user-property updates when local state is available. Changed values send normally, skipped calls do not extend the window, and identity changes reset it.
+- web: Also inherit the intervening JS updates for SSE campaign synchronization and recovery, delayed-popup cancellation and timer deduplication, current-event count targeting, user-segment comparisons, external-user identity reconciliation, popup link modes, dark-mode rendering, and `templateName` display-event metadata. See `notifly_flutter_web/CHANGELOG.md` for the dependency-upgrade details.
+- Align all five Flutter packages, their internal dependency pins, and platform-reported wrapper versions at stable `2.6.0`. No Flutter public API or platform-interface changes are required.

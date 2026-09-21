@@ -218,5 +218,9 @@
 
 # 2.6.0
 
-- Use iOS Native SDK version 2.8.0 for server-rendered popup personalization.
-- Align package and reported wrapper SDK versions at 2.6.0.
+- Upgrade iOS Native SDK from `2.7.0` to `2.8.0`, using its shared KMP Core 0.1.0 integration and matching `notifly_core` binary dependency.
+- Support server-rendered in-app popups with Liquid personalization, catalogs, Connected Content, and render-abort handling using the existing event context. Preserve static URL loading and the template base URL in WKWebView; skip failures instead of loading raw templates.
+- Inherit native checks for cancelled/replaced requests, user identity, foreground state, popup availability, and campaign/template hiding conditions before presenting rendered content.
+- Use the native SDK's shared user ID transition decisions for state synchronization, merging, and clearing.
+- Inherit five-second suppression of unchanged `setUserProperties` calls when local in-app messaging state is available. Changed values send normally, skipped calls do not extend the window, and identity changes reset it.
+- Align the package, podspec, platform-interface dependency, and reported wrapper SDK versions at stable `2.6.0`; no Flutter API changes are required.

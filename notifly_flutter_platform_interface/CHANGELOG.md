@@ -213,4 +213,5 @@
 
 # 2.6.0
 
-- No API changes; align the version with the stable Flutter packages.
+- Align the platform-interface package at stable `2.6.0` so the umbrella and Android/iOS/Web implementations use matching dependency versions.
+- No method signatures, event models, or platform-interface behavior change. Popup personalization, shared user ID handling, and user-property send suppression are provided by the updated platform SDK dependencies.

@@ -220,5 +220,9 @@
 
 # 2.6.0
 
-- Use Android Native SDK version 1.24.0 for server-rendered popup personalization.
-- Align package and reported wrapper SDK versions at 2.6.0.
+- Upgrade Android Native SDK from `1.23.0` to `1.24.0`, using its shared KMP Core 0.1.0 integration.
+- Support server-rendered in-app popups with Liquid personalization, catalogs, Connected Content, and render-abort handling using the existing event context. Preserve static URL loading and the template base URL for rendered HTML; skip failures instead of loading raw templates.
+- Inherit native handling for delayed render requests, campaign cancellation/replacement, identity changes, foreground checks, and in-process HTML transfer to the popup Activity.
+- Use the native SDK's shared user ID transition decisions for state synchronization, merging, and clearing.
+- Inherit five-second suppression of unchanged `setUserProperties` calls when local in-app messaging state is available. Changed values send normally, skipped calls do not extend the window, and identity changes reset it.
+- Align the package, Android library, platform-interface dependency, and reported wrapper SDK versions at stable `2.6.0`; no Flutter API changes are required.
