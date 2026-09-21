@@ -210,3 +210,7 @@
 # 2.6.0-alpha.1
 
 - No API changes; align the version with the Flutter alpha packages.
+
+# 2.6.0
+
+- No API changes; align the version with the stable Flutter packages.

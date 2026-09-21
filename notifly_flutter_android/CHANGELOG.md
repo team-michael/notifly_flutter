@@ -217,3 +217,8 @@
 
 - Use Android Native SDK version 1.24.0-alpha.1 with the shared KMP Core.
 - Align package and reported SDK versions at 2.6.0-alpha.1.
+
+# 2.6.0
+
+- Use Android Native SDK version 1.24.0 for server-rendered popup personalization.
+- Align package and reported wrapper SDK versions at 2.6.0.

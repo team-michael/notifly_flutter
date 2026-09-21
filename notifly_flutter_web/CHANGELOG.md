@@ -211,3 +211,8 @@
 
 - Use JavaScript SDK version 2.21.0-alpha.1 with the shared KMP Core.
 - Align package and reported SDK versions at 2.6.0-alpha.1.
+
+# 2.6.0
+
+- Use JavaScript SDK version 2.21.0 for server-rendered popup personalization.
+- Align package and reported wrapper SDK versions at 2.6.0.

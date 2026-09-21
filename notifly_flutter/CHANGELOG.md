@@ -224,3 +224,10 @@
 - ios: Use iOS Native SDK version 2.8.0-alpha.1 with the shared KMP Core.
 - web: Use JavaScript SDK version 2.21.0-alpha.1 with the shared KMP Core.
 - Align all Flutter packages at 2.6.0-alpha.1. No Flutter API changes are required.
+
+# 2.6.0
+
+- android: Use Android Native SDK version 1.24.0 for server-rendered popup personalization.
+- ios: Use iOS Native SDK version 2.8.0 for server-rendered popup personalization.
+- web: Use JavaScript SDK version 2.21.0 for server-rendered popup personalization.
+- Align all Flutter packages at 2.6.0. No Flutter API changes are required.
