@@ -214,17 +214,7 @@
 
 # 2.6.0
 
-- Upgrade the loaded JavaScript SDK from `2.13.0` to `2.21.0`, including KMP Core 0.1.0 integration and `notifly-web-message-renderer` `2.5.0`.
-- Support server-rendered web popups with Liquid personalization, catalogs, Connected Content, and render-abort handling using the existing event context. Preserve static URL loading and relative resources through the template base URL; skip failed renders instead of displaying raw templates.
-- Inherit JS render cancellation/replacement and identity checks, and reserve the display slot during rendering so a later static popup cannot overtake the selected SSR popup.
-- Use shared Core decisions for user ID changes and inherit five-second suppression of unchanged user-property updates based on local state; changed values send normally, skipped calls do not extend the window, and identity changes reset it.
-- Include the intervening JS `2.13.0` → `2.20.0` changes through the dependency upgrade:
-  - Real-time campaign synchronization over SSE, missed-event recovery, fallback to event-driven synchronization, and jittered reconnect backoff.
-  - Cancellation conditions for delayed popups and replacement of duplicate timers for the same campaign.
-  - Include successfully uploaded local events in event-count targeting while preserving server-triggered event ordering.
-  - Correct null, undefined, falsy-value, and array-membership user-segment comparisons and reconcile external user ID mismatches.
-  - Support prefix, suffix, substring, and regular-expression operators in event parameter conditions.
-  - Add `templateName` to popup display events and support popup link modes and dark-mode rendering fixes.
-  - Update the bundled Service Worker to derive tracking user IDs from project, external-user, and device identity instead of relying on a separately stored Notifly user ID. Production Service Worker deployment remains part of the JS SDK release workflow, not the Flutter package upgrade itself.
-  - Include the underlying JS SDK's user-supplied event logging options, internal-event flag, and Cafe24 changed-properties-only behavior; these do not add Flutter API parameters or change the `js-flutter` SDK type.
-- Align the package, platform-interface dependency, and reported wrapper SDK versions at stable `2.6.0`; no Flutter API changes are required.
+- Upgrade JS SDK from `2.13.0` to `2.21.0` for KMP-based popup personalization and shared user ID handling.
+- Inherit SSE campaign sync, popup cancellation, targeting fixes, and renderer improvements.
+- Inherit five-second suppression of unchanged user-property updates.
+- Align package and wrapper versions at `2.6.0` without public API changes.
