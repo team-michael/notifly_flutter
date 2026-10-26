@@ -223,3 +223,9 @@
 - Upgrade Android SDK to `1.24.0` for KMP-based popup personalization and shared user ID handling.
 - Inherit five-second suppression of unchanged user-property updates.
 - Align package and wrapper versions at `2.6.0` without public API changes.
+
+# 2.6.1
+
+- Upgrade Android SDK to `1.24.3` to fix ad push notification crashes on Android 9 and earlier and in-app message crashes from late WebView callbacks.
+- Keep the unsubscribe row visible in expanded image ad notifications on Android.
+- Android native in-app message button event listeners now run on the main thread.
