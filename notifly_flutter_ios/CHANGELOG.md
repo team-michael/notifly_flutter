@@ -221,3 +221,7 @@
 - Upgrade iOS SDK to `2.8.0` for KMP-based popup personalization and shared user ID handling.
 - Inherit five-second suppression of unchanged user-property updates.
 - Align package and wrapper versions at `2.6.0` without public API changes.
+
+# 2.6.2
+
+- Use Notifly iOS SDK `2.9.0` to migrate existing user and device identifiers from UserDefaults to Keychain.

@@ -218,3 +218,7 @@
 - Inherit SSE campaign sync, popup cancellation, targeting fixes, and renderer improvements.
 - Inherit five-second suppression of unchanged user-property updates.
 - Align package and wrapper versions at `2.6.0` without public API changes.
+
+# 2.6.2
+
+- Use Notifly JS SDK `2.23.0` to encrypt persisted identifiers and refresh in-memory user state on initialization.

@@ -214,3 +214,7 @@
 # 2.6.0
 
 - Align the version with the Flutter `2.6.0` packages; no API changes.
+
+# 2.6.2
+
+- Align with the Flutter 2.6.2 release. No public API changes.
