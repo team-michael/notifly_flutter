@@ -238,3 +238,8 @@
 - Upgrade Android SDK to `1.24.3` to fix ad push notification crashes on Android 9 and earlier and in-app message crashes from late WebView callbacks.
 - Keep the unsubscribe row visible in expanded image ad notifications on Android.
 - Android native in-app message button event listeners now run on the main thread.
+
+# 2.6.2
+
+- iOS: Use Notifly iOS SDK `2.9.0` to migrate existing user and device identifiers to Keychain.
+- Web: Use Notifly JS SDK `2.23.0` to encrypt persisted identifiers and keep user state in memory.
