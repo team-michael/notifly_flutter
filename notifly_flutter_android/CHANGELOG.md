@@ -229,3 +229,7 @@
 - Upgrade Android SDK to `1.24.3` to fix ad push notification crashes on Android 9 and earlier and in-app message crashes from late WebView callbacks.
 - Keep the unsubscribe row visible in expanded image ad notifications on Android.
 - Android native in-app message button event listeners now run on the main thread.
+
+# 2.6.2
+
+- Align the package and reported SDK versions with the Flutter 2.6.2 release.

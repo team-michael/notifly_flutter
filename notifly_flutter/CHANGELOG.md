@@ -243,3 +243,4 @@
 
 - iOS: Use Notifly iOS SDK `2.9.0` to migrate existing user and device identifiers to Keychain.
 - Web: Use Notifly JS SDK `2.23.0` to encrypt persisted identifiers and keep user state in memory.
+- Align the umbrella, Android, iOS, web, and platform interface packages at 2.6.2.
